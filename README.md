@@ -1,12 +1,11 @@
-# Very short description of the package
+# Laravel support for spatie/enum
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/laravel-enum.svg?style=flat-square)](https://packagist.org/packages/spatie/:package_name)
 [![Build Status](https://img.shields.io/travis/spatie/laravel-enum/master.svg?style=flat-square)](https://travis-ci.org/spatie/:package_name)
 [![Quality Score](https://img.shields.io/scrutinizer/g/spatie/laravel-enum.svg?style=flat-square)](https://scrutinizer-ci.com/g/spatie/:package_name)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-enum.svg?style=flat-square)](https://packagist.org/packages/spatie/:package_name)
 
-
-This is where your description should go. Try and limit it to a paragraph or two.
+This package provides extended support for our [spatie/enum](https://github.com/spatie/enum) package in Laravel.
 
 ## Installation
 
@@ -17,11 +16,6 @@ composer require spatie/laravel-enum
 ```
 
 ## Usage
-
-``` php
-$skeleton = new Spatie\Skeleton();
-echo $skeleton->echoPhrase('Hello, Spatie!');
-```
 
 ### Testing
 
