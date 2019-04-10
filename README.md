@@ -17,6 +17,63 @@ composer require spatie/laravel-enum
 
 ## Usage
 
+### Model support
+
+Chances are that if you're working in a Laravel project, you'll want to use enums within your models.
+This package provides a trait you can use in these models, 
+to allow allow automatic casting between stored enum values and enum objects. 
+
+```php
+use Spatie\Enum\HasEnums;
+
+final class TestModel extends Model
+{
+    use HasEnums;
+
+    protected $enums = [
+        'status' => TestModelStatus::class,
+    ];
+}
+```
+
+By using the `HasEnums` trait, you'll be able to work with the `status` field like so:
+
+```php
+$model = TestModel::create([
+    'status' => StatusEnum::DRAFT(),
+]);
+
+// …
+
+$model->status = StatusEnum::PUBLISHED();
+
+// …
+
+$model->status->isEqual(StatusEnum::ARCHIVED());
+``` 
+
+In some cases, enums can be stored differently in the database. 
+Take for example a legacy application.
+
+By using the `HasEnums` trait, you can provide a mapping on your enum classes:
+
+```php
+/**
+ * @method static self DRAFT()
+ * @method static self PUBLISHED()
+ * @method static self ARCHIVED()
+ */
+final class StatusEnum extends Enum
+{
+    public static $map = [
+        'archived' => 'legacy archived value',
+    ];
+}
+```
+
+Once a mapping is provided and the trait is used in your model, 
+the package will automatically handle it for you.
+
 ### Testing
 
 ``` bash
