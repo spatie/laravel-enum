@@ -10,7 +10,7 @@ use Spatie\Enum\Laravel\HasEnums;
  *
  * @method static self create(array $properties)
  */
-final class TestModel extends Model
+class TestModel extends Model
 {
     use HasEnums;
 
@@ -18,7 +18,7 @@ final class TestModel extends Model
 
     protected $table = 'test';
 
-    private $enums = [
+    protected $enums = [
         'status' => TestModelStatus::class,
     ];
 }
