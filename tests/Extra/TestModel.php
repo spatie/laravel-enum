@@ -14,11 +14,11 @@ final class TestModel extends Model
 {
     use HasEnums;
 
-    protected $enums = [
-        'status' => TestModelStatus::class,
-    ];
-
     protected $guarded = [];
 
     protected $table = 'test';
+
+    private $enums = [
+        'status' => TestModelStatus::class,
+    ];
 }
