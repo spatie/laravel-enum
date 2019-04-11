@@ -26,7 +26,7 @@ to allow allow automatic casting between stored enum values and enum objects.
 ```php
 use Spatie\Enum\HasEnums;
 
-final class TestModel extends Model
+class TestModel extends Model
 {
     use HasEnums;
 
