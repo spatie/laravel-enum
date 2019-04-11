@@ -32,9 +32,7 @@ trait HasEnums
 
         $enumValue = $enumObject->getValue();
 
-        $mappedValue = $enumClass::$map[$enumValue] ?? null;
-
-        $this->attributes[$key] = $mappedValue ?? $enumValue;
+        $this->attributes[$key] = $enumClass::$map[$enumValue] ?? $enumValue;
 
         return $this;
     }
