@@ -9,9 +9,9 @@ final class InvalidEnumError extends TypeError
     public static function make(
         string $class,
         string $field,
-        string $expected,
-        string $got
+        string $expectedClass,
+        string $actualClass
     ): InvalidEnumError {
-        return new self("Expected {$class}::{$field} to be instance of {$expected}, instead got {$got}");
+        return new self("Expected {$class}::{$field} to be instance of {$expectedClass}, instead got {$actualClass}");
     }
 }

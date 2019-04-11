@@ -2,6 +2,7 @@
 
 namespace Spatie\Enum\Laravel;
 
+use Spatie\Enum\Enum;
 use Spatie\Enum\Exceptions\InvalidValueException;
 use Spatie\Enum\Laravel\Exceptions\InvalidEnumError;
 
@@ -15,34 +16,40 @@ trait HasEnums
      */
     public function setAttribute($key, $enumObject)
     {
-        if (! isset($this->enums[$key])) {
-            return parent::setAttribute($key, $enumObject);
-        }
+        return isset($this->enums[$key])
+            ? $this->setEnumAttribute($key, $enumObject)
+            : parent::setAttribute($key, $enumObject);
+    }
 
+    public function getAttribute($key)
+    {
+        return isset($this->enums[$key])
+            ? $this->getEnumAttribute($key)
+            : parent::getAttribute($key);
+    }
+
+    protected function setEnumAttribute(string $key, object $enum)
+    {
         $enumClass = $this->enums[$key];
 
-        if (! is_a($enumObject, $enumClass)) {
+        if (! is_a($enum, $enumClass)) {
             throw InvalidEnumError::make(
                 static::class,
                 $key,
                 $enumClass,
-                get_class($enumObject)
+                get_class($enum)
             );
         }
 
-        $enumValue = $enumObject->getValue();
+        $enumValue = $enum->getValue();
 
         $this->attributes[$key] = $enumClass::$map[$enumValue] ?? $enumValue;
 
         return $this;
     }
 
-    public function getAttribute($key)
+    protected function getEnumAttribute(string $key): Enum
     {
-        if (! isset($this->enums[$key])) {
-            return parent::getAttribute($key);
-        }
-
         $enumClass = $this->enums[$key];
 
         $storedEnumValue = $this->attributes[$key] ?? null;
