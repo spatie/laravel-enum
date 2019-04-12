@@ -2,12 +2,59 @@
 
 namespace Spatie\Enum\Laravel;
 
+use Illuminate\Database\Eloquent\Builder;
 use Spatie\Enum\Enumerable;
 use Spatie\Enum\Exceptions\InvalidValueException;
 use Spatie\Enum\Laravel\Exceptions\InvalidEnumError;
+use Spatie\Enum\Laravel\Exceptions\NoSuchEnumField;
 
 trait HasEnums
 {
+    public function scopeWhereEnum(
+        Builder $builder,
+        string $key,
+        $enumerables
+    ): void {
+        if (! $this->isEnumAttribute($key)) {
+            throw NoSuchEnumField::make($key, get_class($this));
+        }
+
+        $builder->whereIn(
+            $key,
+            $this->resolveEnumerables($key, $enumerables)
+        );
+    }
+
+    public function scopeWhereNotEnum(
+        Builder $builder,
+        string $key,
+        $enumerables
+    ): void {
+        if (! $this->isEnumAttribute($key)) {
+            throw NoSuchEnumField::make($key, get_class($this));
+        }
+
+        $builder->whereNotIn(
+            $key,
+            $this->resolveEnumerables($key, $enumerables)
+        );
+    }
+
+    private function resolveEnumerables($key, $enumerables): array
+    {
+        $enumClass = $this->enums[$key];
+
+        $enumerables = is_array($enumerables) ? $enumerables : [$enumerables];
+
+        return array_map(function ($value) use ($enumClass): string {
+            if ($value instanceof Enumerable) {
+                $value = $value->getValue();
+            }
+
+            return $enumClass::$map[$value] ?? $value;
+        }, $enumerables);
+    }
+
     /**
      * @param $key
      * @param \Spatie\Enum\Enum $enumObject
@@ -78,7 +125,7 @@ trait HasEnums
     protected function asEnum(string $class, $value): Enumerable
     {
         return forward_static_call_array(
-            $class.'::make',
+            $class . '::make',
             [$value]
         );
     }
