@@ -17,7 +17,7 @@ composer require spatie/laravel-enum
 
 ## Usage
 
-### Model support
+### Casting
 
 Chances are that if you're working in a Laravel project, you'll want to use enums within your models.
 This package provides a trait you can use in these models, 
@@ -85,6 +85,14 @@ final class StatusEnum extends Enum
 
 Once a mapping is provided and the trait is used in your model, 
 the package will automatically handle it for you.
+
+### Roadmap
+
+- [ ] Models fields
+    - [x] Automatic value casting [#1](https://github.com/spatie/laravel-enum/pull/1)
+    - [ ] Mapping support [spatie/enum#25](https://github.com/spatie/enum/pull/25)
+- [ ] Model scopes [#4](https://github.com/spatie/laravel-enum/pull/4)
+- [ ] Request validation [#5](https://github.com/spatie/laravel-enum/issues/5)
 
 ### Testing
 
