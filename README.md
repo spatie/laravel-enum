@@ -43,6 +43,18 @@ $model = TestModel::create([
     'status' => StatusEnum::DRAFT(),
 ]);
 
+You can set the value of an enum field with its textual value:
+
+```php
+$model->status = 'published';
+```
+
+This can be useful when filling data from a validated request:
+
+```php
+$model->fill($request->validated());
+```
+
 // …
 
 $model->status = StatusEnum::PUBLISHED();

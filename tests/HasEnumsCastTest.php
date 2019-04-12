@@ -74,4 +74,21 @@ final class HasEnumsCastTest extends TestCase
         $this->assertInstanceOf(StatusEnum::class, $post->status);
         $this->assertTrue($post->status->isEqual(StatusEnum::archived()));
     }
+
+    /** @test */
+    public function textual_value_from_fill_and_create()
+    {
+        $post = Post::create([
+            'status' => 'published',
+        ]);
+
+        $this->assertInstanceOf(StatusEnum::class, $post->status);
+        $this->assertTrue($post->status->isEqual(StatusEnum::published()));
+
+        $post->fill([
+            'status' => 'draft',
+        ]);
+
+        $this->assertTrue($post->status->isEqual(StatusEnum::draft()));
+    }
 }
