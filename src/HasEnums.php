@@ -3,6 +3,7 @@
 namespace Spatie\Enum\Laravel;
 
 use Spatie\Enum\Enum;
+use Spatie\Enum\Enumerable;
 use Spatie\Enum\Exceptions\InvalidValueException;
 use Spatie\Enum\Laravel\Exceptions\InvalidEnumError;
 
@@ -55,10 +56,7 @@ trait HasEnums
         $storedEnumValue = $this->attributes[$key] ?? null;
 
         try {
-            $enumObject = forward_static_call_array(
-                $enumClass . '::make',
-                [$storedEnumValue]
-            );
+            $enumObject = $this->asEnum($enumClass, $storedEnumValue);
         } catch (InvalidValueException $exception) {
             $mappedEnumValue = array_search($storedEnumValue, $enumClass::$map ?? []);
 
@@ -66,10 +64,7 @@ trait HasEnums
                 throw new InvalidValueException($storedEnumValue, $enumClass);
             }
 
-            $enumObject = forward_static_call_array(
-                $enumClass . '::make',
-                [$mappedEnumValue]
-            );
+            $enumObject = $this->asEnum($enumClass, $mappedEnumValue);
         }
 
         return $enumObject;
@@ -78,5 +73,13 @@ trait HasEnums
     protected function isEnumAttribute(string $key): bool
     {
         return isset($this->enums[$key]);
+    }
+
+    protected function asEnum(string $class, $value): Enumerable
+    {
+        return forward_static_call_array(
+            $class.'::make',
+            [$value]
+        );
     }
 }
