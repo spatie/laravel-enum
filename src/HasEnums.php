@@ -28,20 +28,21 @@ trait HasEnums
             : parent::getAttribute($key);
     }
 
-    protected function setEnumAttribute(string $key, object $enum)
+    protected function setEnumAttribute(string $key, $value)
     {
         $enumClass = $this->enums[$key];
 
-        if (! is_a($enum, $enumClass)) {
-            throw InvalidEnumError::make(
-                static::class,
-                $key,
-                $enumClass,
-                get_class($enum)
-            );
+        if (is_string($value)) {
+            $mappedValue = array_search($value, $enumClass::$map ?? []) ?: $value;
+
+            $value = $this->asEnum($enumClass, $mappedValue);
         }
 
-        $enumValue = $enum->getValue();
+        if (! is_a($value, $enumClass)) {
+            throw InvalidEnumError::make(static::class, $key, $enumClass, get_class($value));
+        }
+
+        $enumValue = $value->getValue();
 
         $this->attributes[$key] = $enumClass::$map[$enumValue] ?? $enumValue;
 

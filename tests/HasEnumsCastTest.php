@@ -47,4 +47,31 @@ final class HasEnumsCastTest extends TestCase
 
         $this->assertTrue($model->status->isEqual(StatusEnum::archived()));
     }
+
+    /** @test */
+    public function a_textual_value_is_cast_to_the_enum_object()
+    {
+        $post = new Post();
+
+        $post->status = 'published';
+
+        $this->assertInstanceOf(StatusEnum::class, $post->status);
+        $this->assertTrue($post->status->isEqual(StatusEnum::published()));
+    }
+
+    /** @test */
+    public function a_mapped_textual_value_is_cast_to_the_enum_object()
+    {
+        $post = new Post();
+
+        $post->status = 'archived';
+
+        $this->assertInstanceOf(StatusEnum::class, $post->status);
+        $this->assertTrue($post->status->isEqual(StatusEnum::archived()));
+
+        $post->status = 'stored archive';
+
+        $this->assertInstanceOf(StatusEnum::class, $post->status);
+        $this->assertTrue($post->status->isEqual(StatusEnum::archived()));
+    }
 }
