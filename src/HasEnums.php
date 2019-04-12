@@ -132,11 +132,7 @@ trait HasEnums
                 $enumValue = $value;
             }
 
-            if (isset($enumClass::$map[$enumValue])) {
-                return $enumClass::$map[$enumValue];
-            }
-
-            return $enumValue;
+            return $enumClass::$map[$enumValue] ?? $enumValue;
         }, $enumerables);
     }
 }
