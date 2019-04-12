@@ -17,7 +17,7 @@ composer require spatie/laravel-enum
 
 ## Usage
 
-### Model support
+### Casting
 
 Chances are that if you're working in a Laravel project, you'll want to use enums within your models.
 This package provides a trait you can use in these models, 
@@ -73,6 +73,32 @@ final class StatusEnum extends Enum
 
 Once a mapping is provided and the trait is used in your model, 
 the package will automatically handle it for you.
+
+### Scopes
+
+The `HasEnums` trait also provides some useful scopes to query your database.
+These scopes will also take the optional mapping you provided into account.
+
+```php
+Post::whereEnum('status', StatusEnum::DRAFT());
+
+Post::whereNotEnum('status', StatusEnum::PUBLISHED());
+```
+
+You may provide multiple enums as an array:
+
+```php
+Post::whereEnum('status', [StatusEnum::DRAFT(), StatusEnum::ARCHIVED()]);
+
+Post::whereNotEnum('status', [StatusEnum::PUBLISHED()]);
+```
+
+You may also provide textual input:
+
+```php
+Post::whereEnum('status', 'archived');
+Post::whereEnum('status', 'legacy archived value');
+```
 
 ### Testing
 
