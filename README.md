@@ -91,7 +91,7 @@ the package will automatically handle it for you.
     - [x] Automatic value casting [#1](https://github.com/spatie/laravel-enum/pull/1)
     - [ ] Mapping support [spatie/enum#25](https://github.com/spatie/enum/pull/25)
 - [ ] Model scopes [#4](https://github.com/spatie/laravel-enum/pull/4)
-- [ ] Request validation [#5](https://github.com/spatie/laravel-enum/issues/5)
+- [ ] Validation [#5](https://github.com/spatie/laravel-enum/issues/5)
 
 ### Testing
 
