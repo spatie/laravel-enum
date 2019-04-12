@@ -2,7 +2,6 @@
 
 namespace Spatie\Enum\Laravel;
 
-use Spatie\Enum\Enum;
 use Spatie\Enum\Enumerable;
 use Spatie\Enum\Exceptions\InvalidValueException;
 use Spatie\Enum\Laravel\Exceptions\InvalidEnumError;
@@ -49,7 +48,7 @@ trait HasEnums
         return $this;
     }
 
-    protected function getEnumAttribute(string $key): Enum
+    protected function getEnumAttribute(string $key): Enumerable
     {
         $enumClass = $this->enums[$key];
 
