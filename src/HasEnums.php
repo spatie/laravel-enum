@@ -40,21 +40,6 @@ trait HasEnums
         );
     }
 
-    private function resolveEnumerables($key, $enumerables): array
-    {
-        $enumClass = $this->enums[$key];
-
-        $enumerables = is_array($enumerables) ? $enumerables : [$enumerables];
-
-        return array_map(function ($value) use ($enumClass): string {
-            if ($value instanceof Enumerable) {
-                $value = $value->getValue();
-            }
-
-            return $enumClass::$map[$value] ?? $value;
-        }, $enumerables);
-    }
-
     /**
      * @param $key
      * @param \Spatie\Enum\Enum $enumObject
@@ -128,5 +113,20 @@ trait HasEnums
             $class . '::make',
             [$value]
         );
+    }
+
+    private function resolveEnumerables($key, $enumerables): array
+    {
+        $enumClass = $this->enums[$key];
+
+        $enumerables = is_array($enumerables) ? $enumerables : [$enumerables];
+
+        return array_map(function ($value) use ($enumClass): string {
+            if ($value instanceof Enumerable) {
+                $value = $value->getValue();
+            }
+
+            return $enumClass::$map[$value] ?? $value;
+        }, $enumerables);
     }
 }
