@@ -16,14 +16,14 @@ trait HasEnums
      */
     public function setAttribute($key, $enumObject)
     {
-        return isset($this->enums[$key])
+        return $this->isEnumAttribute($key)
             ? $this->setEnumAttribute($key, $enumObject)
             : parent::setAttribute($key, $enumObject);
     }
 
     public function getAttribute($key)
     {
-        return isset($this->enums[$key])
+        return $this->isEnumAttribute($key)
             ? $this->getEnumAttribute($key)
             : parent::getAttribute($key);
     }
@@ -73,5 +73,10 @@ trait HasEnums
         }
 
         return $enumObject;
+    }
+
+    protected function isEnumAttribute(string $key): bool
+    {
+        return isset($this->enums[$key]);
     }
 }

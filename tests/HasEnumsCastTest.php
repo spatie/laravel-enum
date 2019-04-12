@@ -3,22 +3,22 @@
 namespace Spatie\Enum\Laravel\Tests;
 
 use Spatie\Enum\Laravel\Exceptions\InvalidEnumError;
-use Spatie\Enum\Laravel\Tests\Extra\TestModel;
-use Spatie\Enum\Laravel\Tests\Extra\TestModelStatus;
+use Spatie\Enum\Laravel\Tests\Extra\Post;
+use Spatie\Enum\Laravel\Tests\Extra\StatusEnum;
 use stdClass;
 
-final class ModelEnumTest extends LaravelTestCase
+final class HasEnumsCastTest extends TestCase
 {
     /** @test */
     public function it_saves_the_value_of_an_enum()
     {
-        $model = TestModel::create([
-            'status' => TestModelStatus::draft(),
+        $model = Post::create([
+            'status' => StatusEnum::draft(),
         ]);
 
         $model->refresh();
 
-        $this->assertTrue($model->status->isEqual(TestModelStatus::draft()));
+        $this->assertTrue($model->status->isEqual(StatusEnum::draft()));
     }
 
     /** @test */
@@ -26,7 +26,7 @@ final class ModelEnumTest extends LaravelTestCase
     {
         $this->expectException(InvalidEnumError::class);
 
-        TestModel::create([
+        Post::create([
             'status' => new stdClass(),
         ]);
     }
@@ -34,17 +34,17 @@ final class ModelEnumTest extends LaravelTestCase
     /** @test */
     public function an_enum_value_can_be_mapped()
     {
-        $model = TestModel::create([
-            'status' => TestModelStatus::archived(),
+        $model = Post::create([
+            'status' => StatusEnum::archived(),
         ]);
 
         $this->assertEquals(
-            TestModelStatus::$map['archived'],
+            StatusEnum::$map['archived'],
             $model->getAttributes()['status']
         );
 
         $model->refresh();
 
-        $this->assertTrue($model->status->isEqual(TestModelStatus::archived()));
+        $this->assertTrue($model->status->isEqual(StatusEnum::archived()));
     }
 }
