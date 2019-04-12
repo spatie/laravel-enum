@@ -35,6 +35,7 @@ final class EnumScopeTest extends TestCase
         $this->assertEquals(0, Post::whereEnum('status', StatusEnum::published())->count());
     }
 
+    /** @test */
     public function test_scope_where_enum_with_array()
     {
         Post::create([
@@ -78,6 +79,16 @@ final class EnumScopeTest extends TestCase
         ]);
 
         $this->assertEquals(1, Post::whereEnum('status', 'archived')->count());
+    }
+
+    /** @test */
+    public function scope_with_index_input()
+    {
+        Post::create([
+            'status' => StatusEnum::archived(),
+        ]);
+
+        $this->assertEquals(1, Post::whereEnum('status', 2)->count());
     }
 
     /** @test */

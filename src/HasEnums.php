@@ -109,6 +109,10 @@ trait HasEnums
 
     protected function asEnum(string $class, $value): Enumerable
     {
+        if ($value instanceof Enumerable) {
+            return $value;
+        }
+
         return forward_static_call_array(
             $class . '::make',
             [$value]
@@ -122,11 +126,17 @@ trait HasEnums
         $enumerables = is_array($enumerables) ? $enumerables : [$enumerables];
 
         return array_map(function ($value) use ($enumClass): string {
-            if ($value instanceof Enumerable) {
-                $value = $value->getValue();
+            try {
+                $enumValue = $this->asEnum($enumClass, $value)->getValue();
+            } catch (InvalidValueException $invalidValueException) {
+                $enumValue = $value;
             }
 
-            return $enumClass::$map[$value] ?? $value;
+            if (isset($enumClass::$map[$enumValue])) {
+                return $enumClass::$map[$enumValue];
+            }
+
+            return $enumValue;
         }, $enumerables);
     }
 }
