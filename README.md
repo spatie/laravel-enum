@@ -53,7 +53,6 @@ This can be useful when filling data from a validated request:
 
 ```php
 $model->fill($request->validated());
-```
 
 // …
 
