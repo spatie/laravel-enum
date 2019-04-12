@@ -60,6 +60,17 @@ final class HasEnumsCastTest extends TestCase
     }
 
     /** @test */
+    public function an_index_is_cast_to_the_enum_object()
+    {
+        $post = new Post();
+
+        $post->status = 1;
+
+        $this->assertInstanceOf(StatusEnum::class, $post->status);
+        $this->assertTrue($post->status->isEqual(StatusEnum::published()));
+    }
+
+    /** @test */
     public function a_mapped_textual_value_is_cast_to_the_enum_object()
     {
         $post = new Post();

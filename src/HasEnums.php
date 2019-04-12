@@ -32,7 +32,7 @@ trait HasEnums
     {
         $enumClass = $this->enums[$key];
 
-        if (is_string($value)) {
+        if (is_string($value) || is_int($value)) {
             $mappedValue = array_search($value, $enumClass::$map ?? []) ?: $value;
 
             $value = $this->asEnum($enumClass, $mappedValue);
