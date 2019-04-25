@@ -21,6 +21,25 @@ final class HasEnumsCastTest extends TestCase
         $model->refresh();
 
         $this->assertTrue($model->status->isEqual(StatusEnum::draft()));
+        $this->assertEquals('draft', $model->getOriginal('status'));
+    }
+
+    /** @test */
+    public function it_saves_the_index_of_an_enum()
+    {
+        $model = new class extends Post {
+            protected $casts = [
+                'status' => 'int',
+            ];
+        };
+
+        $model->status = StatusEnum::draft();
+        $model->save();
+
+        $model->refresh();
+
+        $this->assertTrue($model->status->isEqual(StatusEnum::draft()));
+        $this->assertEquals(0, $model->getOriginal('status'));
     }
 
     /** @test */

@@ -2,10 +2,14 @@
 
 namespace Spatie\Enum\Laravel;
 
+use Illuminate\Database\Eloquent\Model;
 use InvalidArgumentException;
 use Spatie\Enum\Enumerable;
 use Spatie\Enum\Laravel\Exceptions\InvalidEnumError;
 
+/**
+ * @mixin Model
+ */
 trait HasEnums
 {
     public function setAttribute($key, $value)
@@ -17,9 +21,11 @@ trait HasEnums
 
     public function getAttribute($key)
     {
+        $value = parent::getAttribute($key);
+
         return $this->isEnumAttribute($key)
-            ? $this->getEnumAttribute($key)
-            : parent::getAttribute($key);
+            ? $this->getEnumAttribute($key, $value)
+            : $value;
     }
 
     /**
@@ -40,17 +46,21 @@ trait HasEnums
             throw InvalidEnumError::make(static::class, $key, $enumClass, get_class($value));
         }
 
-        $this->attributes[$key] = $value->getValue();
+        $this->attributes[$key] = $this->hasCast($key, ['int', 'integer'])
+            ? $value->getIndex()
+            : $value->getValue();
 
         return $this;
     }
 
-    protected function getEnumAttribute(string $key): Enumerable
+    /**
+     * @param string $key
+     * @param int|string $value
+     * @return Enumerable
+     */
+    protected function getEnumAttribute(string $key, $value): Enumerable
     {
-        return $this->asEnum(
-            $this->getEnumClass($key),
-            $this->attributes[$key] ?? null
-        );
+        return $this->asEnum($this->getEnumClass($key), $value);
     }
 
     protected function isEnumAttribute(string $key): bool

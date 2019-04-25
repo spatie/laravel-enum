@@ -17,6 +17,8 @@ class Post extends Model
 {
     use HasEnums;
 
+    protected $table = 'posts';
+
     protected $guarded = [];
 
     protected $enums = [
