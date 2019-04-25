@@ -3,6 +3,7 @@
 namespace Spatie\Enum\Laravel\Tests;
 
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
+use Spatie\Enum\Laravel\EnumServiceProvider;
 use Spatie\Enum\Laravel\Tests\Extra\Post;
 
 abstract class TestCase extends OrchestraTestCase
@@ -28,5 +29,12 @@ abstract class TestCase extends OrchestraTestCase
             'database' => ':memory:',
             'prefix' => '',
         ]);
+    }
+
+    protected function getPackageProviders($app)
+    {
+        return [
+            EnumServiceProvider::class,
+        ];
     }
 }

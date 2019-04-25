@@ -17,6 +17,7 @@
     ],
     "require": {
         "php": "^7.2",
+        "illuminate/support": "^5.8",
         "spatie/enum": "^2.1"
     },
     "require-dev": {
