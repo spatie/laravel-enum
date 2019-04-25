@@ -78,9 +78,9 @@ trait HasEnums
      */
     protected function asEnum(string $class, $value): Enumerable
     {
-        return forward_static_call_array(
+        return forward_static_call(
             $class.'::make',
-            [$value]
+            $value
         );
     }
 }
