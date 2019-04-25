@@ -11,7 +11,7 @@ use Spatie\Enum\Enum;
  */
 final class StatusEnum extends Enum
 {
-    public static $map = [
+    const MAP_VALUE = [
         'archived' => 'stored archive',
     ];
 }

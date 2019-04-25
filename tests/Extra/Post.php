@@ -9,6 +9,7 @@ use Spatie\Enum\Laravel\HasEnums;
 
 /**
  * @property \Spatie\Enum\Laravel\Tests\Extra\StatusEnum status
+ * @property mixed invalid_enum
  *
  * @method static self create(array $properties)
  */
@@ -20,6 +21,7 @@ class Post extends Model
 
     protected $enums = [
         'status' => StatusEnum::class,
+        'invalid_enum' => Post::class,
     ];
 
     public static function migrate()
