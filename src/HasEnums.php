@@ -72,8 +72,9 @@ trait HasEnums
     {
         $enumClass = $this->enums[$key];
         $enumInterface = Enumerable::class;
+        $classImplementsEnumerable = class_implements($enumClass)[$enumInterface] ?? false;
 
-        if (! isset(class_implements($enumClass)[$enumInterface])) {
+        if (! $classImplementsEnumerable) {
             throw new InvalidArgumentException("Expected {$enumClass} to implement {$enumInterface}");
         }
 
