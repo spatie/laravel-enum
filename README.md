@@ -63,35 +63,18 @@ $model->status = StatusEnum::PUBLISHED();
 $model->status->isEqual(StatusEnum::ARCHIVED());
 ``` 
 
-In some cases, enums can be stored differently in the database. 
-Take for example a legacy application.
+In some cases, enums should be stored as integer (index) in the database.
 
-By using the `HasEnums` trait, you can provide a mapping on your enum classes:
-
-```php
-/**
- * @method static self DRAFT()
- * @method static self PUBLISHED()
- * @method static self ARCHIVED()
- */
-final class StatusEnum extends Enum
-{
-    public static $map = [
-        'archived' => 'legacy archived value',
-    ];
-}
-```
-
-Once a mapping is provided and the trait is used in your model, 
-the package will automatically handle it for you.
+By using the `$casts` property you can cast your `status` attribute to `int` or `integer` and the trait will store the index instead of the value.
 
 ### Roadmap
 
 - [ ] Models fields
     - [x] Automatic value casting [#1](https://github.com/spatie/laravel-enum/pull/1)
-    - [ ] Mapping support [spatie/enum#25](https://github.com/spatie/enum/pull/25)
+    - [x] Mapping support [spatie/enum#25](https://github.com/spatie/enum/pull/25)
 - [ ] Model scopes [#4](https://github.com/spatie/laravel-enum/pull/4)
 - [ ] Validation [#5](https://github.com/spatie/laravel-enum/issues/5)
+- [ ] Request Transformation [#7](https://github.com/spatie/laravel-enum/pull/7)
 
 ### Testing
 
