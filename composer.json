@@ -13,11 +13,17 @@
             "email": "brent@spatie.be",
             "homepage": "https://spatie.be",
             "role": "Developer"
+        },
+        {
+            "name": "Tom Witkowski",
+            "email": "dev.gummibeer@gmail.com",
+            "homepage": "https://gummibeer.de",
+            "role": "Developer"
         }
     ],
     "require": {
         "php": "^7.2",
-        "spatie/enum": "^2.0"
+        "spatie/enum": "^2.1"
     },
     "require-dev": {
         "larapack/dd": "^1.0",
