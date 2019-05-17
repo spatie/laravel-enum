@@ -3,6 +3,7 @@
     "description": "Laravel enum support",
     "keywords": [
         "spatie",
+        "enum",
         "laravel-enum"
     ],
     "homepage": "https://github.com/spatie/laravel-enum",
@@ -26,7 +27,6 @@
         "spatie/enum": "^2.1"
     },
     "require-dev": {
-        "larapack/dd": "^1.0",
         "orchestra/testbench": "^3.8",
         "phpunit/phpunit": "^8.0"
     },
@@ -41,9 +41,7 @@
         }
     },
     "scripts": {
-        "test": "vendor/bin/phpunit",
-        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
-
+        "test": "vendor/bin/phpunit"
     },
     "config": {
         "sort-packages": true
