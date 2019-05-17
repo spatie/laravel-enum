@@ -1,0 +1,10 @@
+<?php
+
+namespace DummyNamespace;
+
+use Spatie\Enum\Enum;
+DummyDocBlock
+final class DummyClass extends Enum
+{
+DummyValueMapConst
+}
