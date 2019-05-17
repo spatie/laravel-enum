@@ -19,5 +19,5 @@ script:
   - vendor/bin/phpunit
 
 after_script:
-  - php vendor/bin/ocular code-coverage:upload --format=php-clover coverage.clover
+  - php vendor/bin/ocular code-coverage:upload --format=php-clover build/clover.xml
   - php vendor/bin/php-coveralls
