@@ -2,6 +2,8 @@
 
 namespace Spatie\Enum\Laravel\Tests;
 
+use InvalidArgumentException;
+use Spatie\Enum\Enumerable;
 use Spatie\Enum\Laravel\Exceptions\InvalidEnumError;
 use Spatie\Enum\Laravel\Tests\Extra\Post;
 use Spatie\Enum\Laravel\Tests\Extra\StatusEnum;
@@ -19,6 +21,25 @@ final class HasEnumsCastTest extends TestCase
         $model->refresh();
 
         $this->assertTrue($model->status->isEqual(StatusEnum::draft()));
+        $this->assertEquals('draft', $model->getOriginal('status'));
+    }
+
+    /** @test */
+    public function it_saves_the_index_of_an_enum()
+    {
+        $model = new class extends Post {
+            protected $casts = [
+                'status' => 'int',
+            ];
+        };
+
+        $model->status = StatusEnum::draft();
+        $model->save();
+
+        $model->refresh();
+
+        $this->assertTrue($model->status->isEqual(StatusEnum::draft()));
+        $this->assertEquals(0, $model->getOriginal('status'));
     }
 
     /** @test */
@@ -39,7 +60,7 @@ final class HasEnumsCastTest extends TestCase
         ]);
 
         $this->assertEquals(
-            StatusEnum::$map['archived'],
+            StatusEnum::MAP_VALUE['archived'],
             $model->getAttributes()['status']
         );
 
@@ -101,5 +122,15 @@ final class HasEnumsCastTest extends TestCase
         ]);
 
         $this->assertTrue($post->status->isEqual(StatusEnum::draft()));
+    }
+
+    /** @test */
+    public function throws_exception_if_enum_class_is_not_enumerable()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Expected '.Post::class.' to implement '.Enumerable::class);
+
+        $post = new Post();
+        $post->invalid_enum = 'unknown';
     }
 }

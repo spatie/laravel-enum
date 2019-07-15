@@ -3,103 +3,157 @@
 namespace Spatie\Enum\Laravel;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+use InvalidArgumentException;
 use Spatie\Enum\Enumerable;
-use Spatie\Enum\Exceptions\InvalidValueException;
 use Spatie\Enum\Laravel\Exceptions\InvalidEnumError;
 use Spatie\Enum\Laravel\Exceptions\NoSuchEnumField;
 
+/**
+ * @mixin Model
+ */
 trait HasEnums
 {
+    public function setAttribute($key, $value)
+    {
+        return $this->isEnumAttribute($key)
+            ? $this->setEnumAttribute($key, $value)
+            : parent::setAttribute($key, $value);
+    }
+
+    public function getAttribute($key)
+    {
+        $value = parent::getAttribute($key);
+
+        return $this->isEnumAttribute($key)
+            ? $this->getEnumAttribute($key, $value)
+            : $value;
+    }
+
+    /**
+     * @param Builder $builder
+     * @param string $key
+     * @param int|string|Enumerable|int[]|string[]|Enumerable[] $enumerables
+     *
+     * @see Builder::whereIn()
+     */
     public function scopeWhereEnum(
         Builder $builder,
         string $key,
         $enumerables
     ): void {
-        if (! $this->isEnumAttribute($key)) {
-            throw NoSuchEnumField::make($key, get_class($this));
-        }
-
-        $builder->whereIn(
+        $this->buildEnumScope(
+            $builder,
+            'whereIn',
             $key,
-            $this->resolveEnumerables($key, $enumerables)
+            $enumerables
         );
     }
 
+    /**
+     * @param Builder $builder
+     * @param string $key
+     * @param int|string|Enumerable|int[]|string[]|Enumerable[] $enumerables
+     *
+     * @see Builder::orWhereIn()
+     */
+    public function scopeOrWhereEnum(
+        Builder $builder,
+        string $key,
+        $enumerables
+    ): void {
+        $this->buildEnumScope(
+            $builder,
+            'orWhereIn',
+            $key,
+            $enumerables
+        );
+    }
+
+    /**
+     * @param Builder $builder
+     * @param string $key
+     * @param int|string|Enumerable|int[]|string[]|Enumerable[] $enumerables
+     *
+     * @see Builder::whereNotIn()
+     */
     public function scopeWhereNotEnum(
         Builder $builder,
         string $key,
         $enumerables
     ): void {
-        if (! $this->isEnumAttribute($key)) {
-            throw NoSuchEnumField::make($key, get_class($this));
-        }
-
-        $builder->whereNotIn(
+        $this->buildEnumScope(
+            $builder,
+            'whereNotIn',
             $key,
-            $this->resolveEnumerables($key, $enumerables)
+            $enumerables
         );
     }
 
     /**
-     * @param $key
-     * @param \Spatie\Enum\Enum $enumObject
+     * @param Builder $builder
+     * @param string $key
+     * @param int|string|Enumerable|int[]|string[]|Enumerable[] $enumerables
      *
-     * @return mixed
+     * @see Builder::orWhereNotIn()
      */
-    public function setAttribute($key, $enumObject)
-    {
-        return $this->isEnumAttribute($key)
-            ? $this->setEnumAttribute($key, $enumObject)
-            : parent::setAttribute($key, $enumObject);
+    public function scopeOrWhereNotEnum(
+        Builder $builder,
+        string $key,
+        $enumerables
+    ): void {
+        $this->buildEnumScope(
+            $builder,
+            'orWhereNotIn',
+            $key,
+            $enumerables
+        );
     }
 
-    public function getAttribute($key)
-    {
-        return $this->isEnumAttribute($key)
-            ? $this->getEnumAttribute($key)
-            : parent::getAttribute($key);
-    }
-
+    /**
+     * @param string $key
+     * @param int|string|Enumerable $value
+     *
+     * @return $this
+     */
     protected function setEnumAttribute(string $key, $value)
     {
-        $enumClass = $this->enums[$key];
+        $enumClass = $this->getEnumClass($key);
 
         if (is_string($value) || is_int($value)) {
-            $mappedValue = array_search($value, $enumClass::$map ?? []) ?: $value;
-
-            $value = $this->asEnum($enumClass, $mappedValue);
+            $value = $this->asEnum($enumClass, $value);
         }
 
         if (! is_a($value, $enumClass)) {
             throw InvalidEnumError::make(static::class, $key, $enumClass, get_class($value));
         }
 
-        $enumValue = $value->getValue();
-
-        $this->attributes[$key] = $enumClass::$map[$enumValue] ?? $enumValue;
+        $this->attributes[$key] = $this->getStoredValue($key, $value);
 
         return $this;
     }
 
-    protected function getEnumAttribute(string $key): Enumerable
+    /**
+     * @param string $key
+     * @param Enumerable $enum
+     *
+     * @return int|string
+     */
+    protected function getStoredValue(string $key, Enumerable $enum)
     {
-        $enumClass = $this->enums[$key];
+        return $this->hasCast($key, ['int', 'integer'])
+            ? $enum->getIndex()
+            : $enum->getValue();
+    }
 
-        $storedEnumValue = $this->attributes[$key] ?? null;
-
-        try {
-            $enumObject = $this->asEnum($enumClass, $storedEnumValue);
-        } catch (InvalidValueException $exception) {
-            $mappedEnumValue = array_search($storedEnumValue, $enumClass::$map ?? []);
-
-            if (! $mappedEnumValue) {
-                throw new InvalidValueException($storedEnumValue, $enumClass);
-            }
-
-            $enumObject = $this->asEnum($enumClass, $mappedEnumValue);
-        }
-
-        return $enumObject;
+    /**
+     * @param string $key
+     * @param int|string $value
+     * @return Enumerable
+     */
+    protected function getEnumAttribute(string $key, $value): Enumerable
+    {
+        return $this->asEnum($this->getEnumClass($key), $value);
     }
 
     protected function isEnumAttribute(string $key): bool
@@ -107,32 +161,60 @@ trait HasEnums
         return isset($this->enums[$key]);
     }
 
+    protected function getEnumClass(string $key): string
+    {
+        $enumClass = $this->enums[$key];
+        $enumInterface = Enumerable::class;
+        $classImplementsEnumerable = class_implements($enumClass)[$enumInterface] ?? false;
+
+        if (! $classImplementsEnumerable) {
+            throw new InvalidArgumentException("Expected {$enumClass} to implement {$enumInterface}");
+        }
+
+        return $enumClass;
+    }
+
+    /**
+     * @param string $class
+     * @param int|string $value
+     *
+     * @return Enumerable
+     */
     protected function asEnum(string $class, $value): Enumerable
     {
         if ($value instanceof Enumerable) {
             return $value;
         }
 
-        return forward_static_call_array(
+        return forward_static_call(
             $class . '::make',
-            [$value]
+            $value
         );
     }
 
-    private function resolveEnumerables($key, $enumerables): array
-    {
-        $enumClass = $this->enums[$key];
+    /**
+     * @param Builder $builder
+     * @param string $method
+     * @param string $key
+     * @param int|string|Enumerable|int[]|string[]|Enumerable[] $enumerables
+     */
+    protected function buildEnumScope(
+        Builder $builder,
+        string $method,
+        string $key,
+        $enumerables
+    ): void {
+        if (! $this->isEnumAttribute($key)) {
+            throw NoSuchEnumField::make($key, get_class($this));
+        }
 
         $enumerables = is_array($enumerables) ? $enumerables : [$enumerables];
 
-        return array_map(function ($value) use ($enumClass): string {
-            try {
-                $enumValue = $this->asEnum($enumClass, $value)->getValue();
-            } catch (InvalidValueException $invalidValueException) {
-                $enumValue = $value;
-            }
-
-            return $enumClass::$map[$enumValue] ?? $enumValue;
-        }, $enumerables);
+        $builder->$method(
+            $key,
+            array_map(function ($enumerable) use ($key) {
+                $this->getStoredValue($key, $this->asEnum($key, $enumerable));
+            }, $enumerables)
+        );
     }
 }

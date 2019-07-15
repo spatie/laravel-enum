@@ -1,9 +1,10 @@
 # Laravel support for spatie/enum
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/laravel-enum.svg?style=flat-square)](https://packagist.org/packages/spatie/:package_name)
-[![Build Status](https://img.shields.io/travis/spatie/laravel-enum/master.svg?style=flat-square)](https://travis-ci.org/spatie/:package_name)
-[![Quality Score](https://img.shields.io/scrutinizer/g/spatie/laravel-enum.svg?style=flat-square)](https://scrutinizer-ci.com/g/spatie/:package_name)
-[![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-enum.svg?style=flat-square)](https://packagist.org/packages/spatie/:package_name)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/laravel-enum.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-enum)
+[![Build Status](https://img.shields.io/travis/spatie/laravel-enum/master.svg?style=flat-square)](https://travis-ci.org/spatie/laravel-enum)
+[![Quality Score](https://img.shields.io/scrutinizer/g/spatie/laravel-enum.svg?style=flat-square)](https://scrutinizer-ci.com/g/spatie/laravel-enum)
+[![Code Coverage](https://img.shields.io/coveralls/github/spatie/laravel-enum.svg?style=flat-square)](https://coveralls.io/github/spatie/laravel-enum)
+[![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-enum.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-enum)
 
 This package provides extended support for our [spatie/enum](https://github.com/spatie/enum) package in Laravel.
 
@@ -53,7 +54,6 @@ This can be useful when filling data from a validated request:
 
 ```php
 $model->fill($request->validated());
-```
 
 // …
 
@@ -64,27 +64,18 @@ $model->status = StatusEnum::PUBLISHED();
 $model->status->isEqual(StatusEnum::ARCHIVED());
 ``` 
 
-In some cases, enums can be stored differently in the database. 
-Take for example a legacy application.
+In some cases, enums should be stored as integer (index) in the database.
 
-By using the `HasEnums` trait, you can provide a mapping on your enum classes:
+By using the `$casts` property you can cast your `status` attribute to `int` or `integer` and the trait will store the index instead of the value.
 
-```php
-/**
- * @method static self DRAFT()
- * @method static self PUBLISHED()
- * @method static self ARCHIVED()
- */
-final class StatusEnum extends Enum
-{
-    public static $map = [
-        'archived' => 'legacy archived value',
-    ];
-}
-```
+### Roadmap
 
-Once a mapping is provided and the trait is used in your model, 
-the package will automatically handle it for you.
+- [ ] Models fields
+    - [x] Automatic value casting [#1](https://github.com/spatie/laravel-enum/pull/1)
+    - [x] Mapping support [spatie/enum#25](https://github.com/spatie/enum/pull/25)
+- [ ] Model scopes [#4](https://github.com/spatie/laravel-enum/pull/4)
+- [ ] Validation [#5](https://github.com/spatie/laravel-enum/issues/5)
+- [ ] Request Transformation [#7](https://github.com/spatie/laravel-enum/pull/7)
 
 ### Scopes
 
