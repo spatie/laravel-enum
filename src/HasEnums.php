@@ -212,8 +212,8 @@ trait HasEnums
 
         $builder->$method(
             $key,
-            array_map(function ($enumerable) use ($key) {
-                $this->getStoredValue($key, $this->asEnum($key, $enumerable));
+            array_map(function ($value) use ($key) {
+                $this->getStoredValue($key, $this->getEnumAttribute($key, $value));
             }, $enumerables)
         );
     }
