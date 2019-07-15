@@ -213,7 +213,7 @@ trait HasEnums
         $builder->$method(
             $key,
             array_map(function ($value) use ($key) {
-                $this->getStoredValue($key, $this->getEnumAttribute($key, $value));
+                return $this->getStoredValue($key, $this->getEnumAttribute($key, $value));
             }, $enumerables)
         );
     }
