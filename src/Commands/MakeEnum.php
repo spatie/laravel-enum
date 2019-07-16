@@ -67,22 +67,17 @@ class MakeEnum extends GeneratorCommand
 
     protected function formatValueToMethod(string $value): string
     {
-        $formatter = $this->getFormatter();
-
-        return $this->option('formatter') === 'const' ? strtoupper(Str::$formatter($value)) : Str::$formatter($value);
-    }
-
-    protected function getFormatter(): string
-    {
-        $formatter = $this->option('formatter');
-
-        if ($formatter === 'const') {
-            return 'snake';
+        switch($this->option('formatter')) {
+            case 'const':
+                return strtoupper(Str::snake($value));
+            case 'snake':
+                return Str::snake($value);
+            case 'studly':
+                return Str::studly($value);
+            case 'camel':
+            default:
+                return Str::camel($value);
         }
-
-        return in_array($formatter, ['snake', 'studly', 'camel'])
-            ? $formatter
-            : 'camel';
     }
 
     protected function getArguments()
