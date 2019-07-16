@@ -20,7 +20,7 @@ class MakeEnumTest extends TestCase
     /** @test */
     public function it_can_run_the_make_command(): void
     {
-        $this->runMakeCommand();
+        $this->runMakeCommand('weekdays.empty.php');
     }
 
     /** @test */
@@ -36,13 +36,9 @@ class MakeEnumTest extends TestCase
             'sunday',
         ];
 
-        $this->runMakeCommand([
+        $this->runMakeCommand('weekdays.camel.methods.php', [
             '--method' => $methods,
         ]);
-
-        foreach($methods as $method) {
-            $this->assertMethodDocTag($method);
-        }
     }
 
     /** @test */
@@ -58,14 +54,10 @@ class MakeEnumTest extends TestCase
             'Sunday' => 'sunday',
         ];
 
-        $this->runMakeCommand([
+        $this->runMakeCommand('weekdays.studly.methods.php', [
             '--method' => array_values($values),
             '--formatter' => 'studly',
         ]);
-
-        foreach($values as $method => $value) {
-            $this->assertMethodDocTag($method);
-        }
     }
 
     /** @test */
@@ -81,14 +73,10 @@ class MakeEnumTest extends TestCase
             'sun_day' => 'sun day',
         ];
 
-        $this->runMakeCommand([
+        $this->runMakeCommand('weekdays.snake.methods.php', [
             '--method' => array_values($values),
             '--formatter' => 'snake',
         ]);
-
-        foreach($values as $method => $value) {
-            $this->assertMethodDocTag($method);
-        }
     }
 
     /** @test */
@@ -104,14 +92,10 @@ class MakeEnumTest extends TestCase
             'SUN_DAY' => 'sun day',
         ];
 
-        $this->runMakeCommand([
+        $this->runMakeCommand('weekdays.const.methods.php', [
             '--method' => array_values($values),
             '--formatter' => 'const',
         ]);
-
-        foreach($values as $method => $value) {
-            $this->assertMethodDocTag($method);
-        }
     }
 
     /** @test */
@@ -127,15 +111,9 @@ class MakeEnumTest extends TestCase
             'sunday' => 'Sunday',
         ];
 
-        $this->runMakeCommand([
+        $this->runMakeCommand('weekdays.camel.values.php', [
             '--value' => $values,
         ]);
-
-        $this->assertStringContainsString('const MAP_VALUE', $this->content);
-        foreach($values as $method => $value) {
-            $this->assertMethodDocTag($method);
-            $this->assertValueMap($method, $value);
-        }
     }
 
     /** @test */
@@ -151,16 +129,10 @@ class MakeEnumTest extends TestCase
             'Sunday' => 'sunday',
         ];
 
-        $this->runMakeCommand([
+        $this->runMakeCommand('weekdays.studly.values.php', [
             '--value' => $values,
             '--formatter' => 'studly',
         ]);
-
-        $this->assertStringContainsString('const MAP_VALUE = [', $this->content);
-        foreach($values as $method => $value) {
-            $this->assertMethodDocTag($method);
-            $this->assertValueMap($method, $value);
-        }
     }
 
     /** @test */
@@ -176,16 +148,10 @@ class MakeEnumTest extends TestCase
             'sun_day' => 'sun day',
         ];
 
-        $this->runMakeCommand([
+        $this->runMakeCommand('weekdays.snake.values.php', [
             '--value' => $values,
             '--formatter' => 'snake',
         ]);
-
-        $this->assertStringContainsString('const MAP_VALUE', $this->content);
-        foreach($values as $method => $value) {
-            $this->assertMethodDocTag($method);
-            $this->assertValueMap($method, $value);
-        }
     }
 
     /** @test */
@@ -201,29 +167,13 @@ class MakeEnumTest extends TestCase
             'SUN_DAY' => 'sun day',
         ];
 
-        $this->runMakeCommand([
+        $this->runMakeCommand('weekdays.const.values.php', [
             '--value' => $values,
             '--formatter' => 'const',
         ]);
-
-        $this->assertStringContainsString('const MAP_VALUE', $this->content);
-        foreach($values as $method => $value) {
-            $this->assertMethodDocTag($method);
-            $this->assertValueMap($method, $value);
-        }
     }
 
-    protected function assertMethodDocTag(string $method): void
-    {
-        $this->assertStringContainsString('* @method static self '.$method.'()', $this->content);
-    }
-
-    protected function assertValueMap(string $method, string $value): void
-    {
-        $this->assertStringContainsString('\''.$method.'\' => \''.$value.'\',', $this->content);
-    }
-
-    private function runMakeCommand( array $arguments = []): void
+    private function runMakeCommand(string $stub, array $arguments = []): void
     {
         $artisan = $this->artisan('make:enum', array_merge([
             'name' => 'WeekDay',
@@ -235,10 +185,6 @@ class MakeEnumTest extends TestCase
 
         $this->assertTrue(file_exists(self::WEEKDAY_PATH));
         $this->content = file_get_contents(self::WEEKDAY_PATH);
-        $this->assertStringStartsWith('<?php', $this->content);
-        $this->assertStringContainsString('namespace App\Enums;', $this->content);
-        $this->assertStringContainsString('use Spatie\Enum\Enum;', $this->content);
-        $this->assertStringContainsString('final class WeekDay extends Enum'.PHP_EOL.'{', $this->content);
-        $this->assertStringEndsWith('}'.PHP_EOL, $this->content);
+        $this->assertEquals($this->getStub($stub), $this->content);
     }
 }

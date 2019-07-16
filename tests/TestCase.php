@@ -37,4 +37,9 @@ abstract class TestCase extends OrchestraTestCase
             'prefix' => '',
         ]);
     }
+
+    public function getStub(string $file): string
+    {
+        return file_get_contents(__DIR__.'/stubs/'.$file);
+    }
 }
