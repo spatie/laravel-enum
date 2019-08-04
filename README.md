@@ -4,6 +4,7 @@
 [![Build Status](https://img.shields.io/travis/spatie/laravel-enum/master.svg?style=flat-square)](https://travis-ci.org/spatie/laravel-enum)
 [![Quality Score](https://img.shields.io/scrutinizer/g/spatie/laravel-enum.svg?style=flat-square)](https://scrutinizer-ci.com/g/spatie/laravel-enum)
 [![Code Coverage](https://img.shields.io/coveralls/github/spatie/laravel-enum.svg?style=flat-square)](https://coveralls.io/github/spatie/laravel-enum)
+[![StyleCI](https://github.styleci.io/repos/180570906/shield?branch=master)](https://github.styleci.io/repos/180570906)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-enum.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-enum)
 
 This package provides extended support for our [spatie/enum](https://github.com/spatie/enum) package in Laravel.
