@@ -2,12 +2,12 @@
 
 namespace Spatie\Enum\Laravel;
 
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
-use InvalidArgumentException;
 use Spatie\Enum\Enumerable;
-use Spatie\Enum\Laravel\Exceptions\InvalidEnumError;
+use InvalidArgumentException;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Spatie\Enum\Laravel\Exceptions\NoSuchEnumField;
+use Spatie\Enum\Laravel\Exceptions\InvalidEnumError;
 
 /**
  * @mixin Model
@@ -188,7 +188,7 @@ trait HasEnums
         }
 
         return forward_static_call(
-            $class . '::make',
+            $class.'::make',
             $value
         );
     }

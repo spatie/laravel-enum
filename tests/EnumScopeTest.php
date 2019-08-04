@@ -2,9 +2,9 @@
 
 namespace Spatie\Enum\Laravel\Tests;
 
-use Spatie\Enum\Laravel\Exceptions\NoSuchEnumField;
 use Spatie\Enum\Laravel\Tests\Extra\Post;
 use Spatie\Enum\Laravel\Tests\Extra\StatusEnum;
+use Spatie\Enum\Laravel\Exceptions\NoSuchEnumField;
 
 final class EnumScopeTest extends TestCase
 {
