@@ -31,11 +31,11 @@ trait HasEnums
     }
 
     /**
-     * @param Builder $builder
+     * @param \Illuminate\Database\Eloquent\Builder $builder
      * @param string $key
-     * @param int|string|Enumerable|int[]|string[]|Enumerable[] $enumerables
+     * @param int|string|\Spatie\Enum\Enumerable|int[]|string[]|\Spatie\Enum\Enumerable[] $enumerables
      *
-     * @see Builder::whereIn()
+     * @see \Illuminate\Database\Eloquent\Builder::whereIn()
      */
     public function scopeWhereEnum(
         Builder $builder,
@@ -51,11 +51,11 @@ trait HasEnums
     }
 
     /**
-     * @param Builder $builder
+     * @param \Illuminate\Database\Eloquent\Builder $builder
      * @param string $key
-     * @param int|string|Enumerable|int[]|string[]|Enumerable[] $enumerables
+     * @param int|string|\Spatie\Enum\Enumerable|int[]|string[]|\Spatie\Enum\Enumerable[] $enumerables
      *
-     * @see Builder::orWhereIn()
+     * @see \Illuminate\Database\Eloquent\Builder::orWhereIn()
      */
     public function scopeOrWhereEnum(
         Builder $builder,
@@ -71,11 +71,11 @@ trait HasEnums
     }
 
     /**
-     * @param Builder $builder
+     * @param \Illuminate\Database\Eloquent\Builder $builder
      * @param string $key
-     * @param int|string|Enumerable|int[]|string[]|Enumerable[] $enumerables
+     * @param int|string|\Spatie\Enum\Enumerable|int[]|string[]|\Spatie\Enum\Enumerable[] $enumerables
      *
-     * @see Builder::whereNotIn()
+     * @see \Illuminate\Database\Eloquent\Builder::whereNotIn()
      */
     public function scopeWhereNotEnum(
         Builder $builder,
@@ -91,11 +91,11 @@ trait HasEnums
     }
 
     /**
-     * @param Builder $builder
+     * @param \Illuminate\Database\Eloquent\Builder $builder
      * @param string $key
-     * @param int|string|Enumerable|int[]|string[]|Enumerable[] $enumerables
+     * @param int|string|\Spatie\Enum\Enumerable|int[]|string[]|\Spatie\Enum\Enumerable[] $enumerables
      *
-     * @see Builder::orWhereNotIn()
+     * @see \Illuminate\Database\Eloquent\Builder::orWhereNotIn()
      */
     public function scopeOrWhereNotEnum(
         Builder $builder,
@@ -112,7 +112,7 @@ trait HasEnums
 
     /**
      * @param string $key
-     * @param int|string|Enumerable $value
+     * @param int|string|\Spatie\Enum\Enumerable $value
      *
      * @return $this
      */
@@ -135,7 +135,7 @@ trait HasEnums
 
     /**
      * @param string $key
-     * @param Enumerable $enum
+     * @param \Spatie\Enum\Enumerable $enum
      *
      * @return int|string
      */
@@ -149,7 +149,8 @@ trait HasEnums
     /**
      * @param string $key
      * @param int|string $value
-     * @return Enumerable
+     *
+     * @return \Spatie\Enum\Enumerable
      */
     protected function getEnumAttribute(string $key, $value): Enumerable
     {
@@ -178,7 +179,7 @@ trait HasEnums
      * @param string $class
      * @param int|string $value
      *
-     * @return Enumerable
+     * @return \Spatie\Enum\Enumerable
      */
     protected function asEnum(string $class, $value): Enumerable
     {
@@ -193,10 +194,10 @@ trait HasEnums
     }
 
     /**
-     * @param Builder $builder
+     * @param \Illuminate\Database\Eloquent\Builder $builder
      * @param string $method
      * @param string $key
-     * @param int|string|Enumerable|int[]|string[]|Enumerable[] $enumerables
+     * @param int|string|\Spatie\Enum\Enumerable|int[]|string[]|\Spatie\Enum\Enumerable[] $enumerables
      */
     protected function buildEnumScope(
         Builder $builder,
