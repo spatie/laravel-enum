@@ -77,6 +77,32 @@ By using the `$casts` property you can cast your `status` attribute to `int` or 
 - [ ] Validation [#5](https://github.com/spatie/laravel-enum/issues/5)
 - [ ] Request Transformation [#7](https://github.com/spatie/laravel-enum/pull/7)
 
+### Scopes
+
+The `HasEnums` trait also provides some useful scopes to query your database.
+These scopes will also take the optional mapping you provided into account.
+
+```php
+Post::whereEnum('status', StatusEnum::DRAFT());
+
+Post::whereNotEnum('status', StatusEnum::PUBLISHED());
+```
+
+You may provide multiple enums as an array:
+
+```php
+Post::whereEnum('status', [StatusEnum::DRAFT(), StatusEnum::ARCHIVED()]);
+
+Post::whereNotEnum('status', [StatusEnum::PUBLISHED()]);
+```
+
+You may also provide textual input:
+
+```php
+Post::whereEnum('status', 'archived');
+Post::whereEnum('status', 'legacy archived value');
+```
+
 ### Testing
 
 ``` bash
