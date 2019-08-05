@@ -2,15 +2,9 @@
 
 namespace Spatie\Enum\Laravel\Tests\Rules;
 
-use InvalidArgumentException;
-use Spatie\Enum\Enumerable;
-use Spatie\Enum\Laravel\Exceptions\InvalidEnumError;
-use Spatie\Enum\Laravel\Rules\Enum;
-use Spatie\Enum\Laravel\Rules\EnumIndex;
-use Spatie\Enum\Laravel\Tests\Extra\Post;
-use Spatie\Enum\Laravel\Tests\Extra\StatusEnum;
 use Spatie\Enum\Laravel\Tests\TestCase;
-use stdClass;
+use Spatie\Enum\Laravel\Rules\EnumIndex;
+use Spatie\Enum\Laravel\Tests\Extra\StatusEnum;
 
 final class EnumNameTest extends TestCase
 {

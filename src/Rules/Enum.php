@@ -3,10 +3,10 @@
 namespace Spatie\Enum\Laravel\Rules;
 
 use Exception;
-use Illuminate\Contracts\Validation\Rule;
-use Illuminate\Support\Facades\Lang;
-use InvalidArgumentException;
 use Spatie\Enum\Enumerable;
+use InvalidArgumentException;
+use Illuminate\Support\Facades\Lang;
+use Illuminate\Contracts\Validation\Rule;
 
 class Enum implements Rule
 {
