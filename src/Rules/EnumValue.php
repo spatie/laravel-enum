@@ -11,6 +11,6 @@ class EnumValue extends Enum
         $this->attribute = $attribute;
         $this->value = $value;
 
-        return $this->enum::isValidValue($value);
+        return is_string($value) && $this->enum::isValidValue($value);
     }
 }

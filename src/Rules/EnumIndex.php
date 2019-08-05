@@ -11,6 +11,6 @@ class EnumIndex extends Enum
         $this->attribute = $attribute;
         $this->value = $value;
 
-        return $this->enum::isValidIndex($value);
+        return is_int($value) && $this->enum::isValidIndex($value);
     }
 }
