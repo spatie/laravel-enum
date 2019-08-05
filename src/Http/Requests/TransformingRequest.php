@@ -6,10 +6,10 @@ trait TransformingRequest
 {
     protected function prepareForValidation()
     {
-        $this->transformEnums($this->enumRules());
+        $this->transformEnums($this->enums());
     }
 
-    public function enumRules(): array
+    public function enums(): array
     {
         return [];
     }

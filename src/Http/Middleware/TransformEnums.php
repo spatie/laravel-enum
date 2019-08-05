@@ -8,16 +8,16 @@ use Illuminate\Http\Request;
 class TransformEnums
 {
     /** @var array */
-    protected $enumRules = [];
+    protected $transformations = [];
 
-    public function __construct(array $enumRules = [])
+    public function __construct(array $transformations = [])
     {
-        $this->enumRules = $enumRules;
+        $this->transformations = $transformations;
     }
 
     public function handle(Request $request, Closure $next)
     {
-        $request->transformEnums($this->enumRules);
+        $request->transformEnums($this->transformations);
 
         return $next($request);
     }

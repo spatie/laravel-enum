@@ -15,11 +15,11 @@ class EnumServiceProvider extends ServiceProvider
     public function registerRequestTransformMacro()
     {
         if (! Request::hasMacro('transformEnums')) {
-            Request::macro('transformEnums', function ($rules = []) {
+            Request::macro('transformEnums', function (array $transformations) {
                 /** @var Request $request */
                 $request = $this;
 
-                foreach ($rules as $key => $enumClass) {
+                foreach ($transformations as $key => $enumClass) {
                     if (empty($request[$key])) {
                         continue;
                     }
