@@ -30,6 +30,6 @@ final class EnumValueTest extends TestCase
     {
         $rule = new EnumValue(StatusEnum::class);
 
-        $this->assertFalse($rule->passes('attribute', 'draft'));
+        $this->assertFalse($rule->passes('attribute', 'archived'));
     }
 }
