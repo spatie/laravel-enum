@@ -13,4 +13,9 @@ class EnumIndex extends Enum
 
         return is_int($value) && $this->enum::isValidIndex($value);
     }
+
+    protected function getOtherValues(): array
+    {
+        return $this->enum::getIndices();
+    }
 }

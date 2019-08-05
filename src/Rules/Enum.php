@@ -50,6 +50,12 @@ class Enum implements Rule
             'attribute' => $this->attribute,
             'value' => $this->value,
             'enum' => $this->enum,
+            'other' => implode(', ', $this->getOtherValues()),
         ]);
+    }
+
+    protected function getOtherValues(): array
+    {
+        return $this->enum::getValues();
     }
 }

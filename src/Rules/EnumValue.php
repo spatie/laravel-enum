@@ -13,4 +13,9 @@ class EnumValue extends Enum
 
         return is_string($value) && $this->enum::isValidValue($value);
     }
+
+    protected function getOtherValues(): array
+    {
+        return $this->enum::getValues();
+    }
 }
