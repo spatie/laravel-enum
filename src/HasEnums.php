@@ -2,9 +2,9 @@
 
 namespace Spatie\Enum\Laravel;
 
-use Illuminate\Database\Eloquent\Model;
-use InvalidArgumentException;
 use Spatie\Enum\Enumerable;
+use InvalidArgumentException;
+use Illuminate\Database\Eloquent\Model;
 use Spatie\Enum\Laravel\Exceptions\InvalidEnumError;
 
 /**
