@@ -3,6 +3,7 @@
 namespace Spatie\Enum\Laravel\Tests;
 
 use Spatie\Enum\Laravel\Tests\Extra\Post;
+use Spatie\Enum\Laravel\EnumServiceProvider;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 
 abstract class TestCase extends OrchestraTestCase
@@ -19,6 +20,13 @@ abstract class TestCase extends OrchestraTestCase
         Post::migrate();
     }
 
+    protected function getPackageProviders($app)
+    {
+        return [
+            EnumServiceProvider::class,
+        ];
+    }
+
     public function getEnvironmentSetUp($app)
     {
         config()->set('database.default', 'sqlite');
@@ -28,5 +36,10 @@ abstract class TestCase extends OrchestraTestCase
             'database' => ':memory:',
             'prefix' => '',
         ]);
+    }
+
+    public function getStub(string $file): string
+    {
+        return file_get_contents(__DIR__.'/stubs/'.$file);
     }
 }

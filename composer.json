@@ -24,6 +24,8 @@
     ],
     "require": {
         "php": "^7.2",
+        "illuminate/console": "^5.8",
+        "illuminate/support": "^5.8",
         "spatie/enum": "^2.3"
     },
     "require-dev": {
@@ -45,5 +47,12 @@
     },
     "config": {
         "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Spatie\\Enum\\Laravel\\EnumServiceProvider"
+            ]
+        }
     }
 }
