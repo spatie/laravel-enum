@@ -2,6 +2,7 @@
 
 namespace Spatie\Enum\Laravel\Tests\Rules;
 
+use InvalidArgumentException;
 use Spatie\Enum\Laravel\Rules\Enum;
 use Spatie\Enum\Laravel\Tests\TestCase;
 use Spatie\Enum\Laravel\Tests\Extra\StatusEnum;
@@ -33,5 +34,13 @@ final class EnumTest extends TestCase
 
         $this->assertTrue($rule->passes('attribute', 'stored archive'));
         $this->assertFalse($rule->passes('attribute', 'stored draft'));
+    }
+
+    /** @test */
+    public function it_will_throw_an_exception_if_invalid_enum_passed()
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        new Enum('foobar/enum');
     }
 }
