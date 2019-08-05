@@ -2,10 +2,10 @@
 
 namespace Spatie\Enum\Laravel\Commands;
 
-use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Str;
-use Symfony\Component\Console\Input\InputArgument;
+use Illuminate\Console\GeneratorCommand;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Input\InputArgument;
 
 class MakeEnum extends GeneratorCommand
 {
@@ -36,11 +36,11 @@ class MakeEnum extends GeneratorCommand
     {
         $methods = array_merge($this->option('method'), $this->option('value'));
 
-        if(!empty($methods)) {
+        if (! empty($methods)) {
             $docBlock = PHP_EOL.'/**';
-            $docBlock .= implode('', array_map(function($method) {
-                    return PHP_EOL.' * @method static self '.$this->formatValueToMethod($method).'()';
-                }, $methods));
+            $docBlock .= implode('', array_map(function ($method) {
+                return PHP_EOL.' * @method static self '.$this->formatValueToMethod($method).'()';
+            }, $methods));
             $docBlock .= PHP_EOL.' */';
         }
 
@@ -51,7 +51,7 @@ class MakeEnum extends GeneratorCommand
     {
         $values = $this->option('value');
 
-        if(!empty($values)) {
+        if (! empty($values)) {
             $tab = str_repeat(' ', 4);
             $constant = $tab.'const MAP_VALUE = [';
 
@@ -67,7 +67,7 @@ class MakeEnum extends GeneratorCommand
 
     protected function formatValueToMethod(string $value): string
     {
-        switch($this->option('formatter')) {
+        switch ($this->option('formatter')) {
             case 'const':
                 return strtoupper(Str::snake($value));
             case 'snake':
