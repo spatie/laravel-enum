@@ -109,4 +109,21 @@ final class EnumTest extends TestCase
         $rule->passes('attribute', 'foobar');
         $this->assertEquals('draft, published, stored archive', $rule->message());
     }
+
+    /** @test */
+    public function it_passes_translated_other_to_the_validation_message()
+    {
+        Lang::addLines([
+            'validation.enum' => ':other',
+            'validation.enums.'.StatusEnum::class => [
+                'draft' => 'entwurf',
+                'published' => 'veröffentlicht',
+                'archived' => 'archiviert',
+            ],
+        ], Lang::getLocale(), 'enum');
+
+        $rule = new Enum(StatusEnum::class);
+        $rule->passes('attribute', 'foobar');
+        $this->assertEquals('entwurf, veröffentlicht, archiviert', $rule->message());
+    }
 }

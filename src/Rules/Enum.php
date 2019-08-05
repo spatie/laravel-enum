@@ -3,6 +3,8 @@
 namespace Spatie\Enum\Laravel\Rules;
 
 use Exception;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Spatie\Enum\Enumerable;
 use InvalidArgumentException;
 use Illuminate\Support\Facades\Lang;
@@ -50,8 +52,25 @@ class Enum implements Rule
             'attribute' => $this->attribute,
             'value' => $this->value,
             'enum' => $this->enum,
-            'other' => implode(', ', $this->getOtherValues()),
+            'other' => implode(', ', $this->getDisplayableOtherValues()),
         ]);
+    }
+
+    protected function getDisplayableOtherValues(): array
+    {
+        return array_map(function($value): string {
+            return $this->getTranslation($value) ?? $value;
+        }, $this->getOtherValues());
+    }
+
+    /**
+     * @param string|int $value
+     *
+     * @return string|null
+     */
+    protected function getTranslation($value): ?string
+    {
+        return Arr::get(Lang::trans('enum::validation.enums'), $this->enum.'.'.Str::slug($this->enum::make($value)->getName(), '_'));
     }
 
     protected function getOtherValues(): array
