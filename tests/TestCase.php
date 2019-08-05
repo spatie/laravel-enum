@@ -38,13 +38,6 @@ abstract class TestCase extends OrchestraTestCase
         ]);
     }
 
-    protected function getPackageProviders($app)
-    {
-        return [
-            EnumServiceProvider::class,
-        ];
-    }
-
     public function getStub(string $file): string
     {
         return file_get_contents(__DIR__.'/stubs/'.$file);
