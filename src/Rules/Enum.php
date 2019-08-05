@@ -23,7 +23,7 @@ class Enum implements Rule
 
     public function __construct(string $enum)
     {
-        if (! isset(class_implements($enum)[Enumerable::class])) {
+        if (! class_exists($enum) || ! isset(class_implements($enum)[Enumerable::class])) {
             throw new InvalidArgumentException("The given class {$enum} does not implement the Enumerable interface.");
         }
 
