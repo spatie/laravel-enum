@@ -2,11 +2,11 @@
 
 namespace Spatie\Enum\Laravel\Tests\Rules;
 
-use Illuminate\Support\Facades\Lang;
 use InvalidArgumentException;
 use Spatie\Enum\Laravel\Rules\Enum;
-use Spatie\Enum\Laravel\Tests\Extra\Post;
+use Illuminate\Support\Facades\Lang;
 use Spatie\Enum\Laravel\Tests\TestCase;
+use Spatie\Enum\Laravel\Tests\Extra\Post;
 use Spatie\Enum\Laravel\Tests\Extra\StatusEnum;
 
 final class EnumTest extends TestCase

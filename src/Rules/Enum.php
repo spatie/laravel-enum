@@ -58,7 +58,7 @@ class Enum implements Rule
 
     protected function getDisplayableOtherValues(): array
     {
-        return array_map(function($value): string {
+        return array_map(function ($value): string {
             return $this->getTranslation($value) ?? $value;
         }, $this->getOtherValues());
     }
