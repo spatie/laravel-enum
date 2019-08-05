@@ -2,8 +2,8 @@
 
 namespace Spatie\Enum\Laravel\Tests\Rules;
 
-use Spatie\Enum\Laravel\Rules\EnumValue;
 use Spatie\Enum\Laravel\Tests\TestCase;
+use Spatie\Enum\Laravel\Rules\EnumValue;
 use Spatie\Enum\Laravel\Tests\Extra\StatusEnum;
 
 final class EnumValueTest extends TestCase
