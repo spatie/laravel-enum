@@ -3,6 +3,7 @@
     "description": "Laravel enum support",
     "keywords": [
         "spatie",
+        "enum",
         "laravel-enum"
     ],
     "homepage": "https://github.com/spatie/laravel-enum",
@@ -13,15 +14,21 @@
             "email": "brent@spatie.be",
             "homepage": "https://spatie.be",
             "role": "Developer"
+        },
+        {
+            "name": "Tom Witkowski",
+            "email": "dev.gummibeer@gmail.com",
+            "homepage": "https://gummibeer.de",
+            "role": "Developer"
         }
     ],
     "require": {
         "php": "^7.2",
+        "illuminate/console": "^5.8",
         "illuminate/support": "^5.8",
         "spatie/enum": "^2.1"
     },
     "require-dev": {
-        "larapack/dd": "^1.0",
         "orchestra/testbench": "^3.8",
         "phpunit/phpunit": "^8.0"
     },
@@ -36,9 +43,7 @@
         }
     },
     "scripts": {
-        "test": "vendor/bin/phpunit",
-        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
-
+        "test": "vendor/bin/phpunit"
     },
     "config": {
         "sort-packages": true
@@ -46,11 +51,8 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Spatie\\Skeleton\\SkeletonServiceProvider"
-            ],
-            "aliases": {
-                "Skeleton": "Spatie\\Skeleton\\SkeletonFacade"
-            }
+                "Spatie\\Enum\\Laravel\\EnumServiceProvider"
+            ]
         }
     }
 }
