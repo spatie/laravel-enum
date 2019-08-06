@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\Enum\Laravel\Tests\Http\Requests;
+namespace Spatie\Enum\Laravel\Tests\Http\Middleware;
 
 use Illuminate\Http\Request;
 use Spatie\Enum\Laravel\Http\EnumRequest;
