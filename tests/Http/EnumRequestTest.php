@@ -7,7 +7,7 @@ use Spatie\Enum\Laravel\Tests\TestCase;
 use Spatie\Enum\Laravel\Tests\Extra\LocaleEnum;
 use Spatie\Enum\Laravel\Tests\Extra\StatusEnum;
 
-final class RequestTest extends TestCase
+final class EnumRequestTest extends TestCase
 {
     /** @test */
     public function it_has_transform_enums_macro()

@@ -48,7 +48,7 @@ abstract class TestCase extends OrchestraTestCase
     protected function createRequest(
         array $query = [],
         string $method = Request::METHOD_GET,
-        array $content = []
+        array $request = []
     ): Request {
         $uri = 'http://localhost/en/test';
         $server = [
@@ -58,12 +58,12 @@ abstract class TestCase extends OrchestraTestCase
 
         $request = new Request(
             $query,
-            [],
+            $request,
             [],
             [],
             [],
             $server,
-            json_encode($content)
+            json_encode($request)
         );
         $request->setMethod($method);
 
