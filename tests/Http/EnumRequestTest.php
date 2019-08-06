@@ -3,6 +3,7 @@
 namespace Spatie\Enum\Laravel\Tests\Http;
 
 use Illuminate\Http\Request;
+use Spatie\Enum\Laravel\Http\EnumRequest;
 use Spatie\Enum\Laravel\Tests\TestCase;
 use Spatie\Enum\Laravel\Tests\Extra\LocaleEnum;
 use Spatie\Enum\Laravel\Tests\Extra\StatusEnum;
@@ -25,7 +26,7 @@ final class EnumRequestTest extends TestCase
         );
 
         $request->transformEnums([
-            'query' => [
+            EnumRequest::REQUEST_QUERY => [
                 'status' => StatusEnum::class,
             ],
         ]);
@@ -44,7 +45,7 @@ final class EnumRequestTest extends TestCase
         );
 
         $request->transformEnums([
-            'query' => [
+            EnumRequest::REQUEST_QUERY => [
                 'status' => StatusEnum::class,
             ],
         ]);
@@ -63,7 +64,7 @@ final class EnumRequestTest extends TestCase
         );
 
         $request->transformEnums([
-            'query' => [
+            EnumRequest::REQUEST_QUERY => [
                 'status' => StatusEnum::class,
             ],
         ]);
@@ -82,7 +83,7 @@ final class EnumRequestTest extends TestCase
         );
 
         $request->transformEnums([
-            'request' => [
+            EnumRequest::REQUEST_REQUEST => [
                 'status' => StatusEnum::class,
             ],
         ]);
@@ -101,7 +102,7 @@ final class EnumRequestTest extends TestCase
         );
 
         $request->transformEnums([
-            'request' => [
+            EnumRequest::REQUEST_REQUEST => [
                 'state' => StatusEnum::class,
             ],
         ]);
@@ -122,7 +123,7 @@ final class EnumRequestTest extends TestCase
         );
 
         $request->transformEnums([
-            'request' => [
+            EnumRequest::REQUEST_REQUEST => [
                 'status' => StatusEnum::class,
             ],
         ]);
@@ -143,7 +144,7 @@ final class EnumRequestTest extends TestCase
         );
 
         $request->transformEnums([
-            'request' => [
+            EnumRequest::REQUEST_REQUEST => [
                 'status' => StatusEnum::class,
             ],
         ]);
@@ -164,7 +165,7 @@ final class EnumRequestTest extends TestCase
         );
 
         $request->transformEnums([
-            'request' => [
+            EnumRequest::REQUEST_REQUEST => [
                 'status' => StatusEnum::class,
             ],
         ]);
@@ -185,7 +186,7 @@ final class EnumRequestTest extends TestCase
         );
 
         $request->transformEnums([
-            'query' => [
+            EnumRequest::REQUEST_QUERY => [
                 'status' => StatusEnum::class,
             ],
         ]);
@@ -206,7 +207,7 @@ final class EnumRequestTest extends TestCase
         );
 
         $request->transformEnums([
-            'request' => [
+            EnumRequest::REQUEST_REQUEST => [
                 'state' => StatusEnum::class,
             ],
         ]);
@@ -221,7 +222,7 @@ final class EnumRequestTest extends TestCase
         $request = $this->createRequest();
 
         $request->transformEnums([
-            'route' => [
+            EnumRequest::REQUEST_ROUTE => [
                 'locale' => LocaleEnum::class,
             ],
         ]);
@@ -237,7 +238,7 @@ final class EnumRequestTest extends TestCase
         $request = $this->createRequest();
 
         $request->transformEnums([
-            'query' => [
+            EnumRequest::REQUEST_QUERY => [
                 'locale' => LocaleEnum::class,
             ],
         ]);
@@ -252,7 +253,7 @@ final class EnumRequestTest extends TestCase
         $request = $this->createRequest();
 
         $request->transformEnums([
-            'route' => [
+            EnumRequest::REQUEST_ROUTE => [
                 'language' => LocaleEnum::class,
             ],
         ]);

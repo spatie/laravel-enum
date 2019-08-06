@@ -11,13 +11,17 @@ use Closure;
  */
 final class EnumRequest
 {
+    const REQUEST_ROUTE = 'route';
+    const REQUEST_QUERY = 'query';
+    const REQUEST_REQUEST = 'request';
+
     public function transformEnums(): Closure
     {
         return function (array $transformations) {
-            if (isset($transformations['route'])) {
+            if (isset($transformations[self::REQUEST_ROUTE])) {
                 $route = $this->route();
 
-                foreach ($transformations['route'] as $key => $enumClass) {
+                foreach ($transformations[self::REQUEST_ROUTE] as $key => $enumClass) {
                     if (! $route->hasParameter($key)) {
                         continue;
                     }
@@ -32,8 +36,8 @@ final class EnumRequest
                 }
             }
 
-            if (isset($transformations['query'])) {
-                foreach ($transformations['query'] as $key => $enumClass) {
+            if (isset($transformations[self::REQUEST_QUERY])) {
+                foreach ($transformations[self::REQUEST_QUERY] as $key => $enumClass) {
                     if (! $this->query->has($key)) {
                         continue;
                     }
@@ -48,8 +52,8 @@ final class EnumRequest
                 }
             }
 
-            if (isset($transformations['request'])) {
-                foreach ($transformations['request'] as $key => $enumClass) {
+            if (isset($transformations[self::REQUEST_REQUEST])) {
+                foreach ($transformations[self::REQUEST_REQUEST] as $key => $enumClass) {
                     if (! $this->request->has($key)) {
                         continue;
                     }
