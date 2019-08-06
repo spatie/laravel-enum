@@ -9,8 +9,5 @@ trait TransformingRequest
         $this->transformEnums($this->enums());
     }
 
-    public function enums(): array
-    {
-        return [];
-    }
+    abstract public function enums(): array;
 }
