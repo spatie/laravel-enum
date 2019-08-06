@@ -18,10 +18,10 @@ final class EnumRequest
     public function transformEnums(): Closure
     {
         return function (array $transformations) {
-            if (isset($transformations[self::REQUEST_ROUTE])) {
+            if (isset($transformations[EnumRequest::REQUEST_ROUTE])) {
                 $route = $this->route();
 
-                foreach ($transformations[self::REQUEST_ROUTE] as $key => $enumClass) {
+                foreach ($transformations[EnumRequest::REQUEST_ROUTE] as $key => $enumClass) {
                     if (! $route->hasParameter($key)) {
                         continue;
                     }
@@ -35,11 +35,11 @@ final class EnumRequest
                     );
                 }
 
-                unset($transformations[self::REQUEST_ROUTE]);
+                unset($transformations[EnumRequest::REQUEST_ROUTE]);
             }
 
-            if (isset($transformations[self::REQUEST_QUERY])) {
-                foreach ($transformations[self::REQUEST_QUERY] as $key => $enumClass) {
+            if (isset($transformations[EnumRequest::REQUEST_QUERY])) {
+                foreach ($transformations[EnumRequest::REQUEST_QUERY] as $key => $enumClass) {
                     if (! $this->query->has($key)) {
                         continue;
                     }
@@ -53,11 +53,11 @@ final class EnumRequest
                     );
                 }
 
-                unset($transformations[self::REQUEST_QUERY]);
+                unset($transformations[EnumRequest::REQUEST_QUERY]);
             }
 
-            if (isset($transformations[self::REQUEST_REQUEST])) {
-                foreach ($transformations[self::REQUEST_REQUEST] as $key => $enumClass) {
+            if (isset($transformations[EnumRequest::REQUEST_REQUEST])) {
+                foreach ($transformations[EnumRequest::REQUEST_REQUEST] as $key => $enumClass) {
                     if (! $this->request->has($key)) {
                         continue;
                     }
@@ -71,7 +71,7 @@ final class EnumRequest
                     );
                 }
 
-                unset($transformations[self::REQUEST_REQUEST]);
+                unset($transformations[EnumRequest::REQUEST_REQUEST]);
             }
 
             foreach ($transformations as $key => $enumClass) {
