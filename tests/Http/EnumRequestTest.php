@@ -281,4 +281,19 @@ final class EnumRequestTest extends TestCase
         $this->assertInstanceOf(StatusEnum::class, $request['status']);
         $this->assertEquals('DRAFT', $request['status']->getName());
     }
+
+    /** @test */
+    public function it_ignores_rules_if_general_request__parameter_is_not_present()
+    {
+        $request = $this->createRequest([
+            'status' => 'draft',
+        ]);
+
+        $request->transformEnums([
+            'state' => StatusEnum::class,
+        ]);
+
+        $this->assertIsString($request->query->get('status'));
+        $this->assertEquals('draft', $request->query->get('status'));
+    }
 }
