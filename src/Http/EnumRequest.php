@@ -34,6 +34,8 @@ final class EnumRequest
                         )
                     );
                 }
+
+                unset($transformations[self::REQUEST_ROUTE]);
             }
 
             if (isset($transformations[self::REQUEST_QUERY])) {
@@ -50,6 +52,8 @@ final class EnumRequest
                         )
                     );
                 }
+
+                unset($transformations[self::REQUEST_QUERY]);
             }
 
             if (isset($transformations[self::REQUEST_REQUEST])) {
@@ -66,6 +70,19 @@ final class EnumRequest
                         )
                     );
                 }
+
+                unset($transformations[self::REQUEST_REQUEST]);
+            }
+
+            foreach ($transformations as $key => $enumClass) {
+                if (! isset($this[$key])) {
+                    continue;
+                }
+
+                $this[$key] = forward_static_call(
+                    $enumClass.'::make',
+                    $this[$key]
+                );
             }
         };
     }
