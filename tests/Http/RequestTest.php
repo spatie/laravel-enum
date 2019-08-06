@@ -3,9 +3,9 @@
 namespace Spatie\Enum\Laravel\Tests\Http;
 
 use Illuminate\Http\Request;
+use Spatie\Enum\Laravel\Tests\TestCase;
 use Spatie\Enum\Laravel\Tests\Extra\LocaleEnum;
 use Spatie\Enum\Laravel\Tests\Extra\StatusEnum;
-use Spatie\Enum\Laravel\Tests\TestCase;
 
 final class RequestTest extends TestCase
 {

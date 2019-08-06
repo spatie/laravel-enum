@@ -4,8 +4,8 @@ namespace Spatie\Enum\Laravel;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
-use Spatie\Enum\Laravel\Commands\MakeEnum;
 use Spatie\Enum\Laravel\Http\EnumRequest;
+use Spatie\Enum\Laravel\Commands\MakeEnum;
 
 class EnumServiceProvider extends ServiceProvider
 {

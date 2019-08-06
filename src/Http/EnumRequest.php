@@ -18,7 +18,7 @@ final class EnumRequest
                 $route = $this->route();
 
                 foreach ($transformations['route'] as $key => $enumClass) {
-                    if (!$route->hasParameter($key)) {
+                    if (! $route->hasParameter($key)) {
                         continue;
                     }
 
@@ -34,7 +34,7 @@ final class EnumRequest
 
             if (isset($transformations['query'])) {
                 foreach ($transformations['query'] as $key => $enumClass) {
-                    if (!$this->query->has($key)) {
+                    if (! $this->query->has($key)) {
                         continue;
                     }
 
@@ -50,7 +50,7 @@ final class EnumRequest
 
             if (isset($transformations['request'])) {
                 foreach ($transformations['request'] as $key => $enumClass) {
-                    if (!$this->request->has($key)) {
+                    if (! $this->request->has($key)) {
                         continue;
                     }
 
