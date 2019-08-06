@@ -3,8 +3,8 @@
 namespace Spatie\Enum\Laravel\Tests\Http;
 
 use Illuminate\Http\Request;
-use Spatie\Enum\Laravel\Http\EnumRequest;
 use Spatie\Enum\Laravel\Tests\TestCase;
+use Spatie\Enum\Laravel\Http\EnumRequest;
 use Spatie\Enum\Laravel\Tests\Extra\LocaleEnum;
 use Spatie\Enum\Laravel\Tests\Extra\StatusEnum;
 
