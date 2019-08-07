@@ -1,5 +1,9 @@
 language: php
 
+cache:
+  directories:
+    - $HOME/.composer/cache/files
+
 php:
   - 7.2
   - 7.3
@@ -11,9 +15,9 @@ env:
 
 before_script:
   - travis_retry composer self-update
-  - travis_retry composer update ${COMPOSER_FLAGS} --no-interaction --prefer-source
-  - composer require --dev scrutinizer/ocular --no-interaction
-  - composer require --dev php-coveralls/php-coveralls --no-interaction
+  - travis_retry composer update ${COMPOSER_FLAGS} --no-interaction
+  - travis_retry composer require --dev scrutinizer/ocular --no-interaction
+  - travis_retry composer require --dev php-coveralls/php-coveralls --no-interaction
 
 script:
   - vendor/bin/phpunit
