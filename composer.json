@@ -25,7 +25,7 @@
     "require": {
         "php": "^7.2",
         "illuminate/console": "^5.8",
-        "illuminate/http": "^5.8",
+        "illuminate/http": "^5.8.33",
         "illuminate/support": "^5.8",
         "spatie/enum": "^2.1"
     },

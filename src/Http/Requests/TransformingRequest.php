@@ -4,7 +4,7 @@ namespace Spatie\Enum\Laravel\Http\Requests;
 
 trait TransformingRequest
 {
-    protected function prepareForValidation()
+    protected function passedValidation()
     {
         $this->transformEnums($this->enums());
     }
