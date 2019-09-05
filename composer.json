@@ -24,13 +24,23 @@
     ],
     "require": {
         "php": "^7.2",
-        "illuminate/console": "^5.8|^6.0",
-        "illuminate/support": "^5.8|^6.0",
+        "illuminate/console": "^5.8 || ^6.0",
+        "illuminate/support": "^5.8 || ^6.0",
         "spatie/enum": "^2.1"
     },
     "require-dev": {
-        "orchestra/testbench": "^3.8|^4.0",
+        "orchestra/testbench": "^3.8 || ^4.0",
         "phpunit/phpunit": "^8.0"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Spatie\\Enum\\Laravel\\EnumServiceProvider"
+            ]
+        }
     },
     "autoload": {
         "psr-4": {
@@ -45,15 +55,5 @@
     "scripts": {
         "test": "vendor/bin/phpunit",
         "test-coverage": "vendor/bin/phpunit --coverage-html=build"
-    },
-    "config": {
-        "sort-packages": true
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Spatie\\Enum\\Laravel\\EnumServiceProvider"
-            ]
-        }
     }
 }
