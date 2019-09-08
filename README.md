@@ -44,6 +44,7 @@ By using the `HasEnums` trait, you'll be able to work with the `status` field li
 $model = TestModel::create([
     'status' => StatusEnum::DRAFT(),
 ]);
+```
 
 You can set the value of an enum field with its textual value:
 

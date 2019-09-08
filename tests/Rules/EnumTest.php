@@ -2,6 +2,7 @@
 
 namespace Spatie\Enum\Laravel\Tests\Rules;
 
+use Illuminate\Support\Facades\Validator;
 use InvalidArgumentException;
 use Spatie\Enum\Laravel\Rules\Enum;
 use Illuminate\Support\Facades\Lang;
@@ -125,5 +126,37 @@ final class EnumTest extends TestCase
         $rule = new Enum(StatusEnum::class);
         $rule->passes('attribute', 'foobar');
         $this->assertEquals('entwurf, veröffentlicht, archiviert', $rule->message());
+    }
+
+    /** @test */
+    public function it_can_resolve_validator_extension_and_pass_validation()
+    {
+        $validator = Validator::make([
+            'attribute' => 1,
+        ], [
+            'attribute' => 'enum:'.StatusEnum::class,
+        ]);
+
+        $this->assertTrue($validator->passes());
+
+        $this->assertTrue($validator->validateEnum('attribute', 1, [StatusEnum::class], $validator));
+        $this->assertTrue($validator->validateEnum('attribute', 'draft', [StatusEnum::class], $validator));
+        $this->assertTrue($validator->validateEnum('attribute', 'stored archive', [StatusEnum::class], $validator));
+    }
+
+    /** @test */
+    public function it_can_resolve_validator_extension_and_fail_validation()
+    {
+        $validator = Validator::make([
+            'attribute' => 5,
+        ], [
+            'attribute' => 'enum:'.StatusEnum::class,
+        ]);
+
+        $this->assertFalse($validator->passes());
+
+        $this->assertFalse($validator->validateEnum('attribute', 5, [StatusEnum::class], $validator));
+        $this->assertFalse($validator->validateEnum('attribute', 'drafted', [StatusEnum::class], $validator));
+        $this->assertFalse($validator->validateEnum('attribute', 'stored draft', [StatusEnum::class], $validator));
     }
 }

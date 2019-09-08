@@ -48,7 +48,7 @@ class Enum implements Rule
 
     public function message(): string
     {
-        return Lang::trans('enum::validation.'.$this->rule, [
+        return Lang::get('enum::validation.'.$this->rule, [
             'attribute' => $this->attribute,
             'value' => $this->value,
             'enum' => $this->enum,
@@ -59,7 +59,7 @@ class Enum implements Rule
     protected function getDisplayableOtherValues(): array
     {
         return array_map(function ($value): string {
-            return $this->getTranslation($value) ?? $value;
+            return $this->getValueTranslation($value) ?? $value;
         }, $this->getOtherValues());
     }
 
@@ -68,9 +68,9 @@ class Enum implements Rule
      *
      * @return string|null
      */
-    protected function getTranslation($value): ?string
+    protected function getValueTranslation($value): ?string
     {
-        return Arr::get(Lang::trans('enum::validation.enums'), $this->enum.'.'.Str::slug($this->enum::make($value)->getName(), '_'));
+        return Arr::get(Lang::get('enum::validation.enums'), $this->enum.'.'.Str::slug($this->enum::make($value)->getName(), '_'));
     }
 
     protected function getOtherValues(): array
