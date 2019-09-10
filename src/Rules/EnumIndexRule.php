@@ -2,7 +2,7 @@
 
 namespace Spatie\Enum\Laravel\Rules;
 
-class EnumIndex extends Enum
+class EnumIndexRule extends EnumRule
 {
     protected $rule = 'enum_index';
 

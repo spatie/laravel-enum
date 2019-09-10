@@ -10,7 +10,7 @@ use InvalidArgumentException;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Contracts\Validation\Rule;
 
-class Enum implements Rule
+class EnumRule implements Rule
 {
     protected $rule = 'enum';
 

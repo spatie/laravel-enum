@@ -5,10 +5,10 @@ namespace Spatie\Enum\Laravel;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 use Spatie\Enum\Laravel\Commands\MakeEnum;
-use Spatie\Enum\Laravel\Rules\Enum;
-use Spatie\Enum\Laravel\Rules\EnumIndex;
-use Spatie\Enum\Laravel\Rules\EnumName;
-use Spatie\Enum\Laravel\Rules\EnumValue;
+use Spatie\Enum\Laravel\Rules\EnumRule;
+use Spatie\Enum\Laravel\Rules\EnumIndexRule;
+use Spatie\Enum\Laravel\Rules\EnumNameRule;
+use Spatie\Enum\Laravel\Rules\EnumValueRule;
 use Illuminate\Contracts\Validation\Validator as ValidatorContract;
 
 class EnumServiceProvider extends ServiceProvider
@@ -38,25 +38,25 @@ class EnumServiceProvider extends ServiceProvider
         Validator::extend('enum', function (string $attribute, $value, array $parameters, ValidatorContract $validator): bool {
             $enum = $parameters[0] ?? null;
 
-            return (new Enum($enum))->passes($attribute, $value);
+            return (new EnumRule($enum))->passes($attribute, $value);
         });
 
         Validator::extend('enum_index', function (string $attribute, $value, array $parameters, ValidatorContract $validator): bool {
             $enum = $parameters[0] ?? null;
 
-            return (new EnumIndex($enum))->passes($attribute, $value);
+            return (new EnumIndexRule($enum))->passes($attribute, $value);
         });
 
         Validator::extend('enum_name', function (string $attribute, $value, array $parameters, ValidatorContract $validator): bool {
             $enum = $parameters[0] ?? null;
 
-            return (new EnumName($enum))->passes($attribute, $value);
+            return (new EnumNameRule($enum))->passes($attribute, $value);
         });
 
         Validator::extend('enum_value', function (string $attribute, $value, array $parameters, ValidatorContract $validator): bool {
             $enum = $parameters[0] ?? null;
 
-            return (new EnumValue($enum))->passes($attribute, $value);
+            return (new EnumValueRule($enum))->passes($attribute, $value);
         });
     }
 }
