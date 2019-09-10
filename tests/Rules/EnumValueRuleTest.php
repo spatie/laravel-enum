@@ -3,8 +3,8 @@
 namespace Spatie\Enum\Laravel\Tests\Rules;
 
 use Illuminate\Support\Facades\Lang;
-use Illuminate\Support\Facades\Validator;
 use Spatie\Enum\Laravel\Tests\TestCase;
+use Illuminate\Support\Facades\Validator;
 use Spatie\Enum\Laravel\Rules\EnumValueRule;
 use Spatie\Enum\Laravel\Tests\Extra\StatusEnum;
 
