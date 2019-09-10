@@ -28,6 +28,9 @@
         "illuminate/support": "^5.8 || ^6.0",
         "spatie/enum": "^2.3"
     },
+    "conflict": {
+        "bensampo/laravel-enum": "*"
+    },
     "require-dev": {
         "orchestra/testbench": "^3.8 || ^4.0",
         "phpunit/phpunit": "^8.0"
