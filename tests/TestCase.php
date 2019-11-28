@@ -2,11 +2,10 @@
 
 namespace Spatie\Enum\Laravel\Tests;
 
-use Spatie\Enum\Laravel\Tests\Extra\ExtendedPost;
+use Orchestra\Testbench\TestCase as OrchestraTestCase;
+use Spatie\Enum\Laravel\EnumServiceProvider;
 use Spatie\Enum\Laravel\Tests\Extra\InvalidNullablePost;
 use Spatie\Enum\Laravel\Tests\Extra\Post;
-use Spatie\Enum\Laravel\EnumServiceProvider;
-use Orchestra\Testbench\TestCase as OrchestraTestCase;
 
 abstract class TestCase extends OrchestraTestCase
 {

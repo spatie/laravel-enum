@@ -2,12 +2,12 @@
 
 namespace Spatie\Enum\Laravel;
 
-use Spatie\Enum\Enumerable;
-use InvalidArgumentException;
+ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
-use Spatie\Enum\Laravel\Exceptions\NoSuchEnumField;
+use InvalidArgumentException;
+use Spatie\Enum\Enumerable;
 use Spatie\Enum\Laravel\Exceptions\InvalidEnumError;
+use Spatie\Enum\Laravel\Exceptions\NoSuchEnumField;
 
 /**
  * @mixin Model
