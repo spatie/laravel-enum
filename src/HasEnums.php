@@ -2,7 +2,7 @@
 
 namespace Spatie\Enum\Laravel;
 
- use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use InvalidArgumentException;
 use Spatie\Enum\Enumerable;
