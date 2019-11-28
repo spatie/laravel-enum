@@ -124,10 +124,6 @@ trait HasEnums
     {
         $enumClass = $this->getEnumClass($key);
 
-        if (is_array($enumClass)) {
-            $enumClass = $enumClass['class'] ?? null;
-        }
-
         if (is_string($value) || is_int($value)) {
             $value = $this->asEnum($enumClass, $value);
         }
@@ -194,6 +190,11 @@ trait HasEnums
         }
 
         $enumInterface = Enumerable::class;
+
+        if (is_null($enumClass)) {
+            throw new InvalidArgumentException("Could not find Enumerable class in \$enums property {$key}");
+        }
+
         $classImplementsEnumerable = class_implements($enumClass)[$enumInterface] ?? false;
 
         if (! $classImplementsEnumerable) {

@@ -2,6 +2,8 @@
 
 namespace Spatie\Enum\Laravel\Tests;
 
+use Spatie\Enum\Laravel\Tests\Extra\ExtendedPost;
+use Spatie\Enum\Laravel\Tests\Extra\InvalidNullablePost;
 use stdClass;
 use Spatie\Enum\Enumerable;
 use InvalidArgumentException;
@@ -163,5 +165,31 @@ final class HasEnumsCastTest extends TestCase
         $this->assertEquals('draft', $model->getOriginal('status'));
         $this->assertTrue($model->nullable_enum->isEqual(StatusEnum::draft()));
         $this->assertEquals('draft', $model->getOriginal('nullable_enum'));
+    }
+
+    /** @test */
+    public function it_saves_an_extended_enum()
+    {
+        $model = Post::create([
+            'status' => StatusEnum::draft(),
+            'extended_enum' => StatusEnum::draft(),
+        ]);
+
+        $model->refresh();
+
+        $this->assertTrue($model->status->isEqual(StatusEnum::draft()));
+        $this->assertEquals('draft', $model->getOriginal('status'));
+        $this->assertTrue($model->extended_enum->isEqual(StatusEnum::draft()));
+        $this->assertEquals('draft', $model->getOriginal('extended_enum'));
+    }
+
+    /** @test */
+    public function throws_exception_if_extended_enum_class_is_invalid()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Could not find Enumerable class in $enums property invalid_nullable_enum');
+
+        $post = new InvalidNullablePost();
+        $post->invalid_nullable_enum = StatusEnum::draft();
     }
 }
