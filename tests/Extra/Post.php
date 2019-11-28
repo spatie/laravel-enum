@@ -24,6 +24,10 @@ class Post extends Model
     protected $enums = [
         'status' => StatusEnum::class,
         'invalid_enum' => Post::class,
+        'nullable_enum' => [
+            'class' => StatusEnum::class,
+            'nullable' => true,
+        ],
     ];
 
     public static function migrate()
@@ -31,6 +35,7 @@ class Post extends Model
         Schema::create('posts', function (Blueprint $table) {
             $table->increments('id');
             $table->string('status');
+            $table->string('nullable_enum')->nullable();
             $table->timestamps();
         });
     }

@@ -16,18 +16,22 @@ trait HasEnums
 {
     public function setAttribute($key, $value)
     {
-        return $this->isEnumAttribute($key)
-            ? $this->setEnumAttribute($key, $value)
-            : parent::setAttribute($key, $value);
+        if (! $this->isEnumAttribute($key) || $this->isNullableEnum($key, $value)) {
+            return parent::setAttribute($key, $value);
+        }
+
+        return $this->setEnumAttribute($key, $value);
     }
 
     public function getAttribute($key)
     {
         $value = parent::getAttribute($key);
 
-        return $this->isEnumAttribute($key)
-            ? $this->getEnumAttribute($key, $value)
-            : $value;
+        if (! $this->isEnumAttribute($key) || $this->isNullableEnum($key, $value)) {
+            return $value;
+        }
+
+        return $this->getEnumAttribute($key, $value);
     }
 
     /**
@@ -120,6 +124,10 @@ trait HasEnums
     {
         $enumClass = $this->getEnumClass($key);
 
+        if (is_array($enumClass)) {
+            $enumClass = $enumClass['class'] ?? null;
+        }
+
         if (is_string($value) || is_int($value)) {
             $value = $this->asEnum($enumClass, $value);
         }
@@ -162,9 +170,29 @@ trait HasEnums
         return isset($this->enums[$key]);
     }
 
+    protected function isNullableEnum(string $key, $value): bool
+    {
+        $enum = $this->enums[$key];
+
+        if (! is_array($enum)) {
+            return false;
+        }
+
+        if (! isset($enum['nullable'])) {
+            return false;
+        }
+
+        return $enum['nullable'] && is_null($value);
+    }
+
     protected function getEnumClass(string $key): string
     {
         $enumClass = $this->enums[$key];
+
+        if (is_array($enumClass)) {
+            $enumClass = $enumClass['class'] ?? null;
+        }
+
         $enumInterface = Enumerable::class;
         $classImplementsEnumerable = class_implements($enumClass)[$enumInterface] ?? false;
 

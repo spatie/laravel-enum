@@ -38,6 +38,17 @@ class TestModel extends Model
 }
 ```
 
+You can also define enum as nullable:
+
+```php
+    protected $enums = [
+        'status' => [
+            'class' => TestModelStatus::class,
+            'nullable' => true,
+        ],
+    ];
+```
+
 By using the `HasEnums` trait, you'll be able to work with the `status` field like so:
 
 ```php

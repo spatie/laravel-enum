@@ -133,4 +133,35 @@ final class HasEnumsCastTest extends TestCase
         $post = new Post();
         $post->invalid_enum = 'unknown';
     }
+
+    /** @test */
+    public function it_saves_a_null_nullable_enum()
+    {
+        $model = Post::create([
+            'status' => StatusEnum::draft(),
+            'nullable_enum' => null,
+        ]);
+
+        $model->refresh();
+
+        $this->assertTrue($model->status->isEqual(StatusEnum::draft()));
+        $this->assertEquals('draft', $model->getOriginal('status'));
+        $this->assertNull($model->nullable_enum);
+    }
+
+    /** @test */
+    public function it_saves_an_enum_of_nullable_enum()
+    {
+        $model = Post::create([
+            'status' => StatusEnum::draft(),
+            'nullable_enum' => StatusEnum::draft(),
+        ]);
+
+        $model->refresh();
+
+        $this->assertTrue($model->status->isEqual(StatusEnum::draft()));
+        $this->assertEquals('draft', $model->getOriginal('status'));
+        $this->assertTrue($model->nullable_enum->isEqual(StatusEnum::draft()));
+        $this->assertEquals('draft', $model->getOriginal('nullable_enum'));
+    }
 }
