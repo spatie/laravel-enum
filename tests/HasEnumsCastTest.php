@@ -170,7 +170,7 @@ final class HasEnumsCastTest extends TestCase
     public function throws_exception_if_nullable_enum_is_misspelled()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage(Enumerable::class . ' '. StatusEnum::class . ' is not nullable');
+        $this->expectExceptionMessage(Enumerable::class.' '.StatusEnum::class.' is not nullable');
 
         $post = new InvalidNullablePost();
         $post->invalid_nullable_enum = null;

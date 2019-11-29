@@ -25,7 +25,7 @@ class Post extends Model
     protected $enums = [
         'status' => StatusEnum::class,
         'invalid_enum' => Post::class,
-        'nullable_enum' => StatusEnum::class . ':nullable',
+        'nullable_enum' => StatusEnum::class.':nullable',
     ];
 
     public static function migrate()
