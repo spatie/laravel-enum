@@ -9,7 +9,8 @@ use Spatie\Enum\Laravel\HasEnums;
 
 /**
  * @property \Spatie\Enum\Laravel\Tests\Extra\StatusEnum status
- * @property mixed invalid_nullable_enum
+ * @property mixed invalid_enum
+ * @property mixed nullable_enum
  *
  * @method static self create(array $properties)
  */
@@ -22,17 +23,16 @@ class InvalidNullablePost extends Model
     protected $guarded = [];
 
     protected $enums = [
-        'invalid_nullable_enum' => [
-            'classss' => StatusEnum::class,
-            'nullable' => true,
-        ],
+        'status' => StatusEnum::class,
+        'invalid_nullable_enum' => StatusEnum::class . ':nulllllable',
     ];
 
     public static function migrate()
     {
-        Schema::create('invalid_nullable_enum', function (Blueprint $table) {
+        Schema::create('invalid_nullable_posts', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('invalid_nullable_enum');
+            $table->string('status');
+            $table->string('invalid_nullable_enum')->nullable();
             $table->timestamps();
         });
     }

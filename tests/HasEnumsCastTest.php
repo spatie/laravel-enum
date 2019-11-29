@@ -167,28 +167,12 @@ final class HasEnumsCastTest extends TestCase
     }
 
     /** @test */
-    public function it_saves_an_extended_enum()
-    {
-        $model = Post::create([
-            'status' => StatusEnum::draft(),
-            'extended_enum' => StatusEnum::draft(),
-        ]);
-
-        $model->refresh();
-
-        $this->assertTrue($model->status->isEqual(StatusEnum::draft()));
-        $this->assertEquals('draft', $model->getOriginal('status'));
-        $this->assertTrue($model->extended_enum->isEqual(StatusEnum::draft()));
-        $this->assertEquals('draft', $model->getOriginal('extended_enum'));
-    }
-
-    /** @test */
-    public function throws_exception_if_extended_enum_class_is_invalid()
+    public function throws_exception_if_nullable_enum_is_misspelled()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Could not find Enumerable class in $enums property invalid_nullable_enum');
+        $this->expectExceptionMessage(Enumerable::class . ' '. StatusEnum::class . ' is not nullable');
 
         $post = new InvalidNullablePost();
-        $post->invalid_nullable_enum = StatusEnum::draft();
+        $post->invalid_nullable_enum = null;
     }
 }

@@ -16,18 +16,18 @@ trait HasEnums
 {
     public function setAttribute($key, $value)
     {
-        return (! $this->isEnumAttribute($key) || $this->isNullableEnum($key, $value))
-            ? parent::setAttribute($key, $value)
-            : $this->setEnumAttribute($key, $value);
+        return $this->isEnumAttribute($key)
+            ? $this->setEnumAttribute($key, $value)
+            : parent::setAttribute($key, $value);
     }
 
     public function getAttribute($key)
     {
         $value = parent::getAttribute($key);
 
-        return (! $this->isEnumAttribute($key) || $this->isNullableEnum($key, $value))
-            ? $value
-            : $this->getEnumAttribute($key, $value);
+        return $this->isEnumAttribute($key)
+            ? $this->getEnumAttribute($key, $value)
+            : $value;
     }
 
     /**
@@ -120,8 +120,17 @@ trait HasEnums
     {
         $enumClass = $this->getEnumClass($key);
 
+        if ($this->isNullableEnum($key, $value)) {
+            return $this;
+        }
+
         if (is_string($value) || is_int($value)) {
             $value = $this->asEnum($enumClass, $value);
+        }
+
+        if (is_null($value)) {
+            $enumInterface = Enumerable::class;
+            throw new InvalidArgumentException("{$enumInterface} {$enumClass} is not nullable");
         }
 
         if (! is_a($value, $enumClass)) {
@@ -148,12 +157,16 @@ trait HasEnums
 
     /**
      * @param string $key
-     * @param int|string $value
+     * @param int|string|null $value
      *
-     * @return \Spatie\Enum\Enumerable
+     * @return \Spatie\Enum\Enumerable|int|string|null
      */
-    protected function getEnumAttribute(string $key, $value): Enumerable
+    protected function getEnumAttribute(string $key, $value)
     {
+        if ($this->isNullableEnum($key, $value)) {
+            return $value;
+        }
+
         return $this->asEnum($this->getEnumClass($key), $value);
     }
 
@@ -164,32 +177,30 @@ trait HasEnums
 
     protected function isNullableEnum(string $key, $value): bool
     {
-        $enum = $this->enums[$key];
+        $enumClass = $this->enums[$key];
 
-        if (! is_array($enum)) {
+        if (! strpos($enumClass, ':')) {
             return false;
         }
 
-        if (! isset($enum['nullable'])) {
+        $nullable = explode(':', $enumClass, 2)[1];
+
+        if (! $nullable || $nullable !== 'nullable') {
             return false;
         }
 
-        return $enum['nullable'] && is_null($value);
+        return $nullable && is_null($value);
     }
 
     protected function getEnumClass(string $key): string
     {
         $enumClass = $this->enums[$key];
 
-        if (is_array($enumClass)) {
-            $enumClass = $enumClass['class'] ?? null;
+        if (strpos($enumClass, ':')) {
+            $enumClass = explode(':', $enumClass, 2)[0];
         }
 
         $enumInterface = Enumerable::class;
-
-        if (is_null($enumClass)) {
-            throw new InvalidArgumentException("Could not find Enumerable class in \$enums property {$key}");
-        }
 
         $classImplementsEnumerable = class_implements($enumClass)[$enumInterface] ?? false;
 

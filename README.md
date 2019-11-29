@@ -42,10 +42,7 @@ You can also define enum as nullable:
 
 ```php
     protected $enums = [
-        'status' => [
-            'class' => TestModelStatus::class,
-            'nullable' => true,
-        ],
+        'status' => TestModelStatus::class . ':nullable',
     ];
 ```
 
