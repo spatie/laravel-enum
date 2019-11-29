@@ -16,22 +16,18 @@ trait HasEnums
 {
     public function setAttribute($key, $value)
     {
-        if (! $this->isEnumAttribute($key) || $this->isNullableEnum($key, $value)) {
-            return parent::setAttribute($key, $value);
-        }
-
-        return $this->setEnumAttribute($key, $value);
+        return (! $this->isEnumAttribute($key) || $this->isNullableEnum($key, $value))
+            ? parent::setAttribute($key, $value)
+            : $this->setEnumAttribute($key, $value);
     }
 
     public function getAttribute($key)
     {
         $value = parent::getAttribute($key);
 
-        if (! $this->isEnumAttribute($key) || $this->isNullableEnum($key, $value)) {
-            return $value;
-        }
-
-        return $this->getEnumAttribute($key, $value);
+        return (! $this->isEnumAttribute($key) || $this->isNullableEnum($key, $value))
+            ? $value
+            : $this->getEnumAttribute($key, $value);
     }
 
     /**
