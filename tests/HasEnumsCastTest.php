@@ -2,12 +2,12 @@
 
 namespace Spatie\Enum\Laravel\Tests;
 
-use stdClass;
-use Spatie\Enum\Enumerable;
 use InvalidArgumentException;
+use Spatie\Enum\Enumerable;
+use Spatie\Enum\Laravel\Exceptions\InvalidEnumError;
 use Spatie\Enum\Laravel\Tests\Extra\Post;
 use Spatie\Enum\Laravel\Tests\Extra\StatusEnum;
-use Spatie\Enum\Laravel\Exceptions\InvalidEnumError;
+use stdClass;
 
 final class HasEnumsCastTest extends TestCase
 {
