@@ -11,7 +11,7 @@ final class EnumScopeTest extends TestCase
     /** @test */
     public function scope_where_enum_invalid_enum_field_throws_exception()
     {
-        //$this->expectException(NoSuchEnumField::class);
+        $this->expectException(NoSuchEnumField::class);
 
         Post::whereEnum('unknown', StatusEnum::draft())->count();
     }
