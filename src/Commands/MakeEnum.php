@@ -2,10 +2,10 @@
 
 namespace Spatie\Enum\Laravel\Commands;
 
-use Illuminate\Support\Str;
 use Illuminate\Console\GeneratorCommand;
-use Symfony\Component\Console\Input\InputOption;
+use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 
 class MakeEnum extends GeneratorCommand
 {
