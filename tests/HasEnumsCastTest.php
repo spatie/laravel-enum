@@ -5,6 +5,7 @@ namespace Spatie\Enum\Laravel\Tests;
 use InvalidArgumentException;
 use Spatie\Enum\Enumerable;
 use Spatie\Enum\Laravel\Exceptions\InvalidEnumError;
+use Spatie\Enum\Laravel\Tests\Extra\InvalidNullablePost;
 use Spatie\Enum\Laravel\Tests\Extra\Post;
 use Spatie\Enum\Laravel\Tests\Extra\StatusEnum;
 use stdClass;
@@ -132,5 +133,46 @@ final class HasEnumsCastTest extends TestCase
 
         $post = new Post();
         $post->invalid_enum = 'unknown';
+    }
+
+    /** @test */
+    public function it_saves_a_null_nullable_enum()
+    {
+        $model = Post::create([
+            'status' => StatusEnum::draft(),
+            'nullable_enum' => null,
+        ]);
+
+        $model->refresh();
+
+        $this->assertTrue($model->status->isEqual(StatusEnum::draft()));
+        $this->assertEquals('draft', $model->getOriginal('status'));
+        $this->assertNull($model->nullable_enum);
+    }
+
+    /** @test */
+    public function it_saves_an_enum_of_nullable_enum()
+    {
+        $model = Post::create([
+            'status' => StatusEnum::draft(),
+            'nullable_enum' => StatusEnum::draft(),
+        ]);
+
+        $model->refresh();
+
+        $this->assertTrue($model->status->isEqual(StatusEnum::draft()));
+        $this->assertEquals('draft', $model->getOriginal('status'));
+        $this->assertTrue($model->nullable_enum->isEqual(StatusEnum::draft()));
+        $this->assertEquals('draft', $model->getOriginal('nullable_enum'));
+    }
+
+    /** @test */
+    public function throws_exception_if_nullable_enum_is_misspelled()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(Enumerable::class.' '.StatusEnum::class.' is not nullable');
+
+        $post = new InvalidNullablePost();
+        $post->invalid_nullable_enum = null;
     }
 }

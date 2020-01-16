@@ -120,8 +120,17 @@ trait HasEnums
     {
         $enumClass = $this->getEnumClass($key);
 
+        if ($this->isNullableEnum($key, $value)) {
+            return $this;
+        }
+
         if (is_string($value) || is_int($value)) {
             $value = $this->asEnum($enumClass, $value);
+        }
+
+        if (is_null($value)) {
+            $enumInterface = Enumerable::class;
+            throw new InvalidArgumentException("{$enumInterface} {$enumClass} is not nullable");
         }
 
         if (! is_a($value, $enumClass)) {
@@ -148,12 +157,16 @@ trait HasEnums
 
     /**
      * @param string $key
-     * @param int|string $value
+     * @param int|string|null $value
      *
-     * @return \Spatie\Enum\Enumerable
+     * @return \Spatie\Enum\Enumerable|int|string|null
      */
-    protected function getEnumAttribute(string $key, $value): Enumerable
+    protected function getEnumAttribute(string $key, $value)
     {
+        if ($this->isNullableEnum($key, $value)) {
+            return $value;
+        }
+
         return $this->asEnum($this->getEnumClass($key), $value);
     }
 
@@ -162,10 +175,33 @@ trait HasEnums
         return isset($this->enums[$key]);
     }
 
+    protected function isNullableEnum(string $key, $value): bool
+    {
+        $enumClass = $this->enums[$key];
+
+        if (! strpos($enumClass, ':')) {
+            return false;
+        }
+
+        $nullable = explode(':', $enumClass, 2)[1];
+
+        if (! $nullable || $nullable !== 'nullable') {
+            return false;
+        }
+
+        return $nullable && is_null($value);
+    }
+
     protected function getEnumClass(string $key): string
     {
         $enumClass = $this->enums[$key];
+
+        if (strpos($enumClass, ':')) {
+            $enumClass = explode(':', $enumClass, 2)[0];
+        }
+
         $enumInterface = Enumerable::class;
+
         $classImplementsEnumerable = class_implements($enumClass)[$enumInterface] ?? false;
 
         if (! $classImplementsEnumerable) {
