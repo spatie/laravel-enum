@@ -4,6 +4,7 @@ namespace Spatie\Enum\Laravel\Tests;
 
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Spatie\Enum\Laravel\EnumServiceProvider;
+use Spatie\Enum\Laravel\Tests\Extra\InvalidNullablePost;
 use Spatie\Enum\Laravel\Tests\Extra\Post;
 
 abstract class TestCase extends OrchestraTestCase
@@ -18,6 +19,7 @@ abstract class TestCase extends OrchestraTestCase
     protected function setUpDatabase()
     {
         Post::migrate();
+        InvalidNullablePost::migrate();
     }
 
     protected function getPackageProviders($app)

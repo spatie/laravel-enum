@@ -14,26 +14,25 @@ use Spatie\Enum\Laravel\HasEnums;
  *
  * @method static self create(array $properties)
  */
-class Post extends Model
+class InvalidNullablePost extends Model
 {
     use HasEnums;
 
-    protected $table = 'posts';
+    protected $table = 'invalid_nullable_posts';
 
     protected $guarded = [];
 
     protected $enums = [
         'status' => StatusEnum::class,
-        'invalid_enum' => Post::class,
-        'nullable_enum' => StatusEnum::class.':nullable',
+        'invalid_nullable_enum' => StatusEnum::class.':nulllllable',
     ];
 
     public static function migrate()
     {
-        Schema::create('posts', function (Blueprint $table) {
+        Schema::create('invalid_nullable_posts', function (Blueprint $table) {
             $table->increments('id');
             $table->string('status');
-            $table->string('nullable_enum')->nullable();
+            $table->string('invalid_nullable_enum')->nullable();
             $table->timestamps();
         });
     }
