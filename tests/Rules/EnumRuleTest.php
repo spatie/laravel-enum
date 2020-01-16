@@ -2,13 +2,13 @@
 
 namespace Spatie\Enum\Laravel\Tests\Rules;
 
-use InvalidArgumentException;
 use Illuminate\Support\Facades\Lang;
-use Spatie\Enum\Laravel\Rules\EnumRule;
-use Spatie\Enum\Laravel\Tests\TestCase;
 use Illuminate\Support\Facades\Validator;
+use InvalidArgumentException;
+use Spatie\Enum\Laravel\Rules\EnumRule;
 use Spatie\Enum\Laravel\Tests\Extra\Post;
 use Spatie\Enum\Laravel\Tests\Extra\StatusEnum;
+use Spatie\Enum\Laravel\Tests\TestCase;
 
 final class EnumRuleTest extends TestCase
 {

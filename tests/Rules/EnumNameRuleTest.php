@@ -3,10 +3,10 @@
 namespace Spatie\Enum\Laravel\Tests\Rules;
 
 use Illuminate\Support\Facades\Lang;
-use Spatie\Enum\Laravel\Tests\TestCase;
 use Illuminate\Support\Facades\Validator;
 use Spatie\Enum\Laravel\Rules\EnumNameRule;
 use Spatie\Enum\Laravel\Tests\Extra\StatusEnum;
+use Spatie\Enum\Laravel\Tests\TestCase;
 
 final class EnumNameRuleTest extends TestCase
 {

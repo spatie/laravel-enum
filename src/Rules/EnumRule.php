@@ -3,12 +3,12 @@
 namespace Spatie\Enum\Laravel\Rules;
 
 use Exception;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
-use Spatie\Enum\Enumerable;
-use InvalidArgumentException;
-use Illuminate\Support\Facades\Lang;
 use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Str;
+use InvalidArgumentException;
+use Spatie\Enum\Enumerable;
 
 class EnumRule implements Rule
 {

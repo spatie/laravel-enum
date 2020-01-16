@@ -2,14 +2,14 @@
 
 namespace Spatie\Enum\Laravel;
 
-use Illuminate\Support\ServiceProvider;
-use Spatie\Enum\Laravel\Rules\EnumRule;
-use Illuminate\Support\Facades\Validator;
-use Spatie\Enum\Laravel\Commands\MakeEnum;
-use Spatie\Enum\Laravel\Rules\EnumNameRule;
-use Spatie\Enum\Laravel\Rules\EnumIndexRule;
-use Spatie\Enum\Laravel\Rules\EnumValueRule;
 use Illuminate\Contracts\Validation\Validator as ValidatorContract;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\ServiceProvider;
+use Spatie\Enum\Laravel\Commands\MakeEnum;
+use Spatie\Enum\Laravel\Rules\EnumIndexRule;
+use Spatie\Enum\Laravel\Rules\EnumNameRule;
+use Spatie\Enum\Laravel\Rules\EnumRule;
+use Spatie\Enum\Laravel\Rules\EnumValueRule;
 
 class EnumServiceProvider extends ServiceProvider
 {
