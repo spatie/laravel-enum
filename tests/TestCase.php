@@ -7,9 +7,7 @@ use Illuminate\Routing\Route;
 use Spatie\Enum\Laravel\Tests\Extra\Post;
 use Spatie\Enum\Laravel\EnumServiceProvider;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
-use Spatie\Enum\Laravel\EnumServiceProvider;
 use Spatie\Enum\Laravel\Tests\Extra\InvalidNullablePost;
-use Spatie\Enum\Laravel\Tests\Extra\Post;
 
 abstract class TestCase extends OrchestraTestCase
 {
