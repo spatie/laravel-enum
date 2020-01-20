@@ -2,12 +2,13 @@
 
 namespace Spatie\Enum\Laravel;
 
-use Spatie\Enum\Enumerable;
-use InvalidArgumentException;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
-use Spatie\Enum\Laravel\Exceptions\NoSuchEnumField;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
+use InvalidArgumentException;
+use Spatie\Enum\Enumerable;
 use Spatie\Enum\Laravel\Exceptions\InvalidEnumError;
+use Spatie\Enum\Laravel\Exceptions\NoSuchEnumField;
 
 /**
  * @mixin Model
@@ -120,6 +121,17 @@ trait HasEnums
     {
         $enumClass = $this->getEnumClass($key);
 
+        if (is_null($value)) {
+            if (! $this->isNullableEnum($key)) {
+                $enumInterface = Enumerable::class;
+                throw new InvalidArgumentException("{$enumInterface} {$enumClass} is not nullable");
+            }
+
+            $this->attributes[$key] = null;
+
+            return $this;
+        }
+
         if (is_string($value) || is_int($value)) {
             $value = $this->asEnum($enumClass, $value);
         }
@@ -148,12 +160,16 @@ trait HasEnums
 
     /**
      * @param string $key
-     * @param int|string $value
+     * @param int|string|null $value
      *
-     * @return \Spatie\Enum\Enumerable
+     * @return \Spatie\Enum\Enumerable|null
      */
-    protected function getEnumAttribute(string $key, $value): Enumerable
+    protected function getEnumAttribute(string $key, $value): ?Enumerable
     {
+        if (is_null($value) && $this->isNullableEnum($key)) {
+            return null;
+        }
+
         return $this->asEnum($this->getEnumClass($key), $value);
     }
 
@@ -162,10 +178,34 @@ trait HasEnums
         return isset($this->enums[$key]);
     }
 
+    protected function getEnumCast(string $key): array
+    {
+        $enumCast = $this->enums[$key];
+
+        if (! Str::contains($enumCast, ':')) {
+            return [$enumCast, []];
+        }
+
+        [$enumClass, $options] = explode(':', $enumCast);
+
+        $options = explode(',', $options);
+
+        return [$enumClass, $options];
+    }
+
+    protected function isNullableEnum(string $key): bool
+    {
+        [, $options] = $this->getEnumCast($key);
+
+        return in_array('nullable', $options);
+    }
+
     protected function getEnumClass(string $key): string
     {
-        $enumClass = $this->enums[$key];
+        [$enumClass] = $this->getEnumCast($key);
+
         $enumInterface = Enumerable::class;
+
         $classImplementsEnumerable = class_implements($enumClass)[$enumInterface] ?? false;
 
         if (! $classImplementsEnumerable) {

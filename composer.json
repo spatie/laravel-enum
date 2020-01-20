@@ -24,15 +24,29 @@
     ],
     "require": {
         "php": "^7.2",
-        "illuminate/console": "^5.8",
-        "illuminate/http": "^5.8.33",
-        "illuminate/support": "^5.8",
-        "spatie/enum": "^2.1"
+        "illuminate/console": "^5.8 || ^6.0",
+        "illuminate/http": "^5.8 || ^6.0",
+        "illuminate/support": "^5.8 || ^6.0",
+        "spatie/enum": "^2.3",
+        "symfony/console": "^4.3.4"
+    },
+    "conflict": {
+        "bensampo/laravel-enum": "*"
     },
     "require-dev": {
         "ext-json": "*",
-        "orchestra/testbench": "^3.8",
+        "orchestra/testbench": "^3.8 || ^4.0",
         "phpunit/phpunit": "^8.0"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Spatie\\Enum\\Laravel\\EnumServiceProvider"
+            ]
+        }
     },
     "autoload": {
         "psr-4": {
@@ -45,16 +59,7 @@
         }
     },
     "scripts": {
-        "test": "vendor/bin/phpunit"
-    },
-    "config": {
-        "sort-packages": true
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Spatie\\Enum\\Laravel\\EnumServiceProvider"
-            ]
-        }
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html=build"
     }
 }
