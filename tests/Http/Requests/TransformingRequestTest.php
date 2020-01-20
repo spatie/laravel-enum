@@ -3,11 +3,11 @@
 namespace Spatie\Enum\Laravel\Tests\Http\Requests;
 
 use Illuminate\Http\Request;
-use Spatie\Enum\Laravel\Tests\TestCase;
 use Spatie\Enum\Laravel\Tests\Extra\StatusEnum;
-use Spatie\Enum\Laravel\Tests\Extra\StatusFormRequest;
 use Spatie\Enum\Laravel\Tests\Extra\StatusFormGetRequest;
 use Spatie\Enum\Laravel\Tests\Extra\StatusFormPostRequest;
+use Spatie\Enum\Laravel\Tests\Extra\StatusFormRequest;
+use Spatie\Enum\Laravel\Tests\TestCase;
 
 final class TransformingRequestTest extends TestCase
 {

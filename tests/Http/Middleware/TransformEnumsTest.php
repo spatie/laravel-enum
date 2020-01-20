@@ -3,10 +3,10 @@
 namespace Spatie\Enum\Laravel\Tests\Http\Middleware;
 
 use Illuminate\Http\Request;
-use Spatie\Enum\Laravel\Tests\TestCase;
 use Spatie\Enum\Laravel\Http\EnumRequest;
-use Spatie\Enum\Laravel\Tests\Extra\StatusEnum;
 use Spatie\Enum\Laravel\Http\Middleware\TransformEnums;
+use Spatie\Enum\Laravel\Tests\Extra\StatusEnum;
+use Spatie\Enum\Laravel\Tests\TestCase;
 
 final class TransformEnumsTest extends TestCase
 {
