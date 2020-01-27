@@ -24,9 +24,9 @@
     ],
     "require": {
         "php": "^7.2",
-        "illuminate/console": "^5.8 || ^6.0",
-        "illuminate/http": "^5.8 || ^6.0",
-        "illuminate/support": "^5.8 || ^6.0",
+        "illuminate/console": "^5.8.33 || ^6.0",
+        "illuminate/http": "^5.8.33 || ^6.0",
+        "illuminate/support": "^5.8.33 || ^6.0",
         "spatie/enum": "^2.3",
         "symfony/console": "^4.3.4"
     },
