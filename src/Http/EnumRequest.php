@@ -3,6 +3,8 @@
 namespace Spatie\Enum\Laravel\Http;
 
 use Closure;
+use Illuminate\Support\Arr;
+use Spatie\Enum\Enumerable;
 
 /**
  * @internal This class is only used to get mixed into \Illuminate\Http\Request
@@ -17,10 +19,11 @@ final class EnumRequest
 
     public function transformEnums(): Closure
     {
-        return function (array $transformations) {
+        return function (array $transformations): void {
             if (isset($transformations[EnumRequest::REQUEST_ROUTE])) {
                 $route = $this->route();
 
+                /** @var string|Enumerable $enumClass */
                 foreach ($transformations[EnumRequest::REQUEST_ROUTE] as $key => $enumClass) {
                     if (! $route->hasParameter($key)) {
                         continue;
@@ -29,16 +32,15 @@ final class EnumRequest
                     $route->setParameter(
                         $key,
                         forward_static_call(
-                            $enumClass.'::make',
+                            [$enumClass, 'make'],
                             $route->parameter($key)
                         )
                     );
                 }
-
-                unset($transformations[EnumRequest::REQUEST_ROUTE]);
             }
 
             if (isset($transformations[EnumRequest::REQUEST_QUERY])) {
+                /** @var string|Enumerable $enumClass */
                 foreach ($transformations[EnumRequest::REQUEST_QUERY] as $key => $enumClass) {
                     if (! $this->query->has($key)) {
                         continue;
@@ -47,16 +49,15 @@ final class EnumRequest
                     $this->query->set(
                         $key,
                         forward_static_call(
-                            $enumClass.'::make',
+                            [$enumClass, 'make'],
                             $this->query->get($key)
                         )
                     );
                 }
-
-                unset($transformations[EnumRequest::REQUEST_QUERY]);
             }
 
             if (isset($transformations[EnumRequest::REQUEST_REQUEST])) {
+                /** @var string|Enumerable $enumClass */
                 foreach ($transformations[EnumRequest::REQUEST_REQUEST] as $key => $enumClass) {
                     if (! $this->request->has($key)) {
                         continue;
@@ -65,22 +66,21 @@ final class EnumRequest
                     $this->request->set(
                         $key,
                         forward_static_call(
-                            $enumClass.'::make',
+                            [$enumClass, 'make'],
                             $this->request->get($key)
                         )
                     );
                 }
-
-                unset($transformations[EnumRequest::REQUEST_REQUEST]);
             }
 
-            foreach ($transformations as $key => $enumClass) {
+            /** @var string|Enumerable $enumClass */
+            foreach (Arr::except($transformations, [EnumRequest::REQUEST_ROUTE, EnumRequest::REQUEST_QUERY, EnumRequest::REQUEST_REQUEST]) as $key => $enumClass) {
                 if (! isset($this[$key])) {
                     continue;
                 }
 
                 $this[$key] = forward_static_call(
-                    $enumClass.'::make',
+                    [$enumClass, 'make'],
                     $this[$key]
                 );
             }
