@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-enum` will be documented in this file
 
+## 1.3.0 - 2020-03-02
+
+- add Laravel 7 support [#34](https://github.com/spatie/laravel-enum/pull/34)
+
 ## 1.2.0 - 2020-01-16
 
 - add enum validation rules [#13](https://github.com/spatie/laravel-enum/pull/13)

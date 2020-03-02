@@ -142,6 +142,7 @@ We publish all received postcards [on our company website](https://spatie.be/en/
 ## Credits
 
 - [Brent Roose](https://github.com/brendt)
+- [Tom Witkowski](https://github.com/Gummibeer)
 - [All Contributors](../../contributors)
 
 ## Support us
