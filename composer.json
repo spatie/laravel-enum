@@ -27,7 +27,7 @@
         "illuminate/console": "^5.8 || ^6.0 || ^7.0",
         "illuminate/support": "^5.8 || ^6.0 || ^7.0",
         "spatie/enum": "^2.3",
-        "symfony/console": "^4.3.4 | ^5.0"
+        "symfony/console": "^4.3.4 || ^5.0"
     },
     "conflict": {
         "bensampo/laravel-enum": "*"
