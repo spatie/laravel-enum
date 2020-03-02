@@ -26,7 +26,7 @@ This package provides a trait you can use in these models,
 to allow allow automatic casting between stored enum values and enum objects. 
 
 ```php
-use Spatie\Enum\HasEnums;
+use Spatie\Enum\Laravel\HasEnums;
 
 class TestModel extends Model
 {
@@ -142,6 +142,7 @@ We publish all received postcards [on our company website](https://spatie.be/en/
 ## Credits
 
 - [Brent Roose](https://github.com/brendt)
+- [Tom Witkowski](https://github.com/Gummibeer)
 - [All Contributors](../../contributors)
 
 ## Support us
