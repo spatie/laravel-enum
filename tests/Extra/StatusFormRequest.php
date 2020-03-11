@@ -3,11 +3,11 @@
 namespace Spatie\Enum\Laravel\Tests\Extra;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Spatie\Enum\Laravel\Http\Requests\TransformingRequest;
+use Spatie\Enum\Laravel\Http\Requests\TransformsEnums;
 
 class StatusFormRequest extends FormRequest
 {
-    use TransformingRequest;
+    use TransformsEnums;
 
     public function rules(): array
     {

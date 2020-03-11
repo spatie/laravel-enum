@@ -192,12 +192,11 @@ Form requests are the easiest way to cast the data to an enum.
 
 ```php
 use Illuminate\Foundation\Http\FormRequest;
-use Spatie\Enum\Laravel\Http\EnumRequest;
-use Spatie\Enum\Laravel\Http\Requests\TransformingRequest;
+use Spatie\Enum\Laravel\Http\Requests\TransformsEnums;
 
 class StatusFormRequest extends FormRequest
 {
-    use TransformingRequest;
+    use TransformsEnums;
 
     public function rules(): array
     {

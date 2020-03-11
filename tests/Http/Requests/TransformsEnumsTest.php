@@ -9,7 +9,7 @@ use Spatie\Enum\Laravel\Tests\Extra\StatusFormPostRequest;
 use Spatie\Enum\Laravel\Tests\Extra\StatusFormRequest;
 use Spatie\Enum\Laravel\Tests\TestCase;
 
-final class TransformingRequestTest extends TestCase
+final class TransformsEnumsTest extends TestCase
 {
     /** @test */
     public function it_transforms_get_request_by_enum_rules()

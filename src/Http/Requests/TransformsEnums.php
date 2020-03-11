@@ -2,7 +2,7 @@
 
 namespace Spatie\Enum\Laravel\Http\Requests;
 
-trait TransformingRequest
+trait TransformsEnums
 {
     protected function passedValidation()
     {
