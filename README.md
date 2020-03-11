@@ -1,7 +1,7 @@
 # Laravel support for spatie/enum
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/laravel-enum.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-enum)
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/spatie/laravel-enum/run-tests?label=tests)](https://github.com/spatie/laravel-enum/actions?query=workflow%3Arun-tests)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/spatie/laravel-enum/run-tests?label=tests&style=flat-square)](https://github.com/spatie/laravel-enum/actions?query=workflow%3Arun-tests)
 [![Quality Score](https://img.shields.io/scrutinizer/g/spatie/laravel-enum.svg?style=flat-square)](https://scrutinizer-ci.com/g/spatie/laravel-enum)
 [![Code Coverage](https://img.shields.io/coveralls/github/spatie/laravel-enum.svg?style=flat-square)](https://coveralls.io/github/spatie/laravel-enum)
 [![StyleCI](https://github.styleci.io/repos/180570906/shield?branch=master)](https://github.styleci.io/repos/180570906)
