@@ -2,6 +2,13 @@
 
 All notable changes to `laravel-enum` will be documented in this file
 
+## 1.4.0 - 2020-03-11
+
+- add request transformer [#7](https://github.com/spatie/laravel-enum/pull/7)
+  - form request: `Spatie\Enum\Laravel\Http\Requests\TransformsEnums`
+  - middleware: `Spatie\Enum\Laravel\Http\Middleware\TransformEnums`
+  - macro: `Illuminate\Http\Request::transformEnums()`
+
 ## 1.3.0 - 2020-03-02
 
 - add Laravel 7 support [#34](https://github.com/spatie/laravel-enum/pull/34)
