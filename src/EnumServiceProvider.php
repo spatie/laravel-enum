@@ -3,9 +3,11 @@
 namespace Spatie\Enum\Laravel;
 
 use Illuminate\Contracts\Validation\Validator as ValidatorContract;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 use Spatie\Enum\Laravel\Commands\MakeEnum;
+use Spatie\Enum\Laravel\Http\EnumRequest;
 use Spatie\Enum\Laravel\Rules\EnumIndexRule;
 use Spatie\Enum\Laravel\Rules\EnumNameRule;
 use Spatie\Enum\Laravel\Rules\EnumRule;
@@ -31,6 +33,13 @@ class EnumServiceProvider extends ServiceProvider
         $this->commands([
             'command.make:enum',
         ]);
+
+        $this->registerRequestTransformMacro();
+    }
+
+    protected function registerRequestTransformMacro()
+    {
+        Request::mixin(new EnumRequest);
     }
 
     public function bootValidationRules(): void
