@@ -240,7 +240,7 @@ new TransformEnums([
 We provide an artisan make command which allows you to quickly create new enumerables.
 
 ```bash
-php artisan enum:make StatusEnum
+php artisan make:enum StatusEnum
 ```
 
 You can use `--method` or `--value` options to predefine some enum names or values - you can use them several times.
