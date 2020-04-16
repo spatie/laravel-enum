@@ -175,12 +175,13 @@ class MakeEnumTest extends TestCase
 
     private function runMakeCommand(string $stub, array $arguments = []): void
     {
+        $WeekDayEnum = "WeekDay";
         $artisan = $this->artisan('make:enum', array_merge([
-            'name' => 'WeekDay',
+            'name' => $WeekDayEnum,
         ], $arguments));
 
         $artisan->assertExitCode(0);
-        $artisan->expectsOutput(' created successfully.');
+        $artisan->expectsOutput("{$WeekDayEnum} created successfully.");
         $artisan->run();
 
         $this->assertTrue(file_exists(self::WEEKDAY_PATH));

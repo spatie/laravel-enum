@@ -22,6 +22,11 @@ class MakeEnum extends GeneratorCommand
         return $rootNamespace.'\Enums';
     }
 
+    public function info($string, $verbosity = null)
+    {
+        parent::info("{$this->argument('name')}$string", $verbosity);
+    }
+
     protected function replaceClass($stub, $name)
     {
         $stub = parent::replaceClass($stub, $name);
