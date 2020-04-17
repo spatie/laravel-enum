@@ -12,6 +12,13 @@ class MakeEnum extends GeneratorCommand
     protected $name = 'make:enum';
     protected $description = 'Create a new enum';
 
+    public function handle()
+    {
+        $this->type = $this->getNameInput();
+
+        return parent::handle();
+    }
+
     protected function getStub()
     {
         return __DIR__.'/../../stubs/enum.stub';
@@ -94,12 +101,5 @@ class MakeEnum extends GeneratorCommand
             ['value', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'The value that should be added to the enum'],
             ['formatter', null, InputOption::VALUE_REQUIRED, 'The formatter to use for the value to method conversion (snake, const, studly, camel)', 'camel'],
         ];
-    }
-
-    public function handle()
-    {
-        $this->type = $this->getNameInput();
-
-        return parent::handle();
     }
 }
