@@ -95,4 +95,11 @@ class MakeEnum extends GeneratorCommand
             ['formatter', null, InputOption::VALUE_REQUIRED, 'The formatter to use for the value to method conversion (snake, const, studly, camel)', 'camel'],
         ];
     }
+
+    public function handle()
+    {
+        $this->type = $this->getNameInput();
+
+        return parent::handle();
+    }
 }
