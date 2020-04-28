@@ -113,7 +113,7 @@ trait HasEnums
 
     /**
      * @param string $key
-     * @param int|string|\Spatie\Enum\Enumerable $value
+     * @param int|int[]|string|string[]|\Spatie\Enum\Enumerable|\Spatie\Enum\Enumerable[] $value
      *
      * @return $this
      */
@@ -130,6 +130,17 @@ trait HasEnums
             $this->attributes[$key] = null;
 
             return $this;
+        }
+
+        if ($this->isArrayOfEnums($key)) {
+            if(!is_array($value)) {
+                $modelClass = static::class;
+                throw new InvalidArgumentException("{$modelClass} [{$key}] expects array of enum values.");
+            }
+
+            return parent::setAttribute($key, array_map(function($value) use ($key, $enumClass) {
+                return $this->getStoredValue($key, $this->asEnum($enumClass, $value));
+            }, $value));
         }
 
         if (is_string($value) || is_int($value)) {
@@ -160,17 +171,30 @@ trait HasEnums
 
     /**
      * @param string $key
-     * @param int|string|null $value
+     * @param int|int[]|string|string[]|null $value
      *
-     * @return \Spatie\Enum\Enumerable|null
+     * @return \Spatie\Enum\Enumerable|\Spatie\Enum\Enumerable[]|null
      */
-    protected function getEnumAttribute(string $key, $value): ?Enumerable
+    protected function getEnumAttribute(string $key, $value)
     {
         if (is_null($value) && $this->isNullableEnum($key)) {
             return null;
         }
 
-        return $this->asEnum($this->getEnumClass($key), $value);
+        $enumClass = $this->getEnumClass($key);
+
+        if ($this->isArrayOfEnums($key)) {
+            if(!is_array($value)) {
+                $modelClass = static::class;
+                throw new InvalidArgumentException("{$modelClass} [{$key}] expects array of enum values.");
+            }
+
+            return array_map(function($value) use ($enumClass): Enumerable {
+                return $this->asEnum($enumClass, $value);
+            }, $value);
+        }
+
+        return $this->asEnum($enumClass, $value);
     }
 
     protected function isEnumAttribute(string $key): bool
@@ -198,6 +222,13 @@ trait HasEnums
         [, $options] = $this->getEnumCast($key);
 
         return in_array('nullable', $options);
+    }
+
+    protected function isArrayOfEnums(string $key): bool
+    {
+        [, $options] = $this->getEnumCast($key);
+
+        return in_array('array', $options);
     }
 
     protected function getEnumClass(string $key): string

@@ -175,4 +175,47 @@ final class HasEnumsCastTest extends TestCase
         $post = new InvalidNullablePost();
         $post->invalid_nullable_enum = null;
     }
+
+    /** @test */
+    public function it_saves_an_enum_of_array_of_enums()
+    {
+        $model = Post::create([
+            'status' => StatusEnum::draft(),
+            'array_of_enums' => [StatusEnum::draft(), StatusEnum::archived()],
+        ]);
+
+        $model->refresh();
+
+        $this->assertTrue($model->status->isEqual(StatusEnum::draft()));
+        $this->assertEquals('draft', $model->getOriginal('status'));
+        $this->assertIsArray($model->array_of_enums);
+        $this->assertCount(2, $model->array_of_enums);
+        $this->assertTrue(StatusEnum::draft()->isAny($model->array_of_enums));
+        $this->assertTrue(StatusEnum::archived()->isAny($model->array_of_enums));
+    }
+
+    /** @test */
+    public function it_saves_a_null_value_for_nullable_array_of_enums()
+    {
+        $model = Post::create([
+            'status' => StatusEnum::draft(),
+            'nullable_array_of_enums' => null,
+        ]);
+
+        $model->refresh();
+
+        $this->assertTrue($model->status->isEqual(StatusEnum::draft()));
+        $this->assertEquals('draft', $model->getOriginal('status'));
+        $this->assertNull($model->nullable_array_of_enums);
+    }
+
+    /** @test */
+    public function throws_exception_if_non_array_value_is_passed_to_array_of_enums()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(Post::class.' [array_of_enums] expects array of enum values.');
+
+        $post = new Post();
+        $post->array_of_enums = StatusEnum::draft();
+    }
 }
