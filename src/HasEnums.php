@@ -133,12 +133,12 @@ trait HasEnums
         }
 
         if ($this->isArrayOfEnums($key)) {
-            if(!is_array($value)) {
+            if (! is_array($value)) {
                 $modelClass = static::class;
                 throw new InvalidArgumentException("{$modelClass} [{$key}] expects array of enum values.");
             }
 
-            return parent::setAttribute($key, array_map(function($value) use ($key, $enumClass) {
+            return parent::setAttribute($key, array_map(function ($value) use ($key, $enumClass) {
                 return $this->getStoredValue($key, $this->asEnum($enumClass, $value));
             }, $value));
         }
@@ -178,18 +178,18 @@ trait HasEnums
     protected function getEnumAttribute(string $key, $value)
     {
         if (is_null($value) && $this->isNullableEnum($key)) {
-            return null;
+            return;
         }
 
         $enumClass = $this->getEnumClass($key);
 
         if ($this->isArrayOfEnums($key)) {
-            if(!is_array($value)) {
+            if (! is_array($value)) {
                 $modelClass = static::class;
                 throw new InvalidArgumentException("{$modelClass} [{$key}] expects array of enum values.");
             }
 
-            return array_map(function($value) use ($enumClass): Enumerable {
+            return array_map(function ($value) use ($enumClass): Enumerable {
                 return $this->asEnum($enumClass, $value);
             }, $value);
         }
