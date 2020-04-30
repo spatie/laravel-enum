@@ -4,7 +4,9 @@ namespace Spatie\Enum\Laravel\Tests;
 
 use InvalidArgumentException;
 use Spatie\Enum\Enumerable;
+use Spatie\Enum\Laravel\Exceptions\ExpectsArrayOfEnumsField;
 use Spatie\Enum\Laravel\Exceptions\InvalidEnumError;
+use Spatie\Enum\Laravel\Exceptions\NotNullableEnumField;
 use Spatie\Enum\Laravel\Tests\Extra\InvalidNullablePost;
 use Spatie\Enum\Laravel\Tests\Extra\Post;
 use Spatie\Enum\Laravel\Tests\Extra\StatusEnum;
@@ -169,8 +171,8 @@ final class HasEnumsCastTest extends TestCase
     /** @test */
     public function throws_exception_if_nullable_enum_is_misspelled()
     {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage(Enumerable::class.' '.StatusEnum::class.' is not nullable');
+        $this->expectException(NotNullableEnumField::class);
+        $this->expectExceptionMessage('Field invalid_nullable_enum on model Spatie\Enum\Laravel\Tests\Extra\InvalidNullablePost is not nullable');
 
         $post = new InvalidNullablePost();
         $post->invalid_nullable_enum = null;
@@ -212,8 +214,8 @@ final class HasEnumsCastTest extends TestCase
     /** @test */
     public function throws_exception_if_non_array_value_is_passed_to_array_of_enums()
     {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage(Post::class.' [array_of_enums] expects array of enum values.');
+        $this->expectException(ExpectsArrayOfEnumsField::class);
+        $this->expectExceptionMessage('Field array_of_enums on model Spatie\Enum\Laravel\Tests\Extra\Post expects an array of Spatie\Enum\Laravel\Tests\Extra\StatusEnum');
 
         $post = new Post();
         $post->array_of_enums = StatusEnum::draft();

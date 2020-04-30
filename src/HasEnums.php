@@ -7,8 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Spatie\Enum\Enumerable;
+use Spatie\Enum\Laravel\Exceptions\ExpectsArrayOfEnumsField;
 use Spatie\Enum\Laravel\Exceptions\InvalidEnumError;
 use Spatie\Enum\Laravel\Exceptions\NoSuchEnumField;
+use Spatie\Enum\Laravel\Exceptions\NotNullableEnumField;
 
 /**
  * @mixin Model
@@ -123,8 +125,7 @@ trait HasEnums
 
         if (is_null($value)) {
             if (! $this->isNullableEnum($key)) {
-                $enumInterface = Enumerable::class;
-                throw new InvalidArgumentException("{$enumInterface} {$enumClass} is not nullable");
+                throw NotNullableEnumField::make($key, static::class);
             }
 
             $this->attributes[$key] = null;
@@ -134,8 +135,7 @@ trait HasEnums
 
         if ($this->isArrayOfEnums($key)) {
             if (! is_array($value)) {
-                $modelClass = static::class;
-                throw new InvalidArgumentException("{$modelClass} [{$key}] expects array of enum values.");
+                throw ExpectsArrayOfEnumsField::make($key, static::class, $enumClass);
             }
 
             return parent::setAttribute($key, array_map(function ($value) use ($key, $enumClass) {
@@ -178,15 +178,14 @@ trait HasEnums
     protected function getEnumAttribute(string $key, $value)
     {
         if (is_null($value) && $this->isNullableEnum($key)) {
-            return;
+            return null;
         }
 
         $enumClass = $this->getEnumClass($key);
 
         if ($this->isArrayOfEnums($key)) {
             if (! is_array($value)) {
-                $modelClass = static::class;
-                throw new InvalidArgumentException("{$modelClass} [{$key}] expects array of enum values.");
+                throw ExpectsArrayOfEnumsField::make($key, static::class, $enumClass);
             }
 
             return array_map(function ($value) use ($enumClass): Enumerable {
@@ -277,7 +276,7 @@ trait HasEnums
         $enumerables
     ): void {
         if (! $this->isEnumAttribute($key)) {
-            throw NoSuchEnumField::make($key, get_class($this));
+            throw NoSuchEnumField::make($key, static::class);
         }
 
         $enumerables = is_array($enumerables) ? $enumerables : [$enumerables];
