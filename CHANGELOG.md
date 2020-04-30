@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-enum` will be documented in this file
 
+## 1.6.0 - 2020-04-30
+
+- add array of enums cast [#43](https://github.com/spatie/laravel-enum/pull/43)
+
 ## 1.5.0 - 2020-04-17
 
 - add classname to make command output [#41](https://github.com/spatie/laravel-enum/pull/41)
