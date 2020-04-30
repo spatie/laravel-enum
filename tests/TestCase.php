@@ -86,21 +86,21 @@ abstract class TestCase extends OrchestraTestCase
      */
     protected function assertSameEnum($expected, $actual)
     {
-        if(is_null($expected)) {
+        if (is_null($expected)) {
             $this->assertNull($actual);
         }
 
-        if(is_int($expected)) {
+        if (is_int($expected)) {
             $this->assertIsInt($actual);
             $this->assertSame($expected, $actual);
         }
 
-        if(is_string($expected)) {
+        if (is_string($expected)) {
             $this->assertIsString($actual);
             $this->assertSame($expected, $actual);
         }
 
-        if(is_object($expected)) {
+        if (is_object($expected)) {
             $this->assertInstanceOf(Enumerable::class, $actual);
             $this->assertInstanceOf(get_class($expected), $actual);
             $this->assertEquals($expected, $actual);
@@ -110,10 +110,10 @@ abstract class TestCase extends OrchestraTestCase
             $this->assertTrue($expected->isEqual($actual));
         }
 
-        if(is_array($expected)) {
+        if (is_array($expected)) {
             $this->assertIsArray($actual);
             $this->assertCount(count($expected), $actual);
-            foreach($actual as $i => $value) {
+            foreach ($actual as $i => $value) {
                 $this->assertSameEnum($expected[$i], $value);
             }
         }

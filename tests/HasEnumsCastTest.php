@@ -4,10 +4,7 @@ namespace Spatie\Enum\Laravel\Tests;
 
 use InvalidArgumentException;
 use Spatie\Enum\Enumerable;
-use Spatie\Enum\Laravel\Casts\Enum;
 use Spatie\Enum\Laravel\Casts\EnumIndex;
-use Spatie\Enum\Laravel\Exceptions\ExpectsArrayOfEnumsField;
-use Spatie\Enum\Laravel\Exceptions\InvalidEnumError;
 use Spatie\Enum\Laravel\Exceptions\NotNullableEnumField;
 use Spatie\Enum\Laravel\Tests\Extra\InvalidNullablePost;
 use Spatie\Enum\Laravel\Tests\Extra\Post;

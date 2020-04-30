@@ -2,11 +2,8 @@
 
 namespace Spatie\Enum\Laravel\Casts;
 
-use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Support\Arr;
-use InvalidArgumentException;
 use Spatie\Enum\Enumerable;
-use Spatie\Enum\Laravel\Exceptions\NotNullableEnumField;
 
 abstract class EnumCollection extends Enum
 {
@@ -45,7 +42,7 @@ abstract class EnumCollection extends Enum
 
         return json_encode(
             array_map(
-                fn(Enumerable $enum) => $this->shouldStoreIndex ? $enum->getIndex() : $enum->getValue(),
+                fn (Enumerable $enum) => $this->shouldStoreIndex ? $enum->getIndex() : $enum->getValue(),
                 $this->asEnums(Arr::wrap($value))
             )
         );

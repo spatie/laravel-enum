@@ -4,13 +4,8 @@ namespace Spatie\Enum\Laravel;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
-use InvalidArgumentException;
 use Spatie\Enum\Enumerable;
-use Spatie\Enum\Laravel\Exceptions\ExpectsArrayOfEnumsField;
-use Spatie\Enum\Laravel\Exceptions\InvalidEnumError;
 use Spatie\Enum\Laravel\Exceptions\NoSuchEnumField;
-use Spatie\Enum\Laravel\Exceptions\NotNullableEnumField;
 
 /**
  * @mixin Model

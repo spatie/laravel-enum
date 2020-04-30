@@ -88,7 +88,5 @@ abstract class Enum implements CastsAttributes
         if (! $this->isNullable) {
             throw NotNullableEnumField::make($key, get_class($model));
         }
-
-        return null;
     }
 }

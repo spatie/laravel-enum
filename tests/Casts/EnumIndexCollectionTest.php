@@ -3,10 +3,7 @@
 namespace Spatie\Enum\Laravel\Tests\Casts;
 
 use InvalidArgumentException;
-use Spatie\Enum\Laravel\Casts\EnumIndex;
 use Spatie\Enum\Laravel\Casts\EnumIndexCollection;
-use Spatie\Enum\Laravel\Casts\EnumValue;
-use Spatie\Enum\Laravel\Casts\EnumValueCollection;
 use Spatie\Enum\Laravel\Exceptions\NotNullableEnumField;
 use Spatie\Enum\Laravel\Tests\Extra\Post;
 use Spatie\Enum\Laravel\Tests\Extra\StatusEnum;
@@ -27,6 +24,7 @@ final class EnumIndexCollectionTest extends TestCase
             $cast->get(new Post, 'key', is_null($value) ? null : json_encode($value), [])
         );
     }
+
     /**
      * @test
      * @dataProvider provideEnumValueMutatorValues
@@ -35,7 +33,7 @@ final class EnumIndexCollectionTest extends TestCase
     {
         $cast = new EnumIndexCollection(StatusEnum::class, ...$options);
 
-        if(is_null($expected)) {
+        if (is_null($expected)) {
             $this->assertNull($cast->set(new Post, 'key', $value, []));
         } else {
             $this->assertJsonStringEqualsJsonString(

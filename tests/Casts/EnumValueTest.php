@@ -3,7 +3,6 @@
 namespace Spatie\Enum\Laravel\Tests\Casts;
 
 use InvalidArgumentException;
-use Spatie\Enum\Laravel\Casts\EnumIndex;
 use Spatie\Enum\Laravel\Casts\EnumValue;
 use Spatie\Enum\Laravel\Exceptions\NotNullableEnumField;
 use Spatie\Enum\Laravel\Tests\Extra\Post;
@@ -25,6 +24,7 @@ final class EnumValueTest extends TestCase
             $cast->get(new Post, 'key', $value, [])
         );
     }
+
     /**
      * @test
      * @dataProvider provideEnumValueMutatorValues
