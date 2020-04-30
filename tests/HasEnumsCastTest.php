@@ -4,7 +4,9 @@ namespace Spatie\Enum\Laravel\Tests;
 
 use InvalidArgumentException;
 use Spatie\Enum\Enumerable;
+use Spatie\Enum\Laravel\Exceptions\ExpectsArrayOfEnumsField;
 use Spatie\Enum\Laravel\Exceptions\InvalidEnumError;
+use Spatie\Enum\Laravel\Exceptions\NotNullableEnumField;
 use Spatie\Enum\Laravel\Tests\Extra\InvalidNullablePost;
 use Spatie\Enum\Laravel\Tests\Extra\Post;
 use Spatie\Enum\Laravel\Tests\Extra\StatusEnum;
@@ -169,10 +171,53 @@ final class HasEnumsCastTest extends TestCase
     /** @test */
     public function throws_exception_if_nullable_enum_is_misspelled()
     {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage(Enumerable::class.' '.StatusEnum::class.' is not nullable');
+        $this->expectException(NotNullableEnumField::class);
+        $this->expectExceptionMessage('Field invalid_nullable_enum on model Spatie\Enum\Laravel\Tests\Extra\InvalidNullablePost is not nullable');
 
         $post = new InvalidNullablePost();
         $post->invalid_nullable_enum = null;
+    }
+
+    /** @test */
+    public function it_saves_an_enum_of_array_of_enums()
+    {
+        $model = Post::create([
+            'status' => StatusEnum::draft(),
+            'array_of_enums' => [StatusEnum::draft(), StatusEnum::archived()],
+        ]);
+
+        $model->refresh();
+
+        $this->assertTrue($model->status->isEqual(StatusEnum::draft()));
+        $this->assertEquals('draft', $model->getOriginal('status'));
+        $this->assertIsArray($model->array_of_enums);
+        $this->assertCount(2, $model->array_of_enums);
+        $this->assertTrue(StatusEnum::draft()->isAny($model->array_of_enums));
+        $this->assertTrue(StatusEnum::archived()->isAny($model->array_of_enums));
+    }
+
+    /** @test */
+    public function it_saves_a_null_value_for_nullable_array_of_enums()
+    {
+        $model = Post::create([
+            'status' => StatusEnum::draft(),
+            'nullable_array_of_enums' => null,
+        ]);
+
+        $model->refresh();
+
+        $this->assertTrue($model->status->isEqual(StatusEnum::draft()));
+        $this->assertEquals('draft', $model->getOriginal('status'));
+        $this->assertNull($model->nullable_array_of_enums);
+    }
+
+    /** @test */
+    public function throws_exception_if_non_array_value_is_passed_to_array_of_enums()
+    {
+        $this->expectException(ExpectsArrayOfEnumsField::class);
+        $this->expectExceptionMessage('Field array_of_enums on model Spatie\Enum\Laravel\Tests\Extra\Post expects an array of Spatie\Enum\Laravel\Tests\Extra\StatusEnum');
+
+        $post = new Post();
+        $post->array_of_enums = StatusEnum::draft();
     }
 }

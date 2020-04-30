@@ -46,6 +46,14 @@ protected $enums = [
 ];
 ```
 
+You can also define attribute as array of enums:
+
+```php
+protected $enums = [
+    'status' => StatusEnum::class.':array',
+];
+```
+
 By using the `HasEnums` trait, you'll be able to work with the `status` field like so:
 
 ```php

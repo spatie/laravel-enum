@@ -7,8 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Spatie\Enum\Enumerable;
+use Spatie\Enum\Laravel\Exceptions\ExpectsArrayOfEnumsField;
 use Spatie\Enum\Laravel\Exceptions\InvalidEnumError;
 use Spatie\Enum\Laravel\Exceptions\NoSuchEnumField;
+use Spatie\Enum\Laravel\Exceptions\NotNullableEnumField;
 
 /**
  * @mixin Model
@@ -113,7 +115,7 @@ trait HasEnums
 
     /**
      * @param string $key
-     * @param int|string|\Spatie\Enum\Enumerable $value
+     * @param int|int[]|string|string[]|\Spatie\Enum\Enumerable|\Spatie\Enum\Enumerable[] $value
      *
      * @return $this
      */
@@ -123,13 +125,22 @@ trait HasEnums
 
         if (is_null($value)) {
             if (! $this->isNullableEnum($key)) {
-                $enumInterface = Enumerable::class;
-                throw new InvalidArgumentException("{$enumInterface} {$enumClass} is not nullable");
+                throw NotNullableEnumField::make($key, static::class);
             }
 
             $this->attributes[$key] = null;
 
             return $this;
+        }
+
+        if ($this->isArrayOfEnums($key)) {
+            if (! is_array($value)) {
+                throw ExpectsArrayOfEnumsField::make($key, static::class, $enumClass);
+            }
+
+            return parent::setAttribute($key, array_map(function ($value) use ($key, $enumClass) {
+                return $this->getStoredValue($key, $this->asEnum($enumClass, $value));
+            }, $value));
         }
 
         if (is_string($value) || is_int($value)) {
@@ -160,17 +171,29 @@ trait HasEnums
 
     /**
      * @param string $key
-     * @param int|string|null $value
+     * @param int|int[]|string|string[]|null $value
      *
-     * @return \Spatie\Enum\Enumerable|null
+     * @return \Spatie\Enum\Enumerable|\Spatie\Enum\Enumerable[]|null
      */
-    protected function getEnumAttribute(string $key, $value): ?Enumerable
+    protected function getEnumAttribute(string $key, $value)
     {
         if (is_null($value) && $this->isNullableEnum($key)) {
-            return null;
+            return;
         }
 
-        return $this->asEnum($this->getEnumClass($key), $value);
+        $enumClass = $this->getEnumClass($key);
+
+        if ($this->isArrayOfEnums($key)) {
+            if (! is_array($value)) {
+                throw ExpectsArrayOfEnumsField::make($key, static::class, $enumClass);
+            }
+
+            return array_map(function ($value) use ($enumClass): Enumerable {
+                return $this->asEnum($enumClass, $value);
+            }, $value);
+        }
+
+        return $this->asEnum($enumClass, $value);
     }
 
     protected function isEnumAttribute(string $key): bool
@@ -198,6 +221,13 @@ trait HasEnums
         [, $options] = $this->getEnumCast($key);
 
         return in_array('nullable', $options);
+    }
+
+    protected function isArrayOfEnums(string $key): bool
+    {
+        [, $options] = $this->getEnumCast($key);
+
+        return in_array('array', $options);
     }
 
     protected function getEnumClass(string $key): string
@@ -246,7 +276,7 @@ trait HasEnums
         $enumerables
     ): void {
         if (! $this->isEnumAttribute($key)) {
-            throw NoSuchEnumField::make($key, get_class($this));
+            throw NoSuchEnumField::make($key, static::class);
         }
 
         $enumerables = is_array($enumerables) ? $enumerables : [$enumerables];
