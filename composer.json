@@ -24,13 +24,13 @@
     ],
     "require": {
         "php": "^7.4",
+        "ext-json": "*",
         "illuminate/console": "^7.0",
         "illuminate/contracts": "^7.4",
         "illuminate/http": "^7.0",
         "illuminate/support": "^7.0",
         "spatie/enum": "^2.3",
-        "symfony/console": "^5.0",
-        "ext-json": "*"
+        "symfony/console": "^5.0"
     },
     "conflict": {
         "bensampo/laravel-enum": "*"
