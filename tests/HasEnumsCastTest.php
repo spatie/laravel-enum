@@ -4,6 +4,8 @@ namespace Spatie\Enum\Laravel\Tests;
 
 use InvalidArgumentException;
 use Spatie\Enum\Enumerable;
+use Spatie\Enum\Laravel\Casts\Enum;
+use Spatie\Enum\Laravel\Casts\EnumIndex;
 use Spatie\Enum\Laravel\Exceptions\ExpectsArrayOfEnumsField;
 use Spatie\Enum\Laravel\Exceptions\InvalidEnumError;
 use Spatie\Enum\Laravel\Exceptions\NotNullableEnumField;
@@ -11,6 +13,7 @@ use Spatie\Enum\Laravel\Tests\Extra\InvalidNullablePost;
 use Spatie\Enum\Laravel\Tests\Extra\Post;
 use Spatie\Enum\Laravel\Tests\Extra\StatusEnum;
 use stdClass;
+use TypeError;
 
 final class HasEnumsCastTest extends TestCase
 {
@@ -32,7 +35,7 @@ final class HasEnumsCastTest extends TestCase
     {
         $model = new class extends Post {
             protected $casts = [
-                'status' => 'int',
+                'status' => EnumIndex::class.':'.StatusEnum::class,
             ];
         };
 
@@ -42,13 +45,13 @@ final class HasEnumsCastTest extends TestCase
         $model->refresh();
 
         $this->assertTrue($model->status->isEqual(StatusEnum::draft()));
-        $this->assertEquals(0, $model->getOriginal('status'));
+        $this->assertEquals(0, $model->getRawOriginal('status'));
     }
 
     /** @test */
     public function an_invalid_class_throws_an_error()
     {
-        $this->expectException(InvalidEnumError::class);
+        $this->expectException(TypeError::class);
 
         Post::create([
             'status' => new stdClass(),
@@ -209,15 +212,5 @@ final class HasEnumsCastTest extends TestCase
         $this->assertTrue($model->status->isEqual(StatusEnum::draft()));
         $this->assertEquals('draft', $model->getOriginal('status'));
         $this->assertNull($model->nullable_array_of_enums);
-    }
-
-    /** @test */
-    public function throws_exception_if_non_array_value_is_passed_to_array_of_enums()
-    {
-        $this->expectException(ExpectsArrayOfEnumsField::class);
-        $this->expectExceptionMessage('Field array_of_enums on model Spatie\Enum\Laravel\Tests\Extra\Post expects an array of Spatie\Enum\Laravel\Tests\Extra\StatusEnum');
-
-        $post = new Post();
-        $post->array_of_enums = StatusEnum::draft();
     }
 }
