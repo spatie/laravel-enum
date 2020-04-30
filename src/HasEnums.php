@@ -178,7 +178,7 @@ trait HasEnums
     protected function getEnumAttribute(string $key, $value)
     {
         if (is_null($value) && $this->isNullableEnum($key)) {
-            return null;
+            return;
         }
 
         $enumClass = $this->getEnumClass($key);
