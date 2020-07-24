@@ -22,94 +22,35 @@ composer require spatie/laravel-enum
 ### Model Attribute casting
 
 Chances are that if you're working in a Laravel project, you'll want to use enums within your models.
-This package provides a trait you can use in these models, to allow allow automatic casting between stored enum values and enum objects. 
+This package provides two custom casts and the `\Spatie\Enum\Laravel\Enum` also implements the `\Illuminate\Contracts\Database\Eloquent\Castable` interface.
 
 ```php
 use Illuminate\Database\Eloquent\Model;
-use Spatie\Enum\Laravel\HasEnums;
+use Spatie\Enum\Laravel\Casts\EnumCast;
+use Spatie\Enum\Laravel\Casts\EnumCollectionCast;
 
 class TestModel extends Model
 {
-    use HasEnums;
-
-    protected $enums = [
+    protected $casts = [
         'status' => StatusEnum::class,
+        'nullable_enum' => EnumCast::class.':'.StatusEnum::class.',nullable',
+        'array_of_enums' => EnumCollectionCast::class.':'.StatusEnum::class,
+        'nullable_array_of_enums' => EnumCollectionCast::class.':'.StatusEnum::class.',nullable',
     ];
 }
 ```
 
-You can also define enum as nullable:
-
-```php
-protected $enums = [
-    'status' => StatusEnum::class.':nullable',
-];
-```
-
-You can also define attribute as array of enums:
-
-```php
-protected $enums = [
-    'status' => StatusEnum::class.':array',
-];
-```
-
-By using the `HasEnums` trait, you'll be able to work with the `status` field like so:
+By using the casts the casted attribute will always be an instance of the given enum.
 
 ```php
 $model = new TestModel();
 $model->status = StatusEnum::DRAFT();
-```
-
-You can set the value of an enum field with its textual value:
-
-```php
-$model->status = 'published';
-```
-
-This can be useful when filling data from a validated request:
-
-```php
-$model->fill($request->validated());
-
-// …
-
-$model->status->isEqual(StatusEnum::ARCHIVED());
+$model->status->equals(StatusEnum::DRAFT());
 ``` 
 
-In some cases, enums should be stored as integer (index) in the database.
+### Validation Rule
 
-By using the `$casts` property you can cast your `status` attribute to `int` or `integer` and the trait will store the index instead of the value.
-
-### Model Query Scopes
-
-The `HasEnums` trait also provides some useful scopes to query your database.
-These scopes will also take the optional mapping you provided into account.
-
-```php
-Post::whereEnum('status', StatusEnum::DRAFT());
-Post::whereNotEnum('status', 'published');
-Post::whereEnum('status', StatusEnum::DRAFT())->orWhereEnum('status', StatusEnum::PUBLISHED());
-```
-
-You may provide multiple enums as an array:
-
-```php
-Post::whereEnum('status', [StatusEnum::DRAFT(), StatusEnum::ARCHIVED()]);
-
-Post::whereNotEnum('status', [StatusEnum::PUBLISHED()]);
-```
-
-You may also provide textual input:
-
-```php
-Post::whereEnum('status', 'archived');
-Post::whereEnum('status', 'legacy archived value');
-```
-
-### Validation Rules
-
-This package provides some validation rule classes to validate your request data against a given enumerable.
+This package provides a validation rule to validate your request data against a given enumerable.
 
 ```php
 use Spatie\Enum\Laravel\Rules\EnumRule;
@@ -120,17 +61,6 @@ $rules = [
 ```
 
 This rule validates that the value of `status` is any possible representation of the `StatusEnum`.
-If you want to check that the value is a possible `name`, `value` or `index` of `StatusEnum`you can use the more specific rules.
-
-```php
-use Spatie\Enum\Laravel\Rules\EnumIndexRule;
-use Spatie\Enum\Laravel\Rules\EnumNameRule;
-use Spatie\Enum\Laravel\Rules\EnumValueRule;
-
-new EnumIndexRule(StatusEnum::class);
-new EnumNameRule(StatusEnum::class);
-new EnumValueRule(StatusEnum::class);
-``` 
 
 But you can also use the simple string validation rule definition:
 
@@ -138,9 +68,6 @@ But you can also use the simple string validation rule definition:
 $rules = [
     'status' => [
         'enum:'.StatusEnum::class,
-        'enum_index:'.StatusEnum::class,
-        'enum_name:'.StatusEnum::class,
-        'enum_value:'.StatusEnum::class,
     ],
 ];
 ```
@@ -173,6 +100,8 @@ There are three predefined keys available as constants on `Spatie\Enum\Laravel\H
 All other keys will be treated as independent enum casts and are applied to the combined request data set.
 
 ```php
+use Spatie\Enum\Laravel\Http\EnumRequest;
+
 $enums = [
     // cast the status key independent of it's data set
     'status' => StatusEnum::class,
@@ -201,6 +130,7 @@ Form requests are the easiest way to cast the data to an enum.
 ```php
 use Illuminate\Foundation\Http\FormRequest;
 use Spatie\Enum\Laravel\Http\Requests\TransformsEnums;
+use Spatie\Enum\Laravel\Rules\EnumRule;
 
 class StatusFormRequest extends FormRequest
 {
@@ -208,7 +138,9 @@ class StatusFormRequest extends FormRequest
 
     public function rules(): array
     {
-        return [];
+        return [
+            'status' => new EnumRule(StatusEnum::class),
+        ];
     }
 
     public function enums(): array
@@ -251,8 +183,7 @@ We provide an artisan make command which allows you to quickly create new enumer
 php artisan make:enum StatusEnum
 ```
 
-You can use `--method` or `--value` options to predefine some enum names or values - you can use them several times.
-The `--formatter` option is used to let you define the used conversion from value to method.
+You can use `--method` option to predefine some enum values - you can use them several times.
 
 ## Testing
 
