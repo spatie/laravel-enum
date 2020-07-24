@@ -46,7 +46,7 @@ By using the casts the casted attribute will always be an instance of the given 
 $model = new TestModel();
 $model->status = StatusEnum::DRAFT();
 $model->status->equals(StatusEnum::DRAFT());
-``` 
+```
 
 ### Validation Rule
 
@@ -73,14 +73,17 @@ $rules = [
 ```
 
 If you want to customize the failed validation messages you can publish the translation file.
+
 ```bash
 php artisan vendor:publish --provider="Spatie\Enum\Laravel\EnumServiceProvider" --tag="translation"
 ```
+
 We pass several replacements to the translation key which you can use.
-* `attribute` - the name of the validated attribute
-* `value` - the actual value that's validated
-* `enum` - the full class name of the wanted enumerable 
-* `other` - a comma separated list of all possible values - they are translated via the `enums` array in the translation file
+
+-   `attribute` - the name of the validated attribute
+-   `value` - the actual value that's validated
+-   `enum` - the full class name of the wanted enumerable
+-   `other` - a comma separated list of all possible values - they are translated via the `enums` array in the translation file
 
 ### Request Data Transformation
 
@@ -187,7 +190,7 @@ You can use `--method` option to predefine some enum values - you can use them s
 
 ## Testing
 
-``` bash
+```bash
 composer test
 composer test-coverage
 ```
@@ -214,15 +217,15 @@ We publish all received postcards [on our company website](https://spatie.be/en/
 
 ## Credits
 
-- [Brent Roose](https://github.com/brendt)
-- [Tom Witkowski](https://github.com/Gummibeer)
-- [All Contributors](../../contributors)
+-   [Brent Roose](https://github.com/brendt)
+-   [Tom Witkowski](https://github.com/Gummibeer)
+-   [All Contributors](../../contributors)
 
 ## Support us
 
 Spatie is a webdesign agency based in Antwerp, Belgium. You'll find an overview of all our open source projects [on our website](https://spatie.be/opensource).
 
-Does your business depend on our contributions? Reach out and support us on [Patreon](https://www.patreon.com/spatie). 
+Does your business depend on our contributions? Reach out and support us on [Patreon](https://www.patreon.com/spatie).
 All pledges will be dedicated to allocating workforce on maintenance and new awesome stuff.
 
 ## License
