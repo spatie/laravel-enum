@@ -2,6 +2,7 @@ preset: laravel
 
 disabled:
   - simplified_null_return
+  - self_accessor
 
 finder:
   exclude:
