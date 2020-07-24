@@ -3,7 +3,6 @@
 namespace Spatie\Enum\Laravel\Casts;
 
 use Illuminate\Support\Arr;
-use Spatie\Enum\Enum;
 
 class EnumCollectionCast extends EnumCast
 {
