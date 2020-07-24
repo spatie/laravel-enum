@@ -4,24 +4,18 @@ namespace Spatie\Enum\Laravel\Casts;
 
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
-use InvalidArgumentException;
-use Spatie\Enum\Enumerable;
-use Spatie\Enum\Laravel\Exceptions\NotNullableEnumField;
+use Spatie\Enum\Enum;
+use Spatie\Enum\Laravel\Exceptions\NotNullableEnumField as NotNullableEnumFieldAlias;
 
-abstract class Enum implements CastsAttributes
+class EnumCast implements CastsAttributes
 {
+    /** @var string|Enum */
     protected string $enumClass;
+
     protected bool $isNullable = false;
-    protected bool $shouldStoreIndex = false;
 
     public function __construct(string $enumClass, ...$options)
     {
-        $enumInterface = Enumerable::class;
-
-        if (! array_key_exists($enumInterface, class_implements($enumClass))) {
-            throw new InvalidArgumentException("Expected {$enumClass} to implement {$enumInterface}");
-        }
-
         $this->enumClass = $enumClass;
         $this->isNullable = in_array('nullable', $options);
     }
@@ -32,7 +26,10 @@ abstract class Enum implements CastsAttributes
      * @param int|string|null|mixed $value
      * @param array $attributes
      *
-     * @return \Spatie\Enum\Enumerable|null
+     * @return \Spatie\Enum\Enum|null
+     *
+     * @throws \BadMethodCallException
+     * @throws \Spatie\Enum\Laravel\Exceptions\NotNullableEnumField
      */
     public function get($model, string $key, $value, array $attributes)
     {
@@ -46,10 +43,13 @@ abstract class Enum implements CastsAttributes
     /**
      * @param \Illuminate\Database\Eloquent\Model $model
      * @param string $key
-     * @param int|string|\Spatie\Enum\Enumerable|null|mixed $value
+     * @param int|string|\Spatie\Enum\Enum|null|mixed $value
      * @param array $attributes
      *
      * @return int|string|null
+     *
+     * @throws \BadMethodCallException
+     * @throws \Spatie\Enum\Laravel\Exceptions\NotNullableEnumField
      */
     public function set($model, string $key, $value, array $attributes)
     {
@@ -57,36 +57,44 @@ abstract class Enum implements CastsAttributes
             return $this->handleNullValue($model, $key);
         }
 
-        $enum = $this->asEnum($value);
-
-        return $this->shouldStoreIndex
-            ? $enum->getIndex()
-            : $enum->getValue();
+        return $this->asEnum($value)->value;
     }
 
     /**
-     * @param int|string|\Spatie\Enum\Enumerable $value
+     * @param int|string|\Spatie\Enum\Enum $value
      *
-     * @return \Spatie\Enum\Enumerable
+     * @return \Spatie\Enum\Enum
+     *
+     * @throws \BadMethodCallException
+     *
+     * @see \Spatie\Enum\Enum::make()
      */
-    protected function asEnum($value): Enumerable
+    protected function asEnum($value): Enum
     {
-        if ($value instanceof Enumerable) {
+        if ($value instanceof Enum) {
             return $value;
         }
 
         return forward_static_call(
-            $this->enumClass.'::make',
-            $this->shouldStoreIndex && is_numeric($value)
-                ? intval($value)
-                : $value
+            [$this->enumClass, 'make'],
+            $value
         );
     }
 
+    /**
+     * @param Model $model
+     * @param string $key
+     *
+     * @return null
+     *
+     * @throws \Spatie\Enum\Laravel\Exceptions\NotNullableEnumField
+     */
     protected function handleNullValue(Model $model, string $key)
     {
-        if (! $this->isNullable) {
-            throw NotNullableEnumField::make($key, get_class($model));
+        if ($this->isNullable) {
+            return null;
         }
+
+        throw NotNullableEnumFieldAlias::make($key, get_class($model));
     }
 }

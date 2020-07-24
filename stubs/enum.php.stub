@@ -3,8 +3,7 @@
 namespace DummyNamespace;
 
 use Spatie\Enum\Enum;
-DummyDocBlock
+/** DummyDocBlock */
 final class DummyClass extends Enum
 {
-DummyValueMapConst
 }

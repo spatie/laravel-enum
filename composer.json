@@ -1,9 +1,10 @@
 {
     "name": "spatie/laravel-enum",
-    "description": "Laravel enum support",
+    "description": "Laravel Enum support",
     "keywords": [
         "spatie",
         "enum",
+        "laravel",
         "laravel-enum"
     ],
     "homepage": "https://github.com/spatie/laravel-enum",
@@ -17,7 +18,7 @@
         },
         {
             "name": "Tom Witkowski",
-            "email": "dev.gummibeer@gmail.com",
+            "email": "dev@gummibeer.de",
             "homepage": "https://gummibeer.de",
             "role": "Developer"
         }
@@ -29,14 +30,13 @@
         "illuminate/contracts": "^7.0",
         "illuminate/http": "^7.0",
         "illuminate/support": "^7.0",
-        "spatie/enum": "^2.3",
+        "spatie/enum": "^3.0",
         "symfony/console": "^5.0"
     },
     "conflict": {
         "bensampo/laravel-enum": "*"
     },
     "require-dev": {
-        "ext-json": "*",
         "orchestra/testbench": "^5.0",
         "phpunit/phpunit": "^9.0"
     },

@@ -49,23 +49,5 @@ class EnumServiceProvider extends ServiceProvider
 
             return (new EnumRule($enum))->passes($attribute, $value);
         });
-
-        Validator::extend('enum_index', function (string $attribute, $value, array $parameters, ValidatorContract $validator): bool {
-            $enum = $parameters[0] ?? null;
-
-            return (new EnumIndexRule($enum))->passes($attribute, $value);
-        });
-
-        Validator::extend('enum_name', function (string $attribute, $value, array $parameters, ValidatorContract $validator): bool {
-            $enum = $parameters[0] ?? null;
-
-            return (new EnumNameRule($enum))->passes($attribute, $value);
-        });
-
-        Validator::extend('enum_value', function (string $attribute, $value, array $parameters, ValidatorContract $validator): bool {
-            $enum = $parameters[0] ?? null;
-
-            return (new EnumValueRule($enum))->passes($attribute, $value);
-        });
     }
 }

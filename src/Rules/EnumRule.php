@@ -7,28 +7,20 @@ use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Str;
-use InvalidArgumentException;
-use Spatie\Enum\Enumerable;
+use Spatie\Enum\Enum;
 
 class EnumRule implements Rule
 {
-    protected $rule = 'enum';
-
-    /** @var Enumerable */
+    /** @var string|Enum  */
     protected $enum;
 
-    /** @var string */
-    protected $attribute;
+    protected string $attribute;
 
     /** @var mixed */
     protected $value;
 
     public function __construct(string $enum)
     {
-        if (! class_exists($enum) || ! isset(class_implements($enum)[Enumerable::class])) {
-            throw new InvalidArgumentException("The given class {$enum} does not implement the Enumerable interface.");
-        }
-
         $this->enum = $enum;
     }
 
@@ -38,7 +30,7 @@ class EnumRule implements Rule
         $this->value = $value;
 
         try {
-            $this->enum::make($value);
+            $this->asEnum($value);
 
             return true;
         } catch (Exception $ex) {
@@ -48,7 +40,7 @@ class EnumRule implements Rule
 
     public function message(): string
     {
-        return Lang::get('enum::validation.'.$this->rule, [
+        return Lang::get('enum::validation.enum', [
             'attribute' => $this->attribute,
             'value' => $this->value,
             'enum' => $this->enum,
@@ -70,11 +62,29 @@ class EnumRule implements Rule
      */
     protected function getValueTranslation($value): ?string
     {
-        return Arr::get(Lang::get('enum::validation.enums'), $this->enum.'.'.Str::slug($this->enum::make($value)->getName(), '_'));
+        return Arr::get(
+            Lang::get('enum::validation.enums'),
+            $this->enum.'.'.Str::slug($this->asEnum($value)->value, '_')
+        );
     }
 
     protected function getOtherValues(): array
     {
-        return $this->enum::getValues();
+        return array_keys(forward_static_call([$this->enum, 'toArray']));
+    }
+
+    /**
+     * @param int|string|\Spatie\Enum\Enum $value
+     *
+     * @return Enum
+     *
+     * @throws \BadMethodCallException
+     */
+    protected function asEnum($value): Enum
+    {
+        return forward_static_call(
+            [$this->enum, 'make'],
+            $value
+        );
     }
 }

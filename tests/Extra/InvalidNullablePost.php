@@ -16,8 +16,6 @@ use Spatie\Enum\Laravel\HasEnums;
  */
 class InvalidNullablePost extends Model
 {
-    use HasEnums;
-
     protected $table = 'invalid_nullable_posts';
 
     protected $guarded = [];

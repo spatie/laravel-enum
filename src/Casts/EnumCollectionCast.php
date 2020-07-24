@@ -3,9 +3,10 @@
 namespace Spatie\Enum\Laravel\Casts;
 
 use Illuminate\Support\Arr;
+use Spatie\Enum\Enum;
 use Spatie\Enum\Enumerable;
 
-abstract class EnumCollection extends Enum
+class EnumCollectionCast extends EnumCast
 {
     /**
      * @param \Illuminate\Database\Eloquent\Model $model
@@ -13,7 +14,10 @@ abstract class EnumCollection extends Enum
      * @param int[]|string[]|null|mixed $value
      * @param array $attributes
      *
-     * @return \Spatie\Enum\Enumerable[]|null
+     * @return \Spatie\Enum\Enum[]|null
+     *
+     * @throws \BadMethodCallException
+     * @throws \Spatie\Enum\Laravel\Exceptions\NotNullableEnumField
      */
     public function get($model, string $key, $value, array $attributes)
     {
@@ -29,7 +33,7 @@ abstract class EnumCollection extends Enum
     /**
      * @param \Illuminate\Database\Eloquent\Model $model
      * @param string $key
-     * @param int[]|string[]|\Spatie\Enum\Enumerable[]|null|mixed $value
+     * @param int[]|string[]|\Spatie\Enum\Enum[]|null|mixed $value
      * @param array $attributes
      *
      * @return string|null
@@ -42,16 +46,18 @@ abstract class EnumCollection extends Enum
 
         return json_encode(
             array_map(
-                fn (Enumerable $enum) => $this->shouldStoreIndex ? $enum->getIndex() : $enum->getValue(),
+                fn (Enum $enum) => $enum->value,
                 $this->asEnums(Arr::wrap($value))
             )
         );
     }
 
     /**
-     * @param int[]|string[]|\Spatie\Enum\Enumerable[] $values
+     * @param int[]|string[]|\Spatie\Enum\Enum[] $values
      *
-     * @return \Spatie\Enum\Enumerable[]
+     * @return \Spatie\Enum\Enum[]
+     *
+     * @throws \BadMethodCallException
      */
     protected function asEnums(array $values): array
     {

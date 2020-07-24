@@ -3,19 +3,20 @@
 namespace Spatie\Enum\Laravel;
 
 use Illuminate\Contracts\Database\Eloquent\Castable;
-use ReflectionClass;
+use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
+use Illuminate\Contracts\Support\Jsonable;
 use Spatie\Enum\Enum as BaseEnum;
+use Spatie\Enum\Laravel\Casts\EnumCast;
 
-abstract class Enum extends BaseEnum
+abstract class Enum extends BaseEnum implements Jsonable, Castable
 {
-    protected static function resolveFromStaticMethods(ReflectionClass $reflection): array
+    public static function castUsing(): CastsAttributes
     {
-        $values = parent::resolveFromStaticMethods($reflection);
+        return new EnumCast(static::class);
+    }
 
-        if (array_key_exists(Castable::class, class_implements(static::class))) {
-            unset($values[array_search('castUsing', $values)]);
-        }
-
-        return $values;
+    public function toJson($options = 0): string
+    {
+        return json_encode($this->jsonSerialize(), $options);
     }
 }

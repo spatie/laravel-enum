@@ -23,7 +23,7 @@ final class TransformEnumsTest extends TestCase
 
         $middleware->handle($request, function (Request $request) {
             $this->assertInstanceOf(StatusEnum::class, $request['status']);
-            $this->assertEquals('DRAFT', $request['status']->getName());
+            $this->assertTrue(StatusEnum::draft()->equals($request['status']));
         });
     }
 
@@ -44,7 +44,7 @@ final class TransformEnumsTest extends TestCase
 
         $middleware->handle($request, function (Request $request) {
             $this->assertInstanceOf(StatusEnum::class, $request['status']);
-            $this->assertEquals('DRAFT', $request['status']->getName());
+            $this->assertTrue(StatusEnum::draft()->equals($request['status']));
         });
     }
 
@@ -63,7 +63,7 @@ final class TransformEnumsTest extends TestCase
 
         $middleware->handle($request, function (Request $request) {
             $this->assertInstanceOf(StatusEnum::class, $request->query->get('status'));
-            $this->assertEquals('DRAFT', $request->query->get('status')->getName());
+            $this->assertTrue(StatusEnum::draft()->equals($request->query->get('status')));
         });
     }
 
@@ -86,7 +86,7 @@ final class TransformEnumsTest extends TestCase
 
         $middleware->handle($request, function (Request $request) {
             $this->assertInstanceOf(StatusEnum::class, $request->request->get('status'));
-            $this->assertEquals('DRAFT', $request->request->get('status')->getName());
+            $this->assertTrue(StatusEnum::draft()->equals($request->request->get('status')));
         });
     }
 }

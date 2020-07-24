@@ -5,10 +5,8 @@ namespace Spatie\Enum\Laravel\Tests\Extra;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Spatie\Enum\Laravel\Casts\Enum;
-use Spatie\Enum\Laravel\Casts\EnumValue;
-use Spatie\Enum\Laravel\Casts\EnumValueCollection;
-use Spatie\Enum\Laravel\HasEnums;
+use Spatie\Enum\Laravel\Casts\EnumCast;
+use Spatie\Enum\Laravel\Casts\EnumCollectionCast;
 
 /**
  * @property \Spatie\Enum\Laravel\Tests\Extra\StatusEnum status
@@ -21,21 +19,15 @@ use Spatie\Enum\Laravel\HasEnums;
  */
 class Post extends Model
 {
-    use HasEnums;
-
     protected $table = 'posts';
 
     protected $guarded = [];
 
-    protected $enums = [
-        'invalid_enum' => Post::class,
-        'nullable_enum' => StatusEnum::class.':nullable',
-        'nullable_array_of_enums' => StatusEnum::class.':nullable,array',
-    ];
-
     protected $casts = [
-        'status' => EnumValue::class.':'.StatusEnum::class,
-        'array_of_enums' => EnumValueCollection::class.':'.StatusEnum::class,
+        'status' => StatusEnum::class,
+        'nullable_enum' => EnumCast::class.':'.StatusEnum::class.',nullable',
+        'array_of_enums' => EnumCollectionCast::class.':'.StatusEnum::class,
+        'nullable_array_of_enums' => EnumCollectionCast::class.':'.StatusEnum::class.',nullable',
     ];
 
     public static function migrate()

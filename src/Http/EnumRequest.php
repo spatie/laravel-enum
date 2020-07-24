@@ -4,7 +4,7 @@ namespace Spatie\Enum\Laravel\Http;
 
 use Closure;
 use Illuminate\Support\Arr;
-use Spatie\Enum\Enumerable;
+use Spatie\Enum\Enum;
 
 /**
  * @internal This class is only used to get mixed into \Illuminate\Http\Request
@@ -23,7 +23,7 @@ final class EnumRequest
             if (isset($transformations[EnumRequest::REQUEST_ROUTE])) {
                 $route = $this->route();
 
-                /** @var string|Enumerable $enumClass */
+                /** @var string|Enum $enumClass */
                 foreach ($transformations[EnumRequest::REQUEST_ROUTE] as $key => $enumClass) {
                     if (! $route->hasParameter($key)) {
                         continue;
@@ -40,7 +40,7 @@ final class EnumRequest
             }
 
             if (isset($transformations[EnumRequest::REQUEST_QUERY])) {
-                /** @var string|Enumerable $enumClass */
+                /** @var string|Enum $enumClass */
                 foreach ($transformations[EnumRequest::REQUEST_QUERY] as $key => $enumClass) {
                     if (! $this->query->has($key)) {
                         continue;
@@ -57,7 +57,7 @@ final class EnumRequest
             }
 
             if (isset($transformations[EnumRequest::REQUEST_REQUEST])) {
-                /** @var string|Enumerable $enumClass */
+                /** @var string|Enum $enumClass */
                 foreach ($transformations[EnumRequest::REQUEST_REQUEST] as $key => $enumClass) {
                     if (! $this->request->has($key)) {
                         continue;
@@ -73,7 +73,7 @@ final class EnumRequest
                 }
             }
 
-            /** @var string|Enumerable $enumClass */
+            /** @var string|Enum $enumClass */
             foreach (Arr::except($transformations, [EnumRequest::REQUEST_ROUTE, EnumRequest::REQUEST_QUERY, EnumRequest::REQUEST_REQUEST]) as $key => $enumClass) {
                 if (! isset($this[$key])) {
                     continue;

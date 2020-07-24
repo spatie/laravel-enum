@@ -3,13 +3,13 @@
 namespace Spatie\Enum\Laravel\Tests\Casts;
 
 use InvalidArgumentException;
-use Spatie\Enum\Laravel\Casts\EnumValue;
+use Spatie\Enum\Laravel\Casts\EnumCast;
 use Spatie\Enum\Laravel\Exceptions\NotNullableEnumField;
 use Spatie\Enum\Laravel\Tests\Extra\Post;
 use Spatie\Enum\Laravel\Tests\Extra\StatusEnum;
 use Spatie\Enum\Laravel\Tests\TestCase;
 
-final class EnumValueTest extends TestCase
+final class EnumCastTest extends TestCase
 {
     /**
      * @test
@@ -17,7 +17,7 @@ final class EnumValueTest extends TestCase
      */
     public function it_returns_correct_accessor_value($value, $expected, array $options = []): void
     {
-        $cast = new EnumValue(StatusEnum::class, ...$options);
+        $cast = new EnumCast(StatusEnum::class, ...$options);
 
         $this->assertSameEnum(
             $expected,
@@ -31,7 +31,7 @@ final class EnumValueTest extends TestCase
      */
     public function it_returns_correct_mutator_value($value, $expected, array $options = []): void
     {
-        $cast = new EnumValue(StatusEnum::class, ...$options);
+        $cast = new EnumCast(StatusEnum::class, ...$options);
 
         $this->assertSameEnum(
             $expected,
@@ -40,19 +40,11 @@ final class EnumValueTest extends TestCase
     }
 
     /** @test */
-    public function it_throws_exception_when_not_enumerable_class_passed_in(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-
-        new EnumValue(Post::class);
-    }
-
-    /** @test */
     public function it_throws_exception_when_null_value_accessed_but_not_nullable(): void
     {
         $this->expectException(NotNullableEnumField::class);
 
-        $cast = new EnumValue(StatusEnum::class);
+        $cast = new EnumCast(StatusEnum::class);
 
         $cast->get(new Post, 'key', null, []);
     }
@@ -62,10 +54,8 @@ final class EnumValueTest extends TestCase
         return [
             [null, null, ['nullable']],
             ['draft', StatusEnum::draft(), ['nullable']],
-            [0, StatusEnum::draft(), ['nullable']],
-
             ['draft', StatusEnum::draft()],
-            [0, StatusEnum::draft()],
+            [StatusEnum::draft(), StatusEnum::draft()],
         ];
     }
 
@@ -74,11 +64,9 @@ final class EnumValueTest extends TestCase
         return [
             [null, null, ['nullable']],
             ['draft', 'draft', ['nullable']],
-            [0, 'draft', ['nullable']],
             [StatusEnum::draft(), 'draft', ['nullable']],
 
             ['draft', 'draft'],
-            [0, 'draft'],
             [StatusEnum::draft(), 'draft'],
         ];
     }
