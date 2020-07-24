@@ -43,12 +43,7 @@ class EnumCollectionCast extends EnumCast
             return $this->handleNullValue($model, $key);
         }
 
-        return json_encode(
-            array_map(
-                fn (Enum $enum) => $enum->value,
-                $this->asEnums(Arr::wrap($value))
-            )
-        );
+        return json_encode($this->asEnums(Arr::wrap($value)));
     }
 
     /**
