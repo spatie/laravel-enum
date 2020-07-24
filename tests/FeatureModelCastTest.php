@@ -7,7 +7,7 @@ use Spatie\Enum\Laravel\Tests\Extra\Post;
 use Spatie\Enum\Laravel\Tests\Extra\StatusEnum;
 use stdClass;
 
-final class HasEnumsCastTest extends TestCase
+final class FeatureModelCastTest extends TestCase
 {
     /** @test */
     public function it_saves_the_value_of_an_enum()
@@ -94,5 +94,17 @@ final class HasEnumsCastTest extends TestCase
         $this->assertTrue($model->status->equals(StatusEnum::draft()));
         $this->assertEquals('draft', $model->getOriginal('status'));
         $this->assertNull($model->nullable_array_of_enums);
+    }
+
+    /** @test */
+    public function it_can_cast_enum_to_json(): void
+    {
+        $model = Post::create([
+            'status' => StatusEnum::draft(),
+        ]);
+
+        $model->refresh();
+
+        $this->assertSame('"draft"', $model->status->toJson());
     }
 }
