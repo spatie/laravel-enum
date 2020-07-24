@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-use Spatie\Enum\Enum;
+use Spatie\Enum\Laravel\Enum;
 
 final class WeekDay extends Enum
 {

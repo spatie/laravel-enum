@@ -2,7 +2,7 @@
 
 namespace DummyNamespace;
 
-use Spatie\Enum\Enum;
+use Spatie\Enum\Laravel\Enum;
 /** DummyDocBlock */
 final class DummyClass extends Enum
 {
