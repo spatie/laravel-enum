@@ -14,7 +14,7 @@ class EnumServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        if($this->app->runningInConsole()) {
+        if ($this->app->runningInConsole()) {
             $this->publishes([
                 __DIR__.'/../resources/lang' => resource_path('lang/vendor/enum'),
             ], 'translation');
