@@ -31,10 +31,7 @@ final class EnumRequest
 
                     $route->setParameter(
                         $key,
-                        forward_static_call(
-                            [$enumClass, 'make'],
-                            $route->parameter($key)
-                        )
+                        $enumClass::make($route->parameter($key))
                     );
                 }
             }
@@ -48,10 +45,7 @@ final class EnumRequest
 
                     $this->query->set(
                         $key,
-                        forward_static_call(
-                            [$enumClass, 'make'],
-                            $this->query->get($key)
-                        )
+                        $enumClass::make($this->query->get($key))
                     );
                 }
             }
@@ -65,10 +59,7 @@ final class EnumRequest
 
                     $this->request->set(
                         $key,
-                        forward_static_call(
-                            [$enumClass, 'make'],
-                            $this->request->get($key)
-                        )
+                        $enumClass::make($this->request->get($key))
                     );
                 }
             }
@@ -79,10 +70,7 @@ final class EnumRequest
                     continue;
                 }
 
-                $this[$key] = forward_static_call(
-                    [$enumClass, 'make'],
-                    $this[$key]
-                );
+                $this[$key] = $enumClass::make($this[$key]);
             }
         };
     }
