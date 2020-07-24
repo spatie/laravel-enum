@@ -11,7 +11,7 @@ use Spatie\Enum\Enum;
 
 class EnumRule implements Rule
 {
-    /** @var string|Enum  */
+    /** @var string|Enum */
     protected $enum;
 
     protected string $attribute;

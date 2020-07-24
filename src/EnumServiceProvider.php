@@ -8,10 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 use Spatie\Enum\Laravel\Commands\MakeEnum;
 use Spatie\Enum\Laravel\Http\EnumRequest;
-use Spatie\Enum\Laravel\Rules\EnumIndexRule;
-use Spatie\Enum\Laravel\Rules\EnumNameRule;
 use Spatie\Enum\Laravel\Rules\EnumRule;
-use Spatie\Enum\Laravel\Rules\EnumValueRule;
 
 class EnumServiceProvider extends ServiceProvider
 {

@@ -4,7 +4,6 @@ namespace Spatie\Enum\Laravel\Casts;
 
 use Illuminate\Support\Arr;
 use Spatie\Enum\Enum;
-use Spatie\Enum\Enumerable;
 
 class EnumCollectionCast extends EnumCast
 {

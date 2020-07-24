@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Spatie\Enum\Enum;
-use Spatie\Enum\Enumerable;
 use Spatie\Enum\Laravel\EnumServiceProvider;
 use Spatie\Enum\Laravel\Tests\Extra\InvalidNullablePost;
 use Spatie\Enum\Laravel\Tests\Extra\Post;

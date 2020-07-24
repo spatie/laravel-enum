@@ -2,9 +2,7 @@
 
 namespace Spatie\Enum\Laravel\Tests\Casts;
 
-use InvalidArgumentException;
 use Spatie\Enum\Laravel\Casts\EnumCollectionCast;
-use Spatie\Enum\Laravel\Casts\EnumValueCollection;
 use Spatie\Enum\Laravel\Exceptions\NotNullableEnumField;
 use Spatie\Enum\Laravel\Tests\Extra\Post;
 use Spatie\Enum\Laravel\Tests\Extra\StatusEnum;

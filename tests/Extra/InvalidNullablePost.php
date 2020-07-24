@@ -5,7 +5,6 @@ namespace Spatie\Enum\Laravel\Tests\Extra;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Spatie\Enum\Laravel\HasEnums;
 
 /**
  * @property \Spatie\Enum\Laravel\Tests\Extra\StatusEnum status

@@ -4,9 +4,7 @@ namespace Spatie\Enum\Laravel\Tests\Rules;
 
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Validator;
-use InvalidArgumentException;
 use Spatie\Enum\Laravel\Rules\EnumRule;
-use Spatie\Enum\Laravel\Tests\Extra\Post;
 use Spatie\Enum\Laravel\Tests\Extra\StatusEnum;
 use Spatie\Enum\Laravel\Tests\TestCase;
 

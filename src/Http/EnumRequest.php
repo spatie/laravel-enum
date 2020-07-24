@@ -20,11 +20,11 @@ final class EnumRequest
     public function transformEnums(): Closure
     {
         return function (array $transformations): void {
-            if (isset($transformations[EnumRequest::REQUEST_ROUTE])) {
+            if (isset($transformations[self::REQUEST_ROUTE])) {
                 $route = $this->route();
 
                 /** @var string|Enum $enumClass */
-                foreach ($transformations[EnumRequest::REQUEST_ROUTE] as $key => $enumClass) {
+                foreach ($transformations[self::REQUEST_ROUTE] as $key => $enumClass) {
                     if (! $route->hasParameter($key)) {
                         continue;
                     }
@@ -39,9 +39,9 @@ final class EnumRequest
                 }
             }
 
-            if (isset($transformations[EnumRequest::REQUEST_QUERY])) {
+            if (isset($transformations[self::REQUEST_QUERY])) {
                 /** @var string|Enum $enumClass */
-                foreach ($transformations[EnumRequest::REQUEST_QUERY] as $key => $enumClass) {
+                foreach ($transformations[self::REQUEST_QUERY] as $key => $enumClass) {
                     if (! $this->query->has($key)) {
                         continue;
                     }
@@ -56,9 +56,9 @@ final class EnumRequest
                 }
             }
 
-            if (isset($transformations[EnumRequest::REQUEST_REQUEST])) {
+            if (isset($transformations[self::REQUEST_REQUEST])) {
                 /** @var string|Enum $enumClass */
-                foreach ($transformations[EnumRequest::REQUEST_REQUEST] as $key => $enumClass) {
+                foreach ($transformations[self::REQUEST_REQUEST] as $key => $enumClass) {
                     if (! $this->request->has($key)) {
                         continue;
                     }
@@ -74,7 +74,7 @@ final class EnumRequest
             }
 
             /** @var string|Enum $enumClass */
-            foreach (Arr::except($transformations, [EnumRequest::REQUEST_ROUTE, EnumRequest::REQUEST_QUERY, EnumRequest::REQUEST_REQUEST]) as $key => $enumClass) {
+            foreach (Arr::except($transformations, [self::REQUEST_ROUTE, self::REQUEST_QUERY, self::REQUEST_REQUEST]) as $key => $enumClass) {
                 if (! isset($this[$key])) {
                     continue;
                 }
