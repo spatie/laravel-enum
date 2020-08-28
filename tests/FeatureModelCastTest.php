@@ -2,7 +2,6 @@
 
 namespace Spatie\Enum\Laravel\Tests;
 
-use ErrorException;
 use Spatie\Enum\Laravel\Tests\Extra\Post;
 use Spatie\Enum\Laravel\Tests\Extra\StatusEnum;
 use stdClass;
