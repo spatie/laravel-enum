@@ -6,6 +6,7 @@ use ErrorException;
 use Spatie\Enum\Laravel\Tests\Extra\Post;
 use Spatie\Enum\Laravel\Tests\Extra\StatusEnum;
 use stdClass;
+use TypeError;
 
 final class FeatureModelCastTest extends TestCase
 {
@@ -23,9 +24,9 @@ final class FeatureModelCastTest extends TestCase
     }
 
     /** @test */
-    public function an_invalid_class_throws_an_error()
+    public function an_invalid_value_throws_an_error()
     {
-        $this->expectException(ErrorException::class);
+        $this->expectException(TypeError::class);
 
         Post::create([
             'status' => new stdClass(),

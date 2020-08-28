@@ -9,7 +9,7 @@ class EnumCollectionCast extends EnumCast
     /**
      * @param \Illuminate\Database\Eloquent\Model $model
      * @param string $key
-     * @param int[]|string[]|null|mixed $value
+     * @param string|null $value
      * @param array $attributes
      *
      * @return \Spatie\Enum\Enum[]|null
@@ -31,7 +31,7 @@ class EnumCollectionCast extends EnumCast
     /**
      * @param \Illuminate\Database\Eloquent\Model $model
      * @param string $key
-     * @param int[]|string[]|\Spatie\Enum\Enum[]|null|mixed $value
+     * @param int[]|string[]|\Spatie\Enum\Enum[]|null $value
      * @param array $attributes
      *
      * @return string|null
@@ -50,6 +50,7 @@ class EnumCollectionCast extends EnumCast
      *
      * @return \Spatie\Enum\Enum[]
      *
+     * @throws \TypeError
      * @throws \BadMethodCallException
      */
     protected function asEnums(array $values): array

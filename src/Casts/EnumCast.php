@@ -65,6 +65,7 @@ class EnumCast implements CastsAttributes
      *
      * @return \Spatie\Enum\Enum
      *
+     * @throws \TypeError
      * @throws \BadMethodCallException
      *
      * @see \Spatie\Enum\Enum::make()
