@@ -1,8 +1,5 @@
 preset: laravel
 
-disabled:
-  - self_accessor
-
 finder:
   exclude:
     - "tests/stubs"
