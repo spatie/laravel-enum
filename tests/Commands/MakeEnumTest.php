@@ -20,7 +20,7 @@ class MakeEnumTest extends TestCase
     /** @test */
     public function it_can_run_the_make_command(): void
     {
-        $this->runMakeCommand('weekdays.empty.php');
+        $this->runMakeCommand('weekdays.empty.stub.php');
     }
 
     /** @test */
@@ -36,7 +36,7 @@ class MakeEnumTest extends TestCase
             'sunday',
         ];
 
-        $this->runMakeCommand('weekdays.camel.methods.php', [
+        $this->runMakeCommand('weekdays.camel.methods.stub.php', [
             '--method' => $methods,
         ]);
     }
@@ -54,7 +54,7 @@ class MakeEnumTest extends TestCase
             'Sunday' => 'sunday',
         ];
 
-        $this->runMakeCommand('weekdays.studly.methods.php', [
+        $this->runMakeCommand('weekdays.studly.methods.stub.php', [
             '--method' => array_values($values),
             '--formatter' => 'studly',
         ]);
@@ -73,7 +73,7 @@ class MakeEnumTest extends TestCase
             'sun_day' => 'sun day',
         ];
 
-        $this->runMakeCommand('weekdays.snake.methods.php', [
+        $this->runMakeCommand('weekdays.snake.methods.stub.php', [
             '--method' => array_values($values),
             '--formatter' => 'snake',
         ]);
@@ -92,7 +92,7 @@ class MakeEnumTest extends TestCase
             'SUN_DAY' => 'sun day',
         ];
 
-        $this->runMakeCommand('weekdays.const.methods.php', [
+        $this->runMakeCommand('weekdays.const.methods.stub.php', [
             '--method' => array_values($values),
             '--formatter' => 'const',
         ]);
@@ -111,7 +111,7 @@ class MakeEnumTest extends TestCase
             'sunday' => 'Sunday',
         ];
 
-        $this->runMakeCommand('weekdays.camel.values.php', [
+        $this->runMakeCommand('weekdays.camel.values.stub.php', [
             '--value' => $values,
         ]);
     }
@@ -129,7 +129,7 @@ class MakeEnumTest extends TestCase
             'Sunday' => 'sunday',
         ];
 
-        $this->runMakeCommand('weekdays.studly.values.php', [
+        $this->runMakeCommand('weekdays.studly.values.stub.php', [
             '--value' => $values,
             '--formatter' => 'studly',
         ]);
@@ -148,7 +148,7 @@ class MakeEnumTest extends TestCase
             'sun_day' => 'sun day',
         ];
 
-        $this->runMakeCommand('weekdays.snake.values.php', [
+        $this->runMakeCommand('weekdays.snake.values.stub.php', [
             '--value' => $values,
             '--formatter' => 'snake',
         ]);
@@ -167,7 +167,7 @@ class MakeEnumTest extends TestCase
             'SUN_DAY' => 'sun day',
         ];
 
-        $this->runMakeCommand('weekdays.const.values.php', [
+        $this->runMakeCommand('weekdays.const.values.stub.php', [
             '--value' => $values,
             '--formatter' => 'const',
         ]);
