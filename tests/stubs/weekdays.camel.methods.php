@@ -15,4 +15,5 @@ use Spatie\Enum\Enum;
  */
 final class WeekDay extends Enum
 {
+
 }
