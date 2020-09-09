@@ -7,12 +7,17 @@ use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Contracts\Support\Jsonable;
 use Spatie\Enum\Enum as BaseEnum;
 use Spatie\Enum\Laravel\Casts\EnumCast;
+use Spatie\Enum\Laravel\Casts\EnumCollectionCast;
 
 abstract class Enum extends BaseEnum implements Jsonable, Castable
 {
-    public static function castUsing(): CastsAttributes
+    public static function castUsing(array $arguments): CastsAttributes
     {
-        return new EnumCast(static::class);
+        if (in_array('collection', $arguments)) {
+            return new EnumCollectionCast(static::class, ...$arguments);
+        }
+
+        return new EnumCast(static::class, ...$arguments);
     }
 
     public function toJson($options = 0): string

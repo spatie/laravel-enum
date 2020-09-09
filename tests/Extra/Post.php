@@ -25,9 +25,9 @@ class Post extends Model
 
     protected $casts = [
         'status' => StatusEnum::class,
-        'nullable_enum' => EnumCast::class.':'.StatusEnum::class.',nullable',
-        'array_of_enums' => EnumCollectionCast::class.':'.StatusEnum::class,
-        'nullable_array_of_enums' => EnumCollectionCast::class.':'.StatusEnum::class.',nullable',
+        'nullable_enum' => StatusEnum::class.':nullable',
+        'array_of_enums' => StatusEnum::class.':collection',
+        'nullable_array_of_enums' => StatusEnum::class.':collection,nullable',
     ];
 
     public static function migrate()
