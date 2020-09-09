@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-enum` will be documented in this file
 
+## 1.6.1 - 2020-09-09
+
+- Support for Laravel 8
+
 ## 1.6.0 - 2020-04-30
 
 - add array of enums cast [#43](https://github.com/spatie/laravel-enum/pull/43)
