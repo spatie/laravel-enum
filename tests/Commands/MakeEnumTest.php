@@ -20,7 +20,7 @@ class MakeEnumTest extends TestCase
     /** @test */
     public function it_can_run_the_make_command(): void
     {
-        $this->runMakeCommand('weekdays.empty.php');
+        $this->runMakeCommand('weekdays.empty.stub.php');
     }
 
     /** @test */
@@ -36,7 +36,7 @@ class MakeEnumTest extends TestCase
             'sunday',
         ];
 
-        $this->runMakeCommand('weekdays.methods.php', [
+        $this->runMakeCommand('weekdays.methods.stub.php', [
             '--method' => $methods,
         ]);
     }
