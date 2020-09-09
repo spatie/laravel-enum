@@ -9,6 +9,7 @@ use Symfony\Component\Console\Input\InputOption;
 class MakeEnum extends GeneratorCommand
 {
     protected $name = 'make:enum';
+
     protected $description = 'Create a new enum';
 
     public function handle()
