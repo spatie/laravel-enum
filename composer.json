@@ -38,8 +38,12 @@
         "bensampo/laravel-enum": "*"
     },
     "require-dev": {
+        "fzaninotto/faker": "^1.9.1",
         "orchestra/testbench": "^5.0 || ^6.0",
         "phpunit/phpunit": "^9.3"
+    },
+    "suggest": {
+        "fzaninotto/faker": "^1.9.1"
     },
     "config": {
         "sort-packages": true

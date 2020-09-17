@@ -12,7 +12,7 @@ use Spatie\Enum\Laravel\Rules\EnumRule;
 
 class EnumServiceProvider extends ServiceProvider
 {
-    public function boot()
+    public function boot(): void
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
@@ -25,7 +25,7 @@ class EnumServiceProvider extends ServiceProvider
         $this->bootValidationRules();
     }
 
-    public function register()
+    public function register(): void
     {
         $this->app->bind('command.make:enum', MakeEnum::class);
 
@@ -36,7 +36,7 @@ class EnumServiceProvider extends ServiceProvider
         $this->registerRequestTransformMacro();
     }
 
-    protected function registerRequestTransformMacro()
+    protected function registerRequestTransformMacro(): void
     {
         Request::mixin(new EnumRequest);
     }
