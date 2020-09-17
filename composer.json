@@ -40,7 +40,8 @@
     "require-dev": {
         "fzaninotto/faker": "^1.9.1",
         "orchestra/testbench": "^5.0 || ^6.0",
-        "phpunit/phpunit": "^9.3"
+        "phpunit/phpunit": "^9.3",
+        "vimeo/psalm": "^3.12"
     },
     "suggest": {
         "fzaninotto/faker": "^1.9.1"
@@ -68,6 +69,7 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
+        "psalm": "vendor/bin/psalm -c psalm.xml",
         "test": "vendor/bin/phpunit",
         "test-coverage": "vendor/bin/phpunit --coverage-html=build"
     }
