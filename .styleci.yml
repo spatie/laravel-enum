@@ -1,0 +1,5 @@
+preset: laravel
+
+finder:
+  exclude:
+    - "tests/stubs"
