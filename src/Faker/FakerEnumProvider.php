@@ -23,7 +23,7 @@ class FakerEnumProvider extends Base
     }
 
     /**
-     * A random value of the enum you pass in.
+     * A random instance of the enum you pass in.
      *
      * @param string $enum
      *
