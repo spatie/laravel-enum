@@ -14,7 +14,7 @@ class EnumRule implements Rule
     /** @var string|Enum */
     protected $enum;
 
-    protected string $attribute;
+    protected ?string $attribute = null;
 
     /** @var mixed */
     protected $value;

@@ -14,6 +14,11 @@ abstract class Cast implements CastsAttributes
 
     protected bool $isNullable = false;
 
+    /**
+     * Cast constructor.
+     * @param string $enumClass
+     * @param string[] ...$options
+     */
     public function __construct(string $enumClass, ...$options)
     {
         $this->enumClass = $enumClass;
