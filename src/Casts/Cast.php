@@ -1,5 +1,7 @@
 <?php
 
+namespace Spatie\Enum\Laravel\Casts;
+
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Enum\Enum;

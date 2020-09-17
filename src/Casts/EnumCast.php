@@ -2,8 +2,6 @@
 
 namespace Spatie\Enum\Laravel\Casts;
 
-use Cast;
-
 class EnumCast extends Cast
 {
     /**

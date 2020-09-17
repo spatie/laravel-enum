@@ -2,7 +2,6 @@
 
 namespace Spatie\Enum\Laravel\Casts;
 
-use Cast;
 use Illuminate\Support\Arr;
 
 class EnumCollectionCast extends Cast
