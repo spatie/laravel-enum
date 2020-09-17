@@ -64,7 +64,7 @@ class EnumRule implements Rule
     {
         return Arr::get(
             Lang::get('enum::validation.enums'),
-            $this->enum.'.'.Str::slug($this->asEnum($value)->value, '_')
+            $this->enum.'.'.Str::slug((string) $this->asEnum($value), '_')
         );
     }
 

@@ -2,14 +2,15 @@
 
 namespace Spatie\Enum\Laravel\Casts;
 
+use Cast;
 use Illuminate\Support\Arr;
 
-class EnumCollectionCast extends EnumCast
+class EnumCollectionCast extends Cast
 {
     /**
      * @param \Illuminate\Database\Eloquent\Model $model
      * @param string $key
-     * @param string|null $value
+     * @param string|null|mixed $value
      * @param array $attributes
      *
      * @return \Spatie\Enum\Enum[]|null
@@ -31,7 +32,7 @@ class EnumCollectionCast extends EnumCast
     /**
      * @param \Illuminate\Database\Eloquent\Model $model
      * @param string $key
-     * @param int[]|string[]|\Spatie\Enum\Enum[]|null $value
+     * @param int[]|string[]|\Spatie\Enum\Enum[]|null|mixed $value
      * @param array $attributes
      *
      * @return string|null
