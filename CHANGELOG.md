@@ -2,11 +2,11 @@
 
 All notable changes to `laravel-enum` will be documented in this file
 
-## 2.0.0 - 2020-xx-xx
+## 2.0.0 - 2020-09-21
 
 -   upgrade [spatie/enum](https://github.com/spatie/enum) to _v3_ - [spatie/enum#56](https://github.com/spatie/enum/pull/56)
 -   drop **PHP** support for `7.2` and `7.3`
--   drop **Laravel** support for `5.8` and `6.0`
+-   drop **Laravel** support for `5.8` and `6.0` and `7.0`
 -   drop several custom exceptions:
     -   `ExpectsArrayOfEnumsField`
     -   `InvalidEnumError`
@@ -16,6 +16,7 @@ All notable changes to `laravel-enum` will be documented in this file
 -   reduce `make:enum` command to `--method` option - no value/label mapping or method name formatting any more
 -   add Laravel focused base `Enum` class which implements `Jsonable, Castable`
 -   drop `enum_index|EnumIndexRule`, `enum_name|EnumNameRule` and `enum_value|EnumValueRule` validation rules
+- add [Faker](https://github.com/fzaninotto/Faker) provider to generate random enum instances, values and labels `\Spatie\Enum\Laravel\Faker\FakerEnumProvider`
 
 ## 1.6.1 - 2020-09-09
 
