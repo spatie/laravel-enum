@@ -16,7 +16,7 @@ All notable changes to `laravel-enum` will be documented in this file
 -   reduce `make:enum` command to `--method` option - no value/label mapping or method name formatting any more
 -   add Laravel focused base `Enum` class which implements `Jsonable, Castable`
 -   drop `enum_index|EnumIndexRule`, `enum_name|EnumNameRule` and `enum_value|EnumValueRule` validation rules
-- add [Faker](https://github.com/fzaninotto/Faker) provider to generate random enum instances, values and labels `\Spatie\Enum\Laravel\Faker\FakerEnumProvider`
+-   add [Faker](https://github.com/fzaninotto/Faker) provider to generate random enum instances, values and labels `\Spatie\Enum\Laravel\Faker\FakerEnumProvider`
 
 ## 1.6.1 - 2020-09-09
 
