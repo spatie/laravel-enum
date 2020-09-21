@@ -5,7 +5,6 @@ namespace Spatie\Enum\Laravel\Tests\Extra;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Spatie\Enum\Laravel\HasEnums;
 
 /**
  * @property \Spatie\Enum\Laravel\Tests\Extra\StatusEnum status
@@ -18,22 +17,15 @@ use Spatie\Enum\Laravel\HasEnums;
  */
 class Post extends Model
 {
-    use HasEnums;
-
     protected $table = 'posts';
 
     protected $guarded = [];
 
-    protected $enums = [
-        'status' => StatusEnum::class,
-        'invalid_enum' => Post::class,
-        'nullable_enum' => StatusEnum::class.':nullable',
-        'array_of_enums' => StatusEnum::class.':array',
-        'nullable_array_of_enums' => StatusEnum::class.':nullable,array',
-    ];
-
     protected $casts = [
-        'array_of_enums' => 'array',
+        'status' => StatusEnum::class,
+        'nullable_enum' => StatusEnum::class.':nullable',
+        'array_of_enums' => StatusEnum::class.':collection',
+        'nullable_array_of_enums' => StatusEnum::class.':collection,nullable',
     ];
 
     public static function migrate()

@@ -32,45 +32,7 @@ final class EnumRequestTest extends TestCase
         ]);
 
         $this->assertInstanceOf(StatusEnum::class, $request->query->get('status'));
-        $this->assertEquals('DRAFT', $request->query->get('status')->getName());
-    }
-
-    /** @test */
-    public function it_can_transform_a_request_get_parameter_to_enum_by_index()
-    {
-        $request = $this->createRequest(
-            [
-                'status' => 1,
-            ]
-        );
-
-        $request->transformEnums([
-            EnumRequest::REQUEST_QUERY => [
-                'status' => StatusEnum::class,
-            ],
-        ]);
-
-        $this->assertInstanceOf(StatusEnum::class, $request->query->get('status'));
-        $this->assertEquals('PUBLISHED', $request->query->get('status')->getName());
-    }
-
-    /** @test */
-    public function it_can_transform_a_request_get_parameter_to_enum_by_value()
-    {
-        $request = $this->createRequest(
-            [
-                'status' => 'stored archive',
-            ]
-        );
-
-        $request->transformEnums([
-            EnumRequest::REQUEST_QUERY => [
-                'status' => StatusEnum::class,
-            ],
-        ]);
-
-        $this->assertInstanceOf(StatusEnum::class, $request->query->get('status'));
-        $this->assertEquals('ARCHIVED', $request->query->get('status')->getName());
+        $this->assertTrue(StatusEnum::draft()->equals($request->query->get('status')));
     }
 
     /** @test */
@@ -129,49 +91,7 @@ final class EnumRequestTest extends TestCase
         ]);
 
         $this->assertInstanceOf(StatusEnum::class, $request->request->get('status'));
-        $this->assertEquals('DRAFT', $request->request->get('status')->getName());
-    }
-
-    /** @test */
-    public function it_can_transform_a_request_post_parameter_to_enum_by_index()
-    {
-        $request = $this->createRequest(
-            [],
-            Request::METHOD_POST,
-            [
-                'status' => 1,
-            ]
-        );
-
-        $request->transformEnums([
-            EnumRequest::REQUEST_REQUEST => [
-                'status' => StatusEnum::class,
-            ],
-        ]);
-
-        $this->assertInstanceOf(StatusEnum::class, $request->request->get('status'));
-        $this->assertEquals('PUBLISHED', $request->request->get('status')->getName());
-    }
-
-    /** @test */
-    public function it_can_transform_a_request_post_parameter_to_enum_by_value()
-    {
-        $request = $this->createRequest(
-            [],
-            Request::METHOD_POST,
-            [
-                'status' => 'stored archive',
-            ]
-        );
-
-        $request->transformEnums([
-            EnumRequest::REQUEST_REQUEST => [
-                'status' => StatusEnum::class,
-            ],
-        ]);
-
-        $this->assertInstanceOf(StatusEnum::class, $request->request->get('status'));
-        $this->assertEquals('ARCHIVED', $request->request->get('status')->getName());
+        $this->assertTrue(StatusEnum::draft()->equals($request->request->get('status')));
     }
 
     /** @test */
@@ -228,8 +148,7 @@ final class EnumRequestTest extends TestCase
         ]);
 
         $this->assertInstanceOf(LocaleEnum::class, $request->route('locale'));
-        $this->assertEquals('EN', $request->route('locale')->getName());
-        $this->assertEquals('en', $request->route('locale')->getValue());
+        $this->assertTrue(LocaleEnum::en()->equals($request->route('locale')));
     }
 
     /** @test */
@@ -275,11 +194,10 @@ final class EnumRequestTest extends TestCase
         ]);
 
         $this->assertInstanceOf(LocaleEnum::class, $request['locale']);
-        $this->assertEquals('EN', $request['locale']->getName());
-        $this->assertEquals('en', $request['locale']->getValue());
+        $this->assertTrue(LocaleEnum::en()->equals($request['locale']));
 
         $this->assertInstanceOf(StatusEnum::class, $request['status']);
-        $this->assertEquals('DRAFT', $request['status']->getName());
+        $this->assertTrue(StatusEnum::draft()->equals($request['status']));
     }
 
     /** @test */

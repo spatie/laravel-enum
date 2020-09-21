@@ -5,6 +5,7 @@ namespace Spatie\Enum\Laravel\Tests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
+use Spatie\Enum\Enum;
 use Spatie\Enum\Laravel\EnumServiceProvider;
 use Spatie\Enum\Laravel\Tests\Extra\InvalidNullablePost;
 use Spatie\Enum\Laravel\Tests\Extra\Post;
@@ -77,5 +78,40 @@ abstract class TestCase extends OrchestraTestCase
         });
 
         return $request;
+    }
+
+    /**
+     * @param \Spatie\Enum\Enum|null $expected
+     * @param mixed $actual
+     */
+    protected function assertSameEnum($expected, $actual)
+    {
+        if (is_null($expected)) {
+            $this->assertNull($actual);
+        }
+
+        if (is_object($expected)) {
+            $this->assertInstanceOf(Enum::class, $actual);
+            $this->assertInstanceOf(get_class($expected), $actual);
+            $this->assertEquals($expected, $actual);
+            $this->assertSame($expected->value, $actual->value);
+            $this->assertTrue($expected->equals($actual));
+        }
+
+        if (is_array($expected)) {
+            $this->assertIsArray($actual);
+            $this->assertCount(count($expected), $actual);
+            foreach ($actual as $i => $value) {
+                $this->assertSameEnum($expected[$i], $value);
+            }
+        }
+
+        $this->assertTrue(
+            is_null($actual)
+            || is_int($actual)
+            || is_string($actual)
+            || is_array($actual)
+            || is_object($actual)
+        );
     }
 }

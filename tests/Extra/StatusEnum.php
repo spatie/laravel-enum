@@ -2,7 +2,7 @@
 
 namespace Spatie\Enum\Laravel\Tests\Extra;
 
-use Spatie\Enum\Enum;
+use Spatie\Enum\Laravel\Enum;
 
 /**
  * @method static self draft()
@@ -11,7 +11,10 @@ use Spatie\Enum\Enum;
  */
 final class StatusEnum extends Enum
 {
-    const MAP_VALUE = [
-        'archived' => 'stored archive',
-    ];
+    protected static function values(): array
+    {
+        return [
+            'archived' => 'stored archive',
+        ];
+    }
 }

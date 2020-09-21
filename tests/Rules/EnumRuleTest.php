@@ -4,23 +4,12 @@ namespace Spatie\Enum\Laravel\Tests\Rules;
 
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Validator;
-use InvalidArgumentException;
 use Spatie\Enum\Laravel\Rules\EnumRule;
-use Spatie\Enum\Laravel\Tests\Extra\Post;
 use Spatie\Enum\Laravel\Tests\Extra\StatusEnum;
 use Spatie\Enum\Laravel\Tests\TestCase;
 
 final class EnumRuleTest extends TestCase
 {
-    /** @test */
-    public function it_will_validate_an_index()
-    {
-        $rule = new EnumRule(StatusEnum::class);
-
-        $this->assertTrue($rule->passes('attribute', 1));
-        $this->assertFalse($rule->passes('attribute', 5));
-    }
-
     /** @test */
     public function it_will_validate_a_name()
     {
@@ -37,22 +26,6 @@ final class EnumRuleTest extends TestCase
 
         $this->assertTrue($rule->passes('attribute', 'stored archive'));
         $this->assertFalse($rule->passes('attribute', 'stored draft'));
-    }
-
-    /** @test */
-    public function it_will_throw_an_exception_if_not_existing_class_passed()
-    {
-        $this->expectException(InvalidArgumentException::class);
-
-        new EnumRule('foobar/enum');
-    }
-
-    /** @test */
-    public function it_will_throw_an_exception_if_invalid_class_passed()
-    {
-        $this->expectException(InvalidArgumentException::class);
-
-        new EnumRule(Post::class);
     }
 
     /** @test */
@@ -119,7 +92,7 @@ final class EnumRuleTest extends TestCase
             'validation.enums.'.StatusEnum::class => [
                 'draft' => 'entwurf',
                 'published' => 'veröffentlicht',
-                'archived' => 'archiviert',
+                'stored_archive' => 'archiviert',
             ],
         ], Lang::getLocale(), 'enum');
 
@@ -132,14 +105,13 @@ final class EnumRuleTest extends TestCase
     public function it_can_resolve_validator_extension_and_pass_validation()
     {
         $validator = Validator::make([
-            'attribute' => 1,
+            'attribute' => 'draft',
         ], [
             'attribute' => 'enum:'.StatusEnum::class,
         ]);
 
         $this->assertTrue($validator->passes());
 
-        $this->assertTrue($validator->validateEnum('attribute', 1, [StatusEnum::class], $validator));
         $this->assertTrue($validator->validateEnum('attribute', 'draft', [StatusEnum::class], $validator));
         $this->assertTrue($validator->validateEnum('attribute', 'stored archive', [StatusEnum::class], $validator));
     }

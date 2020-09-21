@@ -2,9 +2,8 @@
 
 namespace DummyNamespace;
 
-use Spatie\Enum\Enum;
-DummyDocBlock
+use Spatie\Enum\Laravel\Enum;
+/** DummyDocBlock */
 final class DummyClass extends Enum
 {
-DummyValueMapConst
 }
