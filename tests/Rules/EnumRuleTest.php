@@ -28,6 +28,30 @@ final class EnumRuleTest extends TestCase
         $this->assertFalse($rule->passes('attribute', 'stored draft'));
     }
 
+    /**
+     * @test
+     * @dataProvider provideInvalidTypes
+     */
+    public function it_will_not_validate_nor_throw_when_given_an_invalid_type($invalidType)
+    {
+        $rule = new EnumRule(StatusEnum::class);
+
+        $this->assertFalse($rule->passes('attribute', $invalidType));
+    }
+
+    public function provideInvalidTypes()
+    {
+        return [
+            [null],
+            [[]],
+            [['an', 'array', 'of', 'strings']],
+            [true],
+            [false],
+            [12.34],
+            [new \stdClass],
+        ];
+    }
+
     /** @test */
     public function it_returns_default_validation_message()
     {

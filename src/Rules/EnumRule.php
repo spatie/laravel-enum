@@ -2,13 +2,12 @@
 
 namespace Spatie\Enum\Laravel\Rules;
 
-use Error;
-use Exception;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Str;
 use Spatie\Enum\Enum;
+use Throwable;
 
 class EnumRule implements Rule
 {
@@ -34,7 +33,7 @@ class EnumRule implements Rule
             $this->asEnum($value);
 
             return true;
-        } catch (Error | Exception $ex) {
+        } catch (Throwable $ex) {
             return false;
         }
     }
