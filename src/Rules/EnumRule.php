@@ -2,6 +2,7 @@
 
 namespace Spatie\Enum\Laravel\Rules;
 
+use Error;
 use Exception;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Arr;
@@ -33,7 +34,7 @@ class EnumRule implements Rule
             $this->asEnum($value);
 
             return true;
-        } catch (Exception $ex) {
+        } catch (Error | Exception $ex) {
             return false;
         }
     }
