@@ -39,19 +39,6 @@ final class EnumRuleTest extends TestCase
         $this->assertFalse($rule->passes('attribute', $invalidType));
     }
 
-    public function provideInvalidTypes()
-    {
-        return [
-            [null],
-            [[]],
-            [['an', 'array', 'of', 'strings']],
-            [true],
-            [false],
-            [12.34],
-            [new \stdClass],
-        ];
-    }
-
     /** @test */
     public function it_returns_default_validation_message()
     {
@@ -154,5 +141,16 @@ final class EnumRuleTest extends TestCase
         $this->assertFalse($validator->validateEnum('attribute', 5, [StatusEnum::class], $validator));
         $this->assertFalse($validator->validateEnum('attribute', 'drafted', [StatusEnum::class], $validator));
         $this->assertFalse($validator->validateEnum('attribute', 'stored draft', [StatusEnum::class], $validator));
+    }
+
+    public function provideInvalidTypes(): array
+    {
+        return [
+            'null' => [null],
+            'bool' => [true],
+            'float' => [12.34],
+            'array' => [[]],
+            'object' => [new \stdClass],
+        ];
     }
 }
