@@ -52,6 +52,7 @@ $model->status->equals(StatusEnum::DRAFT());
 ```
 
 #### Example Enum Class
+
 ```php
 namespace App\Enums;
 
