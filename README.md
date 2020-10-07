@@ -51,6 +51,25 @@ $model->status = StatusEnum::DRAFT();
 $model->status->equals(StatusEnum::DRAFT());
 ```
 
+#### Example Enum Class
+```php
+namespace App\Enums;
+
+use Spatie\Enum\Laravel\Enum;
+
+/**
+ * @method static self DRAFT()
+ * @method static self PREVIEW()
+ * @method static self PUBLISHED()
+ * @method static self ARCHIVED()
+ */
+final class StatusEnum extends Enum
+{
+}
+```
+
+More information on working with the Enum class can be found in the [documentation of spatie/enum](https://spatie.be/docs/enum/v3/introduction).
+
 ### Validation Rule
 
 This package provides a validation rule to validate your request data against a given enumerable.
