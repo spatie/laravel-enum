@@ -70,7 +70,7 @@ class EnumRule implements Rule
 
     protected function getOtherValues(): array
     {
-        return array_keys(forward_static_call([$this->enum, 'toArray']));
+        return forward_static_call([$this->enum, 'toValues']);
     }
 
     /**

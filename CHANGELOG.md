@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-enum` will be documented in this file
 
+## 2.1.0 - 2020-10-22
+
+- migrate to base packages faker provider - [spatie/enum#74](https://github.com/spatie/enum/pull/74)
+
 ## 2.0.1 - 2020-10-03
 
 -   fix `\Spatie\Enum\Laravel\Rules\EnumRule` with invalid types passed in - [#54](https://github.com/spatie/laravel-enum/pull/54)

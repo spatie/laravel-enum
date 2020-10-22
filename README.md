@@ -207,21 +207,10 @@ You can use `--method` option to predefine some enum values - you can use them s
 ### Faker Provider
 
 It's very likely that you will have a model with an enum attribute and you want to generate random enum values in your model factory.
-Because doing so with default [faker](https://github.com/fzaninotto/Faker) is a lot of copy'n'paste we've got you covered with a faker provider.
-
-```php
-use Spatie\Enum\Laravel\Faker\FakerEnumProvider;
-use Faker\Generator as Faker;
-/** @var Faker|FakerEnumProvider $faker */
-
-FakerEnumProvider::register();
-
-$enum = $faker->randomEnum(StatusEnum::class);
-$value = $faker->randomEnumValue(StatusEnum::class);
-$value = $faker->randomEnumLabel(StatusEnum::class);
-```
-
+Because doing so with default [faker](https://github.com/fzaninotto/Faker) is a lot of copy'n'paste we've got you covered with a faker provider `Spatie\Enum\Laravel\Faker\FakerEnumProvider`.
 The static `register()` method is only a little helper - you can for sure register the provider the default way `$faker->addProvider(new FakerEnumProvider)`.
+
+The faker methods itself are inherited from the base packages [Faker Provider](https://github.com/spatie/enum#faker-provider).
 
 ## Testing
 
