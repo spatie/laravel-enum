@@ -21,7 +21,13 @@ class MakeEnum extends GeneratorCommand
 
     protected function getStub()
     {
-        return __DIR__.'/../../stubs/enum.php.stub';
+        $customStub = $this->laravel->basePath('stubs/spatie/enum.stub');
+
+        if (file_exists($customStub)) {
+            return $customStub;
+        }
+
+        return __DIR__.'/../../stubs/enum.stub';
     }
 
     protected function getDefaultNamespace($rootNamespace)
