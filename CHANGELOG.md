@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-enum` will be documented in this file
 
+## 2.2.0 - 2020-11-24
+
+- add customized enum stub logic - [#58](https://github.com/spatie/laravel-enum/pull/58)
+
 ## 2.1.0 - 2020-10-22
 
 -   migrate to base packages faker provider - [spatie/enum#74](https://github.com/spatie/enum/pull/74)
