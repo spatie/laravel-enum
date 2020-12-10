@@ -40,7 +40,7 @@
         "fzaninotto/faker": "^1.9.1",
         "orchestra/testbench": "^5.0 || ^6.0",
         "phpunit/phpunit": "^9.3",
-        "vimeo/psalm": "^3.12"
+        "vimeo/psalm": "^4.0"
     },
     "suggest": {
         "fzaninotto/faker": "^1.9.1"
