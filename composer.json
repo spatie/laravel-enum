@@ -31,14 +31,14 @@
         "illuminate/database": "^8.0",
         "illuminate/http": "^8.0",
         "illuminate/support": "^8.0",
-        "spatie/enum": "^3.5.0"
+        "spatie/enum": "^3.5"
     },
     "conflict": {
         "bensampo/laravel-enum": "*"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.9.1",
-        "orchestra/testbench": "^5.0 || ^6.0",
+        "orchestra/testbench": "^5.9 || ^6.6",
         "phpunit/phpunit": "^9.3",
         "vimeo/psalm": "^4.0"
     },
