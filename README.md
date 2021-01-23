@@ -198,6 +198,43 @@ new TransformEnums([
 ]);
 ```
 
+### Route Binding
+
+Beside using form requests, you can also use route binding. Similar [Laravel's Route Model Binding](https://laravel.com/docs/routing#route-model-binding), it automatically inject enum instances into your route action.
+
+#### Implicit Binding
+
+To use implicit route binding, be sure add `Spatie\Enum\Laravel\Http\Middleware\SubstituteBindings` middleware. For example, add it in your `app\Http\Kernel.php`:
+```php
+// app/Http/Kernel.php
+
+protected $middlewareGroups = [
+    'web' => [
+        // ...
+        \Spatie\Enum\Laravel\Http\Middleware\SubstituteBindings::class,
+    ],
+];
+```
+
+Use a type-hinted variable name that matches route segment to use implicit route binding.
+
+```php
+Route::get('/posts/{status}', function (StatusEnum $status) {
+    return $status;
+});
+```
+
+#### Explicit Binding
+
+To have an explicit binding, there is a `Route::enum()` macro:
+
+```php
+Route::enum('status', StatusEnum::class);
+Route::get('/posts/{status}', function (Request $request) {
+    return $request->route('status');
+});
+```
+
 ### Enum Make Command
 
 We provide an artisan make command which allows you to quickly create new enumerables.
