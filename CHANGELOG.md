@@ -4,7 +4,7 @@ All notable changes to `laravel-enum` will be documented in this file
 
 ## 2.3.0 - 2021-02-12
 
-- accept enum instance in validation rule (Livewire) - [#64](https://github.com/spatie/laravel-enum/pull/64)
+-   accept enum instance in validation rule (Livewire) - [#64](https://github.com/spatie/laravel-enum/pull/64)
 
 ## 2.2.0 - 2020-11-24
 
