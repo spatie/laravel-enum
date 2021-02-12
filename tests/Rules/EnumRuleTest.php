@@ -31,6 +31,7 @@ final class EnumRuleTest extends TestCase
     public function it_will_validate_a_class()
     {
         $rule = new EnumRule(StatusEnum::class);
+
         $this->assertTrue($rule->passes('attribute', StatusEnum::draft()));
     }
 
