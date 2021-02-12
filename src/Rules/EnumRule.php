@@ -29,6 +29,10 @@ class EnumRule implements Rule
         $this->attribute = $attribute;
         $this->value = $value;
 
+        if ($value instanceof $this->enum) {
+            return true;
+        }
+
         try {
             $this->asEnum($value);
 
