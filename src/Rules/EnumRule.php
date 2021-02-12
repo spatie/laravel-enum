@@ -11,7 +11,10 @@ use Throwable;
 
 class EnumRule implements Rule
 {
-    /** @var string|Enum */
+    /**
+     * @var string
+     * @psalm-var class-string<\Spatie\Enum\Enum>
+     */
     protected $enum;
 
     protected ?string $attribute = null;
@@ -19,6 +22,10 @@ class EnumRule implements Rule
     /** @var mixed */
     protected $value;
 
+    /**
+     * @param string $enum
+     * @psalm-param class-string<\Spatie\Enum\Enum> $enum
+     */
     public function __construct(string $enum)
     {
         $this->enum = $enum;
@@ -80,7 +87,7 @@ class EnumRule implements Rule
     /**
      * @param int|string|\Spatie\Enum\Enum $value
      *
-     * @return Enum
+     * @return \Spatie\Enum\Enum
      *
      * @throws \BadMethodCallException
      */

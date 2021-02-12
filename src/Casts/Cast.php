@@ -9,7 +9,10 @@ use Spatie\Enum\Laravel\Exceptions\NotNullableEnumField as NotNullableEnumFieldA
 
 abstract class Cast implements CastsAttributes
 {
-    /** @var string|Enum */
+    /**
+     * @var string
+     * @psalm-var class-string<\Spatie\Enum\Enum>
+     */
     protected string $enumClass;
 
     protected bool $isNullable = false;
@@ -17,6 +20,7 @@ abstract class Cast implements CastsAttributes
     /**
      * Cast constructor.
      * @param string $enumClass
+     * @psalm-param class-string<\Spatie\Enum\Enum> $enumClass
      * @param string[] ...$options
      */
     public function __construct(string $enumClass, ...$options)
