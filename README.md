@@ -186,18 +186,6 @@ protected function passedValidation()
 }
 ```
 
-#### Middleware
-
-You can also use the middleware to transform enums in a more general way and for requests without a form request.
-
-```php
-use Spatie\Enum\Laravel\Http\Middleware\TransformEnums;
-
-new TransformEnums([
-    'status' => StatusEnum::class,
-]);
-```
-
 ### Route Binding
 
 Beside using form requests, you can also use route binding. Similar [Laravel's Route Model Binding](https://laravel.com/docs/routing#route-model-binding), it automatically inject enum instances into your route action.
