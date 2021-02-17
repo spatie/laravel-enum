@@ -31,7 +31,7 @@ class SubstituteBindings
 
             try {
                 $instance = forward_static_call(
-                    /** @see \Spatie\Enum\Laravel\Enum::make() */
+                    /** @see \Spatie\Enum\Enum::make() */
                     [Reflector::getParameterClassName($parameter), 'make'],
                     $parameterValue
                 );
