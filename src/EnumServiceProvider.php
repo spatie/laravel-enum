@@ -2,11 +2,14 @@
 
 namespace Spatie\Enum\Laravel;
 
+use BadMethodCallException;
 use Illuminate\Contracts\Validation\Validator as ValidatorContract;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 use Spatie\Enum\Laravel\Commands\MakeEnum;
+use Spatie\Enum\Laravel\Exceptions\InvalidEnumValueException;
 use Spatie\Enum\Laravel\Http\EnumRequest;
 use Spatie\Enum\Laravel\Rules\EnumRule;
 
@@ -34,11 +37,26 @@ class EnumServiceProvider extends ServiceProvider
         ]);
 
         $this->registerRequestTransformMacro();
+        $this->registerRouteBindingMacro();
     }
 
     protected function registerRequestTransformMacro(): void
     {
         Request::mixin(new EnumRequest);
+    }
+
+    protected function registerRouteBindingMacro(): void
+    {
+        Router::macro('enum', function (string $key, string $class) {
+            /** @var \Illuminate\Routing\Router $this */
+            $this->bind($key, function ($value) use ($class) {
+                try {
+                    return app()->make($class, ['value' => $value]);
+                } catch (BadMethodCallException $e) {
+                    throw new InvalidEnumValueException($e->getMessage(), $e);
+                }
+            });
+        });
     }
 
     public function bootValidationRules(): void
