@@ -198,7 +198,7 @@ To use implicit route binding, be sure add `Spatie\Enum\Laravel\Http\Middleware\
 protected $middlewareGroups = [
     'web' => [
         // ...
-        \Spatie\Enum\Laravel\Http\Middleware\SubstituteBindings::class,
+        \Spatie\Enum\Laravel\Http\Middleware\SubstituteEnumBindings::class,
     ],
 ];
 ```

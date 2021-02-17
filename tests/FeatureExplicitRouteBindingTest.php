@@ -2,42 +2,25 @@
 
 namespace Spatie\Enum\Laravel\Tests;
 
-use Illuminate\Container\Container;
-use Illuminate\Contracts\Routing\Registrar;
-use Illuminate\Events\Dispatcher;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Middleware\SubstituteBindings;
-use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Route;
 use Spatie\Enum\Laravel\Tests\Extra\StatusEnum;
 
 class FeatureExplicitRouteBindingTest extends TestCase
 {
     /** @test */
-    public function it_resolves_binding()
+    public function it_resolves_explicit_binding(): void
     {
-        $router = $this->createRouter();
+        Route::enum('status', StatusEnum::class);
+        Route::get('posts/{status}', fn ($status): string => serialize($status))
+            ->middleware(SubstituteBindings::class);
 
-        $router->get('test/{status}', [
-            'middleware' => SubstituteBindings::class,
-            'uses' => function ($status) {
-                return $status->toJson();
-            },
-        ]);
-        $router->enum('status', StatusEnum::class);
+        $enum = StatusEnum::draft();
 
-        $request = Request::create('test/draft');
-        $result = $router->dispatch($request)->getContent();
+        $response = $this->get('posts/'.$enum->value)
+            ->assertOk()
+            ->assertSee(serialize($enum), false);
 
-        $this->assertEquals($result, StatusEnum::draft()->toJson());
-    }
-
-    protected function createRouter()
-    {
-        $container = new Container();
-
-        $router = new Router(new Dispatcher, $container);
-        $container->singleton(Registrar::class, fn () => $router);
-
-        return $router;
+        $this->assertTrue($enum->equals(unserialize($response->content())));
     }
 }
