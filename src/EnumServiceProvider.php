@@ -51,7 +51,10 @@ class EnumServiceProvider extends ServiceProvider
             /** @var \Illuminate\Routing\Router $this */
             $this->bind($key, function ($value) use ($class) {
                 try {
-                    return app()->make($class, ['value' => $value]);
+                    return forward_static_call(
+                        [$class, 'make'],
+                        $value
+                    );
                 } catch (BadMethodCallException $e) {
                     throw new InvalidEnumValueException($e->getMessage(), $e);
                 }
