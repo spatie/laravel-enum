@@ -193,6 +193,7 @@ Beside using form requests, you can also use route binding. Similar [Laravel's R
 #### Implicit Binding
 
 To use implicit route binding, be sure add `Spatie\Enum\Laravel\Http\Middleware\SubstituteBindings` middleware. For example, add it in your `app\Http\Kernel.php`:
+
 ```php
 protected $middlewareGroups = [
     'web' => [
