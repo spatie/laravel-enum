@@ -4,6 +4,7 @@ namespace Spatie\Enum\Laravel\Http\Middleware;
 
 use BadMethodCallException;
 use Closure;
+use Illuminate\Http\Request;
 use Illuminate\Support\Reflector;
 use Illuminate\Support\Str;
 use Spatie\Enum\Enum;
@@ -11,12 +12,7 @@ use Spatie\Enum\Laravel\Exceptions\InvalidEnumValueException;
 
 class SubstituteBindings
 {
-    /**
-     * @param \Illuminate\Http\Request $request
-     * @param \Closure $next
-     * @return mixed
-     */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
         $route = $request->route();
 
