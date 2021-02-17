@@ -19,7 +19,7 @@ class SubstituteBindings
         $parameters = $route->parameters();
 
         foreach ($route->signatureParameters(Enum::class) as $parameter) {
-            $parameterName = static::getParameterName($parameter->getName(), $parameters);
+            $parameterName = $this->getParameterName($parameter->getName(), $parameters);
             if ($parameterName === null) {
                 continue;
             }
