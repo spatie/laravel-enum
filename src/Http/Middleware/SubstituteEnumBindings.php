@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 use Spatie\Enum\Enum;
 use Spatie\Enum\Laravel\Exceptions\InvalidEnumValueException;
 
-class SubstituteBindings
+class SubstituteEnumBindings
 {
     public function handle(Request $request, Closure $next)
     {
