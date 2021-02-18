@@ -23,4 +23,15 @@ class FeatureExplicitRouteBindingTest extends TestCase
 
         $this->assertTrue($enum->equals(unserialize($response->content())));
     }
+
+    /** @test */
+    public function it_returns_404_with_unknown_value(): void
+    {
+        Route::enum('status', StatusEnum::class);
+        Route::get('posts/{status}', fn ($status): string => serialize($status))
+            ->middleware(SubstituteBindings::class);
+
+        $this->get('posts/foobar')
+            ->assertNotFound();
+    }
 }

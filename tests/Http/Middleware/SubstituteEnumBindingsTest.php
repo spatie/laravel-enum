@@ -23,4 +23,14 @@ class SubstituteEnumBindingsTest extends TestCase
 
         $this->assertTrue($enum->equals(unserialize($response->content())));
     }
+
+    /** @test */
+    public function it_returns_404_with_unknown_value(): void
+    {
+        Route::get('posts/{status}', fn (StatusEnum $status): string => serialize($status))
+            ->middleware(SubstituteEnumBindings::class);
+
+        $this->get('posts/foobar')
+            ->assertNotFound();
+    }
 }
