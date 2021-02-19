@@ -204,8 +204,6 @@ protected $middlewareGroups = [
 ```
 
 Use a type-hinted variable name that matches route segment to use implicit route binding.
-It's important that your route/group uses the `\Illuminate\Routing\Middleware\SubstituteBindings` middleware.
-This middleware is enabled by default for the `web` route group.
 
 ```php
 Route::get('/posts/{status}', function (StatusEnum $status) {
@@ -215,7 +213,9 @@ Route::get('/posts/{status}', function (StatusEnum $status) {
 
 #### Explicit Binding
 
-To have an explicit binding, there is a `Route::enum()` macro:
+To have an explicit binding, there is a `Route::enum()` macro.
+It's important that your route/group uses the `\Illuminate\Routing\Middleware\SubstituteBindings` middleware.
+This middleware is enabled by default for the `web` route group.
 
 ```php
 Route::enum('status', StatusEnum::class);
