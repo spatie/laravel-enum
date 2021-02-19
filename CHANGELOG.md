@@ -4,8 +4,8 @@ All notable changes to `laravel-enum` will be documented in this file
 
 ## 2.4.0 - 2021-02-19
 
-- add implicit and explicit route binding - [#65](https://github.com/spatie/laravel-enum/pull/65)
-- drop unusable `Spatie\Enum\Laravel\Http\Middleware\TransformEnums` middleware in favor of route binding
+-   add implicit and explicit route binding - [#65](https://github.com/spatie/laravel-enum/pull/65)
+-   drop unusable `Spatie\Enum\Laravel\Http\Middleware\TransformEnums` middleware in favor of route binding
 
 > **Warning:** the dropped `TransformEnums` middleware was unusable - but if you've found a way to use it in your project this release will be breaking and you will have to switch to form requests or route binding.
 
