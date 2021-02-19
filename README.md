@@ -186,16 +186,42 @@ protected function passedValidation()
 }
 ```
 
-#### Middleware
+### Route Binding
 
-You can also use the middleware to transform enums in a more general way and for requests without a form request.
+Beside using form requests, you can also use route binding. Similar [Laravel's Route Model Binding](https://laravel.com/docs/routing#route-model-binding), it automatically inject enum instances into your route action.
+
+#### Implicit Binding
+
+To use implicit route binding, be sure add `Spatie\Enum\Laravel\Http\Middleware\SubstituteBindings` middleware. For example, add it in your `app\Http\Kernel.php`:
 
 ```php
-use Spatie\Enum\Laravel\Http\Middleware\TransformEnums;
+protected $middlewareGroups = [
+    'web' => [
+        // ...
+        \Spatie\Enum\Laravel\Http\Middleware\SubstituteEnumBindings::class,
+    ],
+];
+```
 
-new TransformEnums([
-    'status' => StatusEnum::class,
-]);
+Use a type-hinted variable name that matches route segment to use implicit route binding.
+
+```php
+Route::get('/posts/{status}', function (StatusEnum $status) {
+    return $status;
+});
+```
+
+#### Explicit Binding
+
+To have an explicit binding, there is a `Route::enum()` macro.
+It's important that your route/group uses the `\Illuminate\Routing\Middleware\SubstituteBindings` middleware.
+This middleware is enabled by default for the `web` route group.
+
+```php
+Route::enum('status', StatusEnum::class);
+Route::get('/posts/{status}', function (Request $request) {
+    return $request->route('status');
+});
 ```
 
 ### Enum Make Command
