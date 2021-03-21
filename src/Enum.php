@@ -21,7 +21,7 @@ abstract class Enum extends BaseEnum implements Jsonable, Castable
         return new EnumCast(static::class, ...$arguments);
     }
 
-    public static function rule(): EnumRule
+    public static function toRule(): EnumRule
     {
         return new EnumRule(static::class);
     }
