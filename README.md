@@ -107,7 +107,7 @@ We pass several replacements to the translation key which you can use.
 
 ### Request Data Transformation
 
-A common scenario is that you receive an enumerable value as part of yor request data.
+A common scenario is that you receive an enumerable value as part of your request data.
 To let you work with it as a real enum object you can transform request data to an enum in a similar way to the model attribute casting.
 
 #### Request macro
