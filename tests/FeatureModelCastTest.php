@@ -97,6 +97,39 @@ final class FeatureModelCastTest extends TestCase
     }
 
     /** @test */
+    public function it_saves_a_null_value_for_nullable_set_of_enums()
+    {
+        $model = Post::create([
+            'status' => StatusEnum::draft(),
+            'nullable_set_of_enums' => null,
+        ]);
+
+        $model->refresh();
+
+        $this->assertTrue($model->status->equals(StatusEnum::draft()));
+        $this->assertEquals('draft', $model->getOriginal('status'));
+        $this->assertNull($model->nullable_set_of_enums);
+    }
+
+    /** @test */
+    public function it_saves_an_enum_of_set_of_enums()
+    {
+        $model = Post::create([
+            'status' => StatusEnum::draft(),
+            'set_of_enums' => [StatusEnum::draft(), StatusEnum::archived()],
+        ]);
+
+        $model->refresh();
+
+        $this->assertTrue($model->status->equals(StatusEnum::draft()));
+        $this->assertEquals('draft', $model->getOriginal('status'));
+        $this->assertIsArray($model->set_of_enums);
+        $this->assertCount(2, $model->set_of_enums);
+        $this->assertTrue(StatusEnum::draft()->equals(...$model->set_of_enums));
+        $this->assertTrue(StatusEnum::archived()->equals(...$model->set_of_enums));
+    }
+
+    /** @test */
     public function it_can_cast_enum_to_json(): void
     {
         $model = Post::create([
