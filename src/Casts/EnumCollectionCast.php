@@ -34,7 +34,9 @@ class EnumCollectionCast extends Cast
 
         if ($this->isCommaSeparatedString) {
             return $this->asEnums(
-                Arr::wrap(array_map(fn($item) => trim($item), explode(',', $value)))
+                Arr::wrap(array_map(function ($item) {
+                    return trim($item);
+                }, explode(',', $value)))
             );
         }
 
