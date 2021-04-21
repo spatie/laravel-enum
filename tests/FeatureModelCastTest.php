@@ -122,7 +122,8 @@ final class FeatureModelCastTest extends TestCase
         $model->refresh();
 
         $this->assertTrue($model->status->equals(StatusEnum::draft()));
-        $this->assertEquals('draft', $model->getOriginal('status'));
+        $this->assertEquals('draft', $model->getRawOriginal('status'));
+        $this->assertEquals('draft,stored archive', $model->getRawOriginal('set_of_enums'));
         $this->assertIsArray($model->set_of_enums);
         $this->assertCount(2, $model->set_of_enums);
         $this->assertTrue(StatusEnum::draft()->equals(...$model->set_of_enums));
