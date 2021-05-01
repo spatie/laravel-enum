@@ -6,6 +6,15 @@ use Illuminate\Support\Arr;
 
 class EnumCollectionCast extends Cast
 {
+    protected bool $isCommaSeparatedString = false;
+
+    public function __construct(string $enumClass, ...$options)
+    {
+        parent::__construct($enumClass, ...$options);
+
+        $this->isCommaSeparatedString = in_array('comma', $options);
+    }
+
     /**
      * @param \Illuminate\Database\Eloquent\Model $model
      * @param string $key
@@ -21,6 +30,14 @@ class EnumCollectionCast extends Cast
     {
         if (is_null($value)) {
             return $this->handleNullValue($model, $key);
+        }
+
+        if ($this->isCommaSeparatedString) {
+            return $this->asEnums(
+                Arr::wrap(array_map(function ($item) {
+                    return trim($item);
+                }, explode(',', $value)))
+            );
         }
 
         return $this->asEnums(
@@ -40,6 +57,12 @@ class EnumCollectionCast extends Cast
     {
         if (is_null($value)) {
             return $this->handleNullValue($model, $key);
+        }
+
+        if ($this->isCommaSeparatedString) {
+            return implode(',', $this->asEnums(
+                Arr::wrap($value)
+            ));
         }
 
         return json_encode($this->asEnums(Arr::wrap($value)));

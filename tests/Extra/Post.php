@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Schema;
  * @property mixed nullable_enum
  * @property mixed array_of_enums
  * @property mixed nullable_array_of_enums
+ * @property mixed set_of_enums
+ * @property mixed nullable_set_of_enums
  *
  * @method static self create(array $properties)
  */
@@ -26,6 +28,8 @@ class Post extends Model
         'nullable_enum' => StatusEnum::class.':nullable',
         'array_of_enums' => StatusEnum::class.':collection',
         'nullable_array_of_enums' => StatusEnum::class.':collection,nullable',
+        'set_of_enums' => StatusEnum::class.':collection,comma',
+        'nullable_set_of_enums' => StatusEnum::class.':collection,comma,nullable',
     ];
 
     public static function migrate()
@@ -36,6 +40,8 @@ class Post extends Model
             $table->string('nullable_enum')->nullable();
             $table->json('array_of_enums')->nullable();
             $table->json('nullable_array_of_enums')->nullable();
+            $table->string('set_of_enums')->nullable();
+            $table->string('nullable_set_of_enums')->nullable();
             $table->timestamps();
         });
     }
