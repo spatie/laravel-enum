@@ -4,7 +4,7 @@ All notable changes to `laravel-enum` will be documented in this file
 
 ## 2.5.0 - 2021-05-01
 
-- add `comma` format to `\Spatie\Enum\Laravel\Casts\EnumCollectionCast` - [#70](https://github.com/spatie/laravel-enum/pull/70)
+-   add `comma` format to `\Spatie\Enum\Laravel\Casts\EnumCollectionCast` - [#70](https://github.com/spatie/laravel-enum/pull/70)
 
 ## 2.4.0 - 2021-02-19
 
