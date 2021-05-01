@@ -6,13 +6,18 @@ use Illuminate\Support\Arr;
 
 class EnumCollectionCast extends Cast
 {
-    protected bool $isCommaSeparatedString = false;
+    public const FORMAT_JSON = 'json';
+    public const FORMAT_COMMA = 'comma';
+
+    protected string $format = 'json';
 
     public function __construct(string $enumClass, ...$options)
     {
         parent::__construct($enumClass, ...$options);
 
-        $this->isCommaSeparatedString = in_array('comma', $options);
+        $this->format = in_array(self::FORMAT_COMMA, $options)
+            ? self::FORMAT_COMMA
+            : self::FORMAT_JSON;
     }
 
     /**
@@ -32,17 +37,7 @@ class EnumCollectionCast extends Cast
             return $this->handleNullValue($model, $key);
         }
 
-        if ($this->isCommaSeparatedString) {
-            return $this->asEnums(
-                Arr::wrap(array_map(function ($item) {
-                    return trim($item);
-                }, explode(',', $value)))
-            );
-        }
-
-        return $this->asEnums(
-            Arr::wrap(json_decode($value, true))
-        );
+        return $this->asEnums($this->fromDatabase($value));
     }
 
     /**
@@ -59,13 +54,7 @@ class EnumCollectionCast extends Cast
             return $this->handleNullValue($model, $key);
         }
 
-        if ($this->isCommaSeparatedString) {
-            return implode(',', $this->asEnums(
-                Arr::wrap($value)
-            ));
-        }
-
-        return json_encode($this->asEnums(Arr::wrap($value)));
+        return $this->toDatabase($this->asEnums(Arr::wrap($value)));
     }
 
     /**
@@ -79,5 +68,33 @@ class EnumCollectionCast extends Cast
     protected function asEnums(array $values): array
     {
         return array_map([$this, 'asEnum'], $values);
+    }
+
+    /**
+     * @param \Spatie\Enum\Enum[] $enums
+     *
+     * @return string
+     */
+    protected function toDatabase(array $enums): string
+    {
+        if ($this->format === self::FORMAT_COMMA) {
+            return implode(',', $enums);
+        }
+
+        return json_encode($enums);
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return string[]
+     */
+    protected function fromDatabase(string $value): array
+    {
+        if ($this->format === self::FORMAT_COMMA) {
+            return array_map('trim', explode(',', $value));
+        }
+
+        return Arr::wrap(json_decode($value, true));
     }
 }
