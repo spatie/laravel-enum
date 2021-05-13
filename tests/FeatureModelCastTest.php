@@ -2,6 +2,7 @@
 
 namespace Spatie\Enum\Laravel\Tests;
 
+use Spatie\Enum\Laravel\Exceptions\NotNullableEnumField;
 use Spatie\Enum\Laravel\Tests\Extra\Post;
 use Spatie\Enum\Laravel\Tests\Extra\StatusEnum;
 use stdClass;
@@ -109,6 +110,33 @@ final class FeatureModelCastTest extends TestCase
         $this->assertTrue($model->status->equals(StatusEnum::draft()));
         $this->assertEquals('draft', $model->getOriginal('status'));
         $this->assertNull($model->nullable_set_of_enums);
+    }
+
+    /** @test */
+    public function it_saves_an_empty_array_for_nullable_set_of_enums()
+    {
+        $model = Post::create([
+            'status' => StatusEnum::draft(),
+            'nullable_set_of_enums' => [],
+        ]);
+
+        $model->refresh();
+
+        $this->assertTrue($model->status->equals(StatusEnum::draft()));
+        $this->assertEquals('draft', $model->getOriginal('status'));
+        $this->assertNull($model->nullable_set_of_enums);
+    }
+
+    /** @test */
+    public function it_tries_to_save_an_empty_array_for_not_nullable_set_of_enums()
+    {
+        $this->expectException(NotNullableEnumField::class);
+
+        $model = Post::create([
+            'set_of_enums' => [],
+        ]);
+
+        $model->refresh();
     }
 
     /** @test */

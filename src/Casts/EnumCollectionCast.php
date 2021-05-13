@@ -50,7 +50,7 @@ class EnumCollectionCast extends Cast
      */
     public function set($model, string $key, $value, array $attributes)
     {
-        if (is_null($value)) {
+        if (is_null($value) || empty($value)) {
             return $this->handleNullValue($model, $key);
         }
 
