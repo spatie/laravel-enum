@@ -94,7 +94,7 @@ class EnumRule implements Rule
     protected function asEnum($value): Enum
     {
         return forward_static_call(
-            [$this->enum, 'make'],
+            [$this->enum, 'from'],
             $value
         );
     }
