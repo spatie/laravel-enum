@@ -50,7 +50,7 @@ class EnumCollectionCast extends Cast
      */
     public function set($model, string $key, $value, array $attributes)
     {
-        if (is_null($value) || empty($value)) {
+        if (is_null($value)) {
             return $this->handleNullValue($model, $key);
         }
 
@@ -92,6 +92,9 @@ class EnumCollectionCast extends Cast
     protected function fromDatabase(string $value): array
     {
         if ($this->format === self::FORMAT_COMMA) {
+            if (empty($value))
+                return [];
+
             return array_map('trim', explode(',', $value));
         }
 
