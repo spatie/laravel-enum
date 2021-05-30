@@ -2,7 +2,12 @@
 
 namespace Spatie\Enum\Laravel\Casts;
 
+use BadMethodCallException;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
+use Spatie\Enum\Enum;
+use Spatie\Enum\Laravel\Exceptions\NotNullableEnumField;
+use TypeError;
 
 class EnumCollectionCast extends Cast
 {
@@ -21,15 +26,15 @@ class EnumCollectionCast extends Cast
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Model $model
+     * @param Model $model
      * @param string $key
      * @param string|null|mixed $value
      * @param array $attributes
      *
-     * @return \Spatie\Enum\Enum[]|null
+     * @return Enum[]|null
      *
-     * @throws \BadMethodCallException
-     * @throws \Spatie\Enum\Laravel\Exceptions\NotNullableEnumField
+     * @throws BadMethodCallException
+     * @throws NotNullableEnumField
      */
     public function get($model, string $key, $value, array $attributes)
     {
@@ -41,9 +46,9 @@ class EnumCollectionCast extends Cast
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Model $model
+     * @param Model $model
      * @param string $key
-     * @param int[]|string[]|\Spatie\Enum\Enum[]|null|mixed $value
+     * @param int[]|string[]|Enum[]|null|mixed $value
      * @param array $attributes
      *
      * @return string|null
@@ -58,12 +63,12 @@ class EnumCollectionCast extends Cast
     }
 
     /**
-     * @param int[]|string[]|\Spatie\Enum\Enum[] $values
+     * @param int[]|string[]|Enum[] $values
      *
-     * @return \Spatie\Enum\Enum[]
+     * @return Enum[]
      *
-     * @throws \TypeError
-     * @throws \BadMethodCallException
+     * @throws TypeError
+     * @throws BadMethodCallException
      */
     protected function asEnums(array $values): array
     {
@@ -71,7 +76,7 @@ class EnumCollectionCast extends Cast
     }
 
     /**
-     * @param \Spatie\Enum\Enum[] $enums
+     * @param Enum[] $enums
      *
      * @return string
      */
@@ -92,8 +97,9 @@ class EnumCollectionCast extends Cast
     protected function fromDatabase(string $value): array
     {
         if ($this->format === self::FORMAT_COMMA) {
-            if (empty($value))
+            if (empty($value)) {
                 return [];
+            }
 
             return array_map('trim', explode(',', $value));
         }
