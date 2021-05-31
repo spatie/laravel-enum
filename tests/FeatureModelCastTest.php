@@ -112,6 +112,22 @@ final class FeatureModelCastTest extends TestCase
     }
 
     /** @test */
+    public function it_saves_an_empty_array_for_nullable_set_of_enums()
+    {
+        $model = Post::create([
+            'status' => StatusEnum::draft(),
+            'nullable_set_of_enums' => [],
+        ]);
+
+        $model->refresh();
+
+        $this->assertTrue($model->status->equals(StatusEnum::draft()));
+        $this->assertEquals('draft', $model->getOriginal('status'));
+        $this->assertIsArray($model->nullable_set_of_enums);
+        $this->assertEmpty($model->nullable_set_of_enums);
+    }
+
+    /** @test */
     public function it_saves_an_enum_of_set_of_enums()
     {
         $model = Post::create([

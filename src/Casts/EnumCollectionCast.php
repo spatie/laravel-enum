@@ -92,6 +92,10 @@ class EnumCollectionCast extends Cast
     protected function fromDatabase(string $value): array
     {
         if ($this->format === self::FORMAT_COMMA) {
+            if (empty($value)) {
+                return [];
+            }
+
             return array_map('trim', explode(',', $value));
         }
 
