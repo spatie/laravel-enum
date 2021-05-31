@@ -4,8 +4,8 @@ All notable changes to `laravel-enum` will be documented in this file
 
 ## 2.5.1 - 2021-05-31
 
-- fix `comma` format with empty string value in database - [#73](https://github.com/spatie/laravel-enum/pull/73)
-- replaced deprecated `make()` call with `from()` - [#74](https://github.com/spatie/laravel-enum/pull/74)
+-   fix `comma` format with empty string value in database - [#73](https://github.com/spatie/laravel-enum/pull/73)
+-   replaced deprecated `make()` call with `from()` - [#74](https://github.com/spatie/laravel-enum/pull/74)
 
 ## 2.5.0 - 2021-05-01
 
