@@ -52,7 +52,6 @@ class EnumRule implements Rule
     public function message(): string
     {
         return Lang::get('enum::validation.enum', [
-            'attribute' => $this->attribute,
             'value' => $this->value,
             'enum' => $this->enum,
             'other' => implode(', ', $this->getDisplayableOtherValues()),
