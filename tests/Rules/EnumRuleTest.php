@@ -49,9 +49,15 @@ final class EnumRuleTest extends TestCase
     /** @test */
     public function it_returns_default_validation_message()
     {
-        $rule = new EnumRule(StatusEnum::class);
-        $rule->passes('attribute', 'foobar');
-        $this->assertEquals('The attribute field is not a valid '.StatusEnum::class.'.', $rule->message());
+        $validator = Validator::make(
+            ['status' => 'foobar'],
+            ['status' => StatusEnum::toRule()]
+        );
+
+        $this->assertEquals(
+            'The status field is not a valid '.StatusEnum::class.'.',
+            $validator->messages()->first()
+        );
     }
 
     /** @test */
@@ -61,9 +67,15 @@ final class EnumRuleTest extends TestCase
             'validation.enum' => ':attribute',
         ], Lang::getLocale(), 'enum');
 
-        $rule = new EnumRule(StatusEnum::class);
-        $rule->passes('attribute', 'foobar');
-        $this->assertEquals('attribute', $rule->message());
+        $validator = Validator::make(
+            ['status' => 'foobar'],
+            ['status' => StatusEnum::toRule()]
+        );
+
+        $this->assertEquals(
+            'status',
+            $validator->messages()->first()
+        );
     }
 
     /** @test */
