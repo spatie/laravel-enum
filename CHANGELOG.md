@@ -4,7 +4,7 @@ All notable changes to `laravel-enum` will be documented in this file
 
 ## 2.5.2 - 2021-07-24
 
-- fix `:attribute` replacement in `\Spatie\Enum\Laravel\Rules\EnumRule::message()` to respect custom attribute translations - [#77](https://github.com/spatie/laravel-enum/pull/77)
+-   fix `:attribute` replacement in `\Spatie\Enum\Laravel\Rules\EnumRule::message()` to respect custom attribute translations - [#77](https://github.com/spatie/laravel-enum/pull/77)
 
 ## 2.5.1 - 2021-05-31
 
