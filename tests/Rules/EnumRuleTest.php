@@ -169,7 +169,7 @@ final class EnumRuleTest extends TestCase
             'bool' => [true],
             'float' => [12.34],
             'array' => [[]],
-            'object' => [new \stdClass],
+            'object' => [new \stdClass()],
         ];
     }
 }

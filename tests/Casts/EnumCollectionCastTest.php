@@ -20,7 +20,7 @@ final class EnumCollectionCastTest extends TestCase
 
         $this->assertSameEnum(
             $expected,
-            $cast->get(new Post, 'key', is_null($value) ? null : json_encode($value), [])
+            $cast->get(new Post(), 'key', is_null($value) ? null : json_encode($value), [])
         );
     }
 
@@ -33,11 +33,11 @@ final class EnumCollectionCastTest extends TestCase
         $cast = new EnumCollectionCast(StatusEnum::class, ...$options);
 
         if (is_null($expected)) {
-            $this->assertNull($cast->set(new Post, 'key', $value, []));
+            $this->assertNull($cast->set(new Post(), 'key', $value, []));
         } else {
             $this->assertJsonStringEqualsJsonString(
                 json_encode($expected),
-                $cast->set(new Post, 'key', $value, [])
+                $cast->set(new Post(), 'key', $value, [])
             );
         }
     }
@@ -49,7 +49,7 @@ final class EnumCollectionCastTest extends TestCase
 
         $cast = new EnumCollectionCast(StatusEnum::class);
 
-        $cast->get(new Post, 'key', null, []);
+        $cast->get(new Post(), 'key', null, []);
     }
 
     public function provideEnumValueAccessorValues(): array

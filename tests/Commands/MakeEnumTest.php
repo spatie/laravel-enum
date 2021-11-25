@@ -6,7 +6,7 @@ use Spatie\Enum\Laravel\Tests\TestCase;
 
 class MakeEnumTest extends TestCase
 {
-    const WEEKDAY_PATH = __DIR__.'/../../vendor/orchestra/testbench-core/laravel/app/Enums/WeekDay.php';
+    public const WEEKDAY_PATH = __DIR__.'/../../vendor/orchestra/testbench-core/laravel/app/Enums/WeekDay.php';
 
     protected $content;
 

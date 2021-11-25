@@ -20,7 +20,7 @@ final class EnumCastTest extends TestCase
 
         $this->assertSameEnum(
             $expected,
-            $cast->get(new Post, 'key', $value, [])
+            $cast->get(new Post(), 'key', $value, [])
         );
     }
 
@@ -34,7 +34,7 @@ final class EnumCastTest extends TestCase
 
         $this->assertSameEnum(
             $expected,
-            $cast->set(new Post, 'key', $value, [])
+            $cast->set(new Post(), 'key', $value, [])
         );
     }
 
@@ -45,7 +45,7 @@ final class EnumCastTest extends TestCase
 
         $cast = new EnumCast(StatusEnum::class);
 
-        $cast->get(new Post, 'key', null, []);
+        $cast->get(new Post(), 'key', null, []);
     }
 
     public function provideEnumValueAccessorValues(): array

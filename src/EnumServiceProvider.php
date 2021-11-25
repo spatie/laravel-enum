@@ -42,7 +42,7 @@ class EnumServiceProvider extends ServiceProvider
 
     protected function registerRequestTransformMacro(): void
     {
-        Request::mixin(new EnumRequest);
+        Request::mixin(new EnumRequest());
     }
 
     protected function registerRouteBindingMacro(): void
