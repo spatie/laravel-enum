@@ -163,6 +163,7 @@ class StatusFormRequest extends FormRequest
     {
         return [
             'status' => new EnumRule(StatusEnum::class),
+            'properties.level' => new EnumRule(LevelEnum::class),
         ];
     }
 
@@ -170,6 +171,7 @@ class StatusFormRequest extends FormRequest
     {
         return [
             'status' => StatusEnum::class,
+            'properties.level' => LevelEnum::class,
         ];
     }
 }
