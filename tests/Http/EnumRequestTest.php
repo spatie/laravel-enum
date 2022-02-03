@@ -31,8 +31,8 @@ final class EnumRequestTest extends TestCase
             ],
         ]);
 
-        $this->assertInstanceOf(StatusEnum::class, $request->query->get('status'));
-        $this->assertTrue(StatusEnum::draft()->equals($request->query->get('status')));
+        $this->assertInstanceOf(StatusEnum::class, $request->input('status'));
+        $this->assertTrue(StatusEnum::draft()->equals($request->input('status')));
     }
 
     /** @test */
@@ -50,8 +50,8 @@ final class EnumRequestTest extends TestCase
             ],
         ]);
 
-        $this->assertIsString($request->query->get('status'));
-        $this->assertEquals('draft', $request->query->get('status'));
+        $this->assertIsString($request->input('status'));
+        $this->assertEquals('draft', $request->input('status'));
     }
 
     /** @test */
@@ -69,8 +69,8 @@ final class EnumRequestTest extends TestCase
             ],
         ]);
 
-        $this->assertIsString($request->query->get('status'));
-        $this->assertEquals('draft', $request->query->get('status'));
+        $this->assertIsString($request->input('status'));
+        $this->assertEquals('draft', $request->input('status'));
     }
 
     /** @test */
@@ -90,8 +90,8 @@ final class EnumRequestTest extends TestCase
             ],
         ]);
 
-        $this->assertInstanceOf(StatusEnum::class, $request->request->get('status'));
-        $this->assertTrue(StatusEnum::draft()->equals($request->request->get('status')));
+        $this->assertInstanceOf(StatusEnum::class, $request->request->all()['status']);
+        $this->assertTrue(StatusEnum::draft()->equals($request->request->all()['status']));
     }
 
     /** @test */
@@ -132,8 +132,8 @@ final class EnumRequestTest extends TestCase
             ],
         ]);
 
-        $this->assertIsString($request->request->get('status'));
-        $this->assertEquals('draft', $request->request->get('status'));
+        $this->assertIsString($request->request->all()['status']);
+        $this->assertEquals('draft', $request->request->all()['status']);
     }
 
     /** @test */
@@ -211,7 +211,7 @@ final class EnumRequestTest extends TestCase
             'state' => StatusEnum::class,
         ]);
 
-        $this->assertIsString($request->query->get('status'));
-        $this->assertEquals('draft', $request->query->get('status'));
+        $this->assertIsString($request->input('status'));
+        $this->assertEquals('draft', $request->input('status'));
     }
 }

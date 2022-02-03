@@ -47,8 +47,8 @@ final class TransformsEnumsTest extends TestCase
         ]));
         $request->setContainer($this->app)->validateResolved();
 
-        $this->assertInstanceOf(StatusEnum::class, $request->query->get('status'));
-        $this->assertTrue(StatusEnum::draft()->equals($request->query->get('status')));
+        $this->assertInstanceOf(StatusEnum::class, $request->input('status'));
+        $this->assertTrue(StatusEnum::draft()->equals($request->input('status')));
     }
 
     /** @test */
@@ -63,7 +63,7 @@ final class TransformsEnumsTest extends TestCase
         ));
         $request->setContainer($this->app)->validateResolved();
 
-        $this->assertInstanceOf(StatusEnum::class, $request->request->get('status'));
-        $this->assertTrue(StatusEnum::draft()->equals($request->request->get('status')));
+        $this->assertInstanceOf(StatusEnum::class, $request->request->all()['status']);
+        $this->assertTrue(StatusEnum::draft()->equals($request->request->all()['status']));
     }
 }
