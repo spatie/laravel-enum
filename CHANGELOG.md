@@ -4,15 +4,15 @@ All notable changes to `laravel-enum` will be documented in this file
 
 ## 3.0.0 - 2022-02-03
 
-- Support Laravel 9
-- Enum request data transformation is only possible with `$request->input()` and not with `$request->query->get()` anymore:
+-   Support Laravel 9
+-   Enum request data transformation is only possible with `$request->input()` and not with `$request->query->get()` anymore:
 
 ```diff
 - $request->query->get('status')
 + $request->input('status')
 ```
 
-- If you're working directly with the `InputBag` request object, you'll need to use `all()['']` instead of `get()`:
+-   If you're working directly with the `InputBag` request object, you'll need to use `all()['']` instead of `get()`:
 
 ```diff
 - $request->request->get('status');
