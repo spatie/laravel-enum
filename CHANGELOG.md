@@ -4,7 +4,7 @@ All notable changes to `laravel-enum` will be documented in this file
 
 ## 3.0.1 - 2022-02-05
 
-- Fix nested form data casting - [#86](https://github.com/spatie/laravel-enum/pull/86)
+-   Fix nested form data casting - [#86](https://github.com/spatie/laravel-enum/pull/86)
 
 ## 3.0.0 - 2022-02-03
 
