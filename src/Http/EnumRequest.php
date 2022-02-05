@@ -70,7 +70,11 @@ final class EnumRequest
                     continue;
                 }
 
-                $this[$key] = $enumClass::make($this[$key]);
+                $input = $this->all();
+
+                Arr::set($input, $key, $enumClass::make($this[$key]));
+
+                $this->replace($input);
             }
         };
     }

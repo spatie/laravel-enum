@@ -200,6 +200,26 @@ final class EnumRequestTest extends TestCase
         $this->assertTrue(StatusEnum::draft()->equals($request['status']));
     }
 
+    public function it_can_transform_general_request_array_parameters_to_enum()
+    {
+        $request = $this->createRequest([
+            'properties' => [
+                'status' => 'draft',
+            ]
+        ]);
+
+        $request->transformEnums([
+            'locale' => LocaleEnum::class,
+            'properties.status' => StatusEnum::class,
+        ]);
+
+        $this->assertInstanceOf(LocaleEnum::class, $request['locale']);
+        $this->assertTrue(LocaleEnum::en()->equals($request['locale']));
+
+        $this->assertInstanceOf(StatusEnum::class, $request['payload']['status']);
+        $this->assertTrue(StatusEnum::draft()->equals($request['payload']['status']));
+    }
+
     /** @test */
     public function it_ignores_rules_if_general_request__parameter_is_not_present()
     {
