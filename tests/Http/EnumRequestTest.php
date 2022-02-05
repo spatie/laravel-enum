@@ -205,7 +205,7 @@ final class EnumRequestTest extends TestCase
         $request = $this->createRequest([
             'properties' => [
                 'status' => 'draft',
-            ]
+            ],
         ]);
 
         $request->transformEnums([
