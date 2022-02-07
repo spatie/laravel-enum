@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-enum` will be documented in this file
 
+## 3.0.0 - 2022-02-07
+
+**Full Changelog**: https://github.com/spatie/laravel-enum/compare/2.5.2...3.0.0
+
 ## 3.0.1 - 2022-02-05
 
 - Fix nested form data casting - [#86](https://github.com/spatie/laravel-enum/pull/86)
@@ -19,12 +23,14 @@ All notable changes to `laravel-enum` will be documented in this file
 - $request->query->get('status')
 + $request->input('status')
 
+
 ```
 - If you're working directly with the `InputBag` request object, you'll need to use `all()['']` instead of `get()`:
 
 ```diff
 - $request->request->get('status');
 + $request->request->all()['status'];
+
 
 ```
 ## 2.5.2 - 2021-07-24
@@ -71,8 +77,11 @@ All notable changes to `laravel-enum` will be documented in this file
 - drop **Laravel** support for `5.8` and `6.0` and `7.0`
 - drop several custom exceptions:
 - - `ExpectsArrayOfEnumsField`
+- 
 - - `InvalidEnumError`
+- 
 - - `NoSuchEnumField`
+- 
 - 
 - replace `HasEnums` trait by custom casts and default laravel query builder logic
 - add custom casts `EnumCast` and `EnumCollectionCast`
@@ -97,8 +106,11 @@ All notable changes to `laravel-enum` will be documented in this file
 
 - add request transformer [#7](https://github.com/spatie/laravel-enum/pull/7)
 - - form request: `Spatie\Enum\Laravel\Http\Requests\TransformsEnums`
+- 
 - - middleware: `Spatie\Enum\Laravel\Http\Middleware\TransformEnums`
+- 
 - - macro: `Illuminate\Http\Request::transformEnums()`
+- 
 - 
 
 ## 1.3.0 - 2020-03-02
