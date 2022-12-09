@@ -47,13 +47,7 @@ class MakeEnumTest extends TestCase
             'name' => 'WeekDay',
         ], $arguments));
 
-
         $artisan->assertExitCode(0);
-
-        if (version_compare($this->app->version(), '9.0.0', '<')) {
-            $artisan->expectsOutput('Enum created successfully.');
-        }
-
         $artisan->run();
 
         $this->assertTrue(file_exists(self::WEEKDAY_PATH));
