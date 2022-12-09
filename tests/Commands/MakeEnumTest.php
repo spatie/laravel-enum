@@ -48,7 +48,6 @@ class MakeEnumTest extends TestCase
         ], $arguments));
 
         $artisan->assertExitCode(0);
-        $artisan->expectsOutput('WeekDay created successfully.');
         $artisan->run();
 
         $this->assertTrue(file_exists(self::WEEKDAY_PATH));
