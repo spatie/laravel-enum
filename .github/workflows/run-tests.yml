@@ -29,10 +29,10 @@ jobs:
 
         steps:
             - name: Checkout code
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
 
             -   name: Cache dependencies
-                uses: actions/cache@v2
+                uses: actions/cache@v3
                 with:
                     path: ~/.composer/cache/files
                     key: dependencies-laravel-${{ matrix.laravel }}-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
@@ -60,5 +60,3 @@ jobs:
 
             - name: Execute tests
               run: vendor/bin/phpunit
-              env:
-                  DB_PORT: ${{ job.services.mysql.ports[3306] }}
