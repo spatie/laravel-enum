@@ -28,6 +28,10 @@ abstract class Enum extends BaseEnum implements Jsonable, Castable
 
     public static function fromLivewire($enum): self
     {
+        if (is_a($enum, self::class)) {
+            return $enum;
+        }
+
         return self::from($enum['value']);
     }
 
