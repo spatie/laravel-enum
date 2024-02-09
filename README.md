@@ -246,6 +246,41 @@ The static `register()` method is only a little helper - you can for sure regist
 
 The faker methods itself are inherited from the base packages [Faker Provider](https://github.com/spatie/enum#faker-provider).
 
+### Livewire
+
+You can use an enum as a property on a Livewire component like this:
+
+```php
+class ShowCustomer extends Component
+{
+    public StatusEnum $statusEnum;
+
+    public function mount($id)
+    {
+        $customer = Customer::find($id);
+        $this->statusEnum = $customer->status;
+    }
+
+    public function render()
+    {
+        return view('livewire.customer');
+    }
+}
+```
+
+Just one thing is required to make this work: implement `\Livewire\Wireable` on all the enums you’ll be using with Livewire::
+
+```php
+use Livewire\Wireable;
+
+/**
+ * @method static self pending()
+ * @method static self active()
+ */
+final class StatusEnum implements Wireable
+{}
+```
+
 ## Testing
 
 ```bash
