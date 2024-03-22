@@ -233,7 +233,7 @@ Route::get('/posts/{status}', function (Request $request) {
 We provide an artisan make command which allows you to quickly create new enumerables.
 
 ```bash
-php artisan make:enum StatusEnum
+php artisan make:spatie-enum StatusEnum
 ```
 
 You can use `--method` option to predefine some enum values - you can use them several times.
