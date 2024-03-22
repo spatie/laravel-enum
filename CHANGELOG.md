@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-enum` will be documented in this file
 
+## 3.0.3 - 2024-03-22
+
+### What's Changed
+
+* Support Laravel 11 by @justinaskav in https://github.com/spatie/laravel-enum/pull/104
+
+### New Contributors
+
+* @justinaskav made their first contribution in https://github.com/spatie/laravel-enum/pull/104
+
+**Full Changelog**: https://github.com/spatie/laravel-enum/compare/3.0.2...3.0.3
+
 ## 3.0.2 - 2023-02-10
 
 - Add Laravel 10 support
@@ -29,12 +41,14 @@ All notable changes to `laravel-enum` will be documented in this file
 
 
 
+
 ```
 - If you're working directly with the `InputBag` request object, you'll need to use `all()['']` instead of `get()`:
 
 ```diff
 - $request->request->get('status');
 + $request->request->all()['status'];
+
 
 
 
@@ -83,12 +97,15 @@ All notable changes to `laravel-enum` will be documented in this file
 - drop **Laravel** support for `5.8` and `6.0` and `7.0`
 - drop several custom exceptions:
 - - `ExpectsArrayOfEnumsField`
+  
 - 
 - 
 - - `InvalidEnumError`
+  
 - 
 - 
 - - `NoSuchEnumField`
+  
 - 
 - 
 - 
@@ -115,12 +132,15 @@ All notable changes to `laravel-enum` will be documented in this file
 
 - add request transformer [#7](https://github.com/spatie/laravel-enum/pull/7)
 - - form request: `Spatie\Enum\Laravel\Http\Requests\TransformsEnums`
+  
 - 
 - 
 - - middleware: `Spatie\Enum\Laravel\Http\Middleware\TransformEnums`
+  
 - 
 - 
 - - macro: `Illuminate\Http\Request::transformEnums()`
+  
 - 
 - 
 - 
