@@ -8,9 +8,9 @@ use Symfony\Component\Console\Input\InputOption;
 
 class MakeEnum extends GeneratorCommand
 {
-    protected $name = 'make:enum';
+    protected $name = 'make:spatie-enum';
 
-    protected $description = 'Create a new enum';
+    protected $description = 'Create a new enum (spatie/laravel-enum)';
 
     public function handle()
     {

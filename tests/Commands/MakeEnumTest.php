@@ -43,7 +43,7 @@ class MakeEnumTest extends TestCase
 
     private function runMakeCommand(string $stub, array $arguments = []): void
     {
-        $artisan = $this->artisan('make:enum', array_merge([
+        $artisan = $this->artisan('make:spatie-enum', array_merge([
             'name' => 'WeekDay',
         ], $arguments));
 
