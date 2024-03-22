@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-enum` will be documented in this file
 
+## 4.0.0 - 2024-03-22
+
+- Laravel 11 support
+
 ## 3.0.2 - 2023-02-10
 
 - Add Laravel 10 support
