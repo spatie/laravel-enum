@@ -26,6 +26,23 @@ abstract class Enum extends BaseEnum implements Jsonable, Castable
         return new EnumRule(static::class);
     }
 
+    public static function fromLivewire($enum): self
+    {
+        if (is_a($enum, self::class)) {
+            return $enum;
+        }
+
+        return self::from($enum['value']);
+    }
+
+    public function toLivewire(): mixed
+    {
+        return [
+            'value' => $this->value,
+            'label' => $this->label,
+        ];
+    }
+
     public function toJson($options = 0): string
     {
         return json_encode($this->jsonSerialize(), $options);
