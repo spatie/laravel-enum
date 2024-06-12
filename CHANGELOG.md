@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-enum` will be documented in this file
 
+## 3.1.0 - 2024-06-12
+
+### What's Changed
+
+* add optional wirable support to enums by @macbookandrew in https://github.com/spatie/laravel-enum/pull/103
+
+### New Contributors
+
+* @macbookandrew made their first contribution in https://github.com/spatie/laravel-enum/pull/103
+
+**Full Changelog**: https://github.com/spatie/laravel-enum/compare/3.0.3...3.1.0
+
 ## 3.0.3 - 2024-03-22
 
 ### What's Changed
@@ -42,12 +54,14 @@ All notable changes to `laravel-enum` will be documented in this file
 
 
 
+
 ```
 - If you're working directly with the `InputBag` request object, you'll need to use `all()['']` instead of `get()`:
 
 ```diff
 - $request->request->get('status');
 + $request->request->all()['status'];
+
 
 
 
@@ -93,9 +107,13 @@ All notable changes to `laravel-enum` will be documented in this file
 ## 2.0.0 - 2020-09-21
 
 - upgrade [spatie/enum](https://github.com/spatie/enum) to *v3* - [spatie/enum#56](https://github.com/spatie/enum/pull/56)
+  
 - drop **PHP** support for `7.2` and `7.3`
+  
 - drop **Laravel** support for `5.8` and `6.0` and `7.0`
+  
 - drop several custom exceptions:
+  
 - - `ExpectsArrayOfEnumsField`
   
 - 
@@ -110,11 +128,17 @@ All notable changes to `laravel-enum` will be documented in this file
 - 
 - 
 - replace `HasEnums` trait by custom casts and default laravel query builder logic
+  
 - add custom casts `EnumCast` and `EnumCollectionCast`
+  
 - reduce `make:enum` command to `--method` option - no value/label mapping or method name formatting any more
+  
 - add Laravel focused base `Enum` class which implements `Jsonable, Castable`
+  
 - drop `enum_index|EnumIndexRule`, `enum_name|EnumNameRule` and `enum_value|EnumValueRule` validation rules
+  
 - add [Faker](https://github.com/fzaninotto/Faker) provider to generate random enum instances, values and labels `\Spatie\Enum\Laravel\Faker\FakerEnumProvider`
+  
 
 ## 1.6.1 - 2020-09-09
 
@@ -131,6 +155,7 @@ All notable changes to `laravel-enum` will be documented in this file
 ## 1.4.0 - 2020-03-11
 
 - add request transformer [#7](https://github.com/spatie/laravel-enum/pull/7)
+  
 - - form request: `Spatie\Enum\Laravel\Http\Requests\TransformsEnums`
   
 - 
