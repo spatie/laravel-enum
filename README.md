@@ -1,4 +1,3 @@
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/support-ukraine.svg?t=1" />](https://supportukrainenow.org)
 
 # Laravel support for spatie/enum
 
@@ -6,7 +5,6 @@
 [![License](https://img.shields.io/github/license/spatie/laravel-enum?style=for-the-badge)](https://github.com/spatie/laravel-enum/blob/master/LICENSE.md)
 ![Postcardware](https://img.shields.io/badge/Postcardware-%F0%9F%92%8C-197593?style=for-the-badge)
 
-[![PHP from Packagist](https://img.shields.io/packagist/php-v/spatie/laravel-enum?style=flat-square)](https://packagist.org/packages/spatie/laravel-enum)
 [![Build Status](https://img.shields.io/github/workflow/status/spatie/laravel-enum/run-tests?label=tests&style=flat-square)](https://github.com/spatie/laravel-enum/actions?query=workflow%3Arun-tests)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-enum.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-enum)
 
