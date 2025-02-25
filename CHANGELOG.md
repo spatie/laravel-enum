@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-enum` will be documented in this file
 
+## 3.2.0 - 2025-02-25
+
+### What's Changed
+
+* Laravel 12 support by @charlietennant in https://github.com/spatie/laravel-enum/pull/112
+
+### New Contributors
+
+* @charlietennant made their first contribution in https://github.com/spatie/laravel-enum/pull/112
+
+**Full Changelog**: https://github.com/spatie/laravel-enum/compare/3.1.0...3.2.0
+
 ## 3.1.0 - 2024-06-12
 
 ### What's Changed
@@ -55,12 +67,14 @@ All notable changes to `laravel-enum` will be documented in this file
 
 
 
+
 ```
 - If you're working directly with the `InputBag` request object, you'll need to use `all()['']` instead of `get()`:
 
 ```diff
 - $request->request->get('status');
 + $request->request->all()['status'];
+
 
 
 
