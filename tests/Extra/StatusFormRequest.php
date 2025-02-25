@@ -14,7 +14,7 @@ class StatusFormRequest extends FormRequest
         return [];
     }
 
-    public function enums(): array
+    public function enums($key = null, $enumClass = null): array
     {
         return [
             'status' => StatusEnum::class,

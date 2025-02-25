@@ -52,7 +52,7 @@ final class EnumCollectionCastTest extends TestCase
         $cast->get(new Post(), 'key', null, []);
     }
 
-    public function provideEnumValueAccessorValues(): array
+    public static function provideEnumValueAccessorValues(): array
     {
         return [
             [null, null, ['nullable']],
@@ -64,7 +64,7 @@ final class EnumCollectionCastTest extends TestCase
         ];
     }
 
-    public function provideEnumValueMutatorValues(): array
+    public static function provideEnumValueMutatorValues(): array
     {
         return [
             [null, null, ['nullable']],

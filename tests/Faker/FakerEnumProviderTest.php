@@ -66,7 +66,7 @@ final class FakerEnumProviderTest extends TestCase
         $this->assertTrue(in_array($label, array_values(StatusEnum::toArray()), true));
     }
 
-    public function repeatHundredTimes(): iterable
+    public static function repeatHundredTimes(): iterable
     {
         for ($i = 0; $i < 100; $i++) {
             yield [];

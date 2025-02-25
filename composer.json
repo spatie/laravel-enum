@@ -26,19 +26,19 @@
     "require": {
         "php": "^8.0",
         "ext-json": "*",
-        "illuminate/console": "^8.0 || ^9.43 || ^10.0 || ^11.0",
-        "illuminate/contracts": "^8.0 || ^9.43 || ^10.0 || ^11.0",
-        "illuminate/database": "^8.0 || ^9.43 || ^10.0 || ^11.0",
-        "illuminate/http": "^8.0 || ^9.43 || ^10.0 || ^11.0",
-        "illuminate/support": "^8.0 || ^9.43 || ^10.0 || ^11.0",
+        "illuminate/console": "^8.0 || ^9.43 || ^10.0 || ^11.0 || ^12.0",
+        "illuminate/contracts": "^8.0 || ^9.43 || ^10.0 || ^11.0 || ^12.0",
+        "illuminate/database": "^8.0 || ^9.43 || ^10.0 || ^11.0 || ^12.0",
+        "illuminate/http": "^8.0 || ^9.43 || ^10.0 || ^11.0 || ^12.0",
+        "illuminate/support": "^8.0 || ^9.43 || ^10.0 || ^11.0 || ^12.0",
         "spatie/enum": "^3.9"
     },
     "require-dev": {
         "fakerphp/faker": "^1.16",
         "mockery/mockery": "^1.4.0",
-        "orchestra/testbench": "^6.0 || ^7.0 || ^8.0 || ^9.0",
-        "phpunit/phpunit": "^9.5 || ^10.0",
-        "vimeo/psalm": "^4.0 || ^5.0"
+        "orchestra/testbench": "^6.0 || ^7.0 || ^8.0 || ^9.0 || ^10.0",
+        "phpunit/phpunit": "^9.5 || ^10.0 || ^11.0",
+        "vimeo/psalm": "^4.0 || ^5.0 || ^6.0"
     },
     "conflict": {
         "bensampo/laravel-enum": "*"
