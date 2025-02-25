@@ -162,7 +162,7 @@ final class EnumRuleTest extends TestCase
         $this->assertFalse($validator->validateEnum('attribute', 'stored draft', [StatusEnum::class], $validator));
     }
 
-    public function provideInvalidTypes(): array
+    public static function provideInvalidTypes(): array
     {
         return [
             'null' => [null],
