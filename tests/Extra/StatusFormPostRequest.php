@@ -6,7 +6,7 @@ use Spatie\Enum\Laravel\Http\EnumRequest;
 
 final class StatusFormPostRequest extends StatusFormRequest
 {
-    public function enums(): array
+    public function enums($key = null, $enumClass = null): array
     {
         return [
             EnumRequest::REQUEST_REQUEST => [
