@@ -13,7 +13,7 @@ jobs:
             fail-fast: true
             matrix:
                 os: [ ubuntu-latest, windows-latest ]
-                php: [ 8.4, 8.3 ]
+                php: [ '8.6', '8.5', '8.4', '8.3' ]
                 laravel: [ 11.*, 12.*, 13.* ]
                 stability: [ prefer-lowest, prefer-stable ]
                 include:
@@ -56,6 +56,7 @@ jobs:
                     echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
             -   name: Install dependencies
+                shell: bash
                 run: |
                     composer require "laravel/framework:${{ matrix.laravel }}" "nesbot/carbon:${{ matrix.carbon }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update --dev
                     composer update --${{ matrix.stability }} --prefer-dist --no-interaction
